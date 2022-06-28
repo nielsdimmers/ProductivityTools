@@ -1,0 +1,16 @@
+[notion]
+
+ACCESS_KEY = <notion API key here>
+
+TASK_DATABASE_KEY = <notion key of tasks database here>
+
+INBOX_DATABASE_KEY = <notion key of inbox database here>
+
+GROCERIES_PAGE_KEY = <notion key of groceries page here>
+
+GROCERIES_PAGE_URL = <notion URL of groceries page here>
+
+[telegram]
+TELEGRAM_API_TOKEN = <telegram API code here>
+
+TELEGRAM_CHAT_ID = <telegram user sending messages here>

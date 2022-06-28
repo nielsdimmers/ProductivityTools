@@ -1,3 +1,9 @@
+.DS_Store
+.config
+config
+
+
+# Automated python ignoring files...
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

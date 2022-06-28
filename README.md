@@ -1,2 +1,80 @@
-# ProductivityTools
-Some diverse tools for productivity
+# productivity tools
+Tools to help me be more productive
+
+# Change log
+(most recent on top)
+
+## 2022-06-28 Let's go public!
++ Moved to public repository
++ added default config.default. Enter details en rename to config to use this
+
+## 2022-06-26.3
++ added /daily command to show daily info
+
+## 2022-06-26.2
++ Moved the add grocery functionality to notion class
++ removed abundand printline
++ Moved the request grocery list to notion class as well
++ shortened the special chars array
+
+## 2022-06-26.1
++ Moved the creation of a task to its separate notion interface object, pycache was created so I added it to gitignore
+
+## 2022-06-26
++ To enable for public: removed chat ID from the code
++ added the ability to add groceries using the /b command, it now shows groceries when empty, but adds a grocery when not empty
++ Added link to grocery list from config
++ Instead of creating the URL myself, just grab the URL from the task response (DUH!)
++ Tried to refactor as much as possible to get it below 100 lines, but ended up creating another todo
+
+## 2022-06-20 listener updates
++ Removed some notion direct links from the listener
++ Remove some test based printlines
++ Added /b command, which shows the grocery list
+
+## 2022-06-19 Added the listener
++ Added a listener.py which starts a listener on /tk commands and creates a task in the inbox.
+
+## 2022-06-18 Dynamic config file
++ To support crontab automation, a cmd option is enabled to support for a dynamic config file
+
+## 2022-06-16 Telegram
++ Moving to telegram turend out to be WAY easier than expected, so here it is.
+
+## 2022-06-15.1 Daily.py
++ first version of daily.py which gives a summary of today's tasks (just the titles) from notion's tasks database
+
+## 2022-06-15 Move to notion
++ Moved the jira queries and linux commands to notion
++ this setup is mainly intended for stuff that's actually executable.
+
+## 2022-06-14 Tiniest update
++ Removed a line from the AddToInbox python script, added a todo to the readme
+
+## 2022-06-10 Counting lines
++ Added counting lines command combo to linux commands
+
+## 2022-06-09 Jira Queries
++ Updated linux commands with the correct script
++ Removed json dependency from addtoinbox.py
++ Removed how to install a new computer from the readme and moved it to Notion where it fits better.
++ New file with interesting Jira JQL queries to remember
+
+## 2022-06-08 new addtoinbox script 
++ Minor changes to readme (consistency, clarity)
++ Added a .gitignore for OS specific files and .config containing secrets
++ Added a addToInbox.py script, which adds the cmd text to the inbox database in notion
+
+## 2022-06-08 First version
++ Added the first version of a more complete readme
++ Expanded the commands to contain an easier wordcount command
+
+# Todo/wishlist
+
++ Fix the telegram URL, markup does not work.
++ Add tekst (content) to a note
++ Exception handling when either telegram is not working (auto come back alive), or Notion is not working (send error message to user)
++ Change options using telegram
++ Add info from opensource parlement to daily list
++ Create an interface for the config file as well, otherwise it's going to get messy
++ upgrade to newest version of python bot: ``pip install -U --pre python-telegram-bot`` and still support it
