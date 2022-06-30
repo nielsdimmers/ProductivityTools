@@ -4,6 +4,9 @@ Tools to help me be more productive
 # Change log
 (most recent on top)
 
+## 2022-06-30 Status check
++ Added a check to see if status is empty and work around that
+
 ## 2022-06-28 Let's go public!
 + Moved to public repository
 + added default config.default. Enter details en rename to config to use this

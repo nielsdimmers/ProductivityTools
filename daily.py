@@ -69,7 +69,13 @@ result += "Good morning Niels, for today, there are a total of %s tasks:\n" % le
 
 # Generate a list of tasks
 for task in response.json()['results']:
-	result += "- %s (%s) \n" % (task['properties']['Name']['title'][0]['plain_text'],task['properties']['Status']['select']['name'])
+	status = task['properties']['Status']['select']
+	if str(type(status)) == '<class \'NoneType\'>':
+		status = 'no status selected!'
+	else:
+		status = status['name']
+	
+	result += "- %s (%s) \n" % (task['properties']['Name']['title'][0]['plain_text'],status)
 
 #print()
 
