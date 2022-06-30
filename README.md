@@ -4,6 +4,9 @@ Tools to help me be more productive
 # Change log
 (most recent on top)
 
+## 2022-06-30.1
++ Created branch for python-telegram-bot version 20.0a2 which is still in alfa, but should be released soon
+
 ## 2022-06-30 Status check
 + Added a check to see if status is empty and work around that
 
