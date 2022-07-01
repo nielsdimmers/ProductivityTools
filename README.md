@@ -4,7 +4,10 @@ Tools to help me be more productive
 # Change log
 (most recent on top)
 
-## 2022-07-01 Added daily goal to daily message
+## 2022-07-01.2 Fix repeating goal message
++ The goal message was added to every task, found out in production. Fortunately, it was a quick fix.
+
+## 2022-07-01.1 Added daily goal to daily message
 + If a goal is defined, it will be added to the daily message.
 
 ## 2022-07-01 Oopsie
