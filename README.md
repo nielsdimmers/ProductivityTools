@@ -4,8 +4,11 @@ Tools to help me be more productive
 # Change log
 (most recent on top)
 
+## 2022-07-01 Added daily goal to daily message
++ If a goal is defined, it will be added to the daily message.
+
 ## 2022-07-01 Oopsie
-Main wasn't supposed to go to v20 yet, because then it can't be updated on production anymore, so reverting changes.
++ Main wasn't supposed to go to v20 yet, because then it can't be updated on production anymore, so reverting changes.
 
 ## 2022-06-30.1
 + Created branch for python-telegram-bot version 20.0a2 which is still in alfa, but should be released soon

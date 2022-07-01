@@ -81,13 +81,41 @@ class notion:
 
 		# Get the notion stuff
 		response = requests.post(request_URL, json=payload,headers=self.getNotionHeaders())
-
+		
 		result = ""
-
 		result += "Good morning Niels, for today, there are a total of %s tasks:\n" % len(response.json()['results'])
-
+		
 		# Generate a list of tasks
 		for task in response.json()['results']:
 			result += "- %s (%s) \n" % (task['properties']['Name']['title'][0]['plain_text'],task['properties']['Status']['select']['name'])
+		
+		## *** Journal goal retrieving ***
+		
+		payload = {"filter": {
+			"or" : [
+			{
+				"property" : "title",
+				"title" : {
+					"starts_with" : today
+				}
+			},
+			{
+				"property" : "Date",
+				"date" : {
+					"equals" : today
+				}
+			}
+			]
+		}
+		}
+		
+		request_URL = 'https://api.notion.com/v1/databases/%s/query' % configParser.get('notion','INBOX_JOURNAL_KEY')
+		
+		response = requests.post(request_URL, json = payload,headers=self.getNotionHeaders())
+		
+		if len(response.json()['results']) > 0 and len(response.json()['results'][0]['properties']['Doel van vandaag']['rich_text']) > 0:
+			result += '\n\nDenk aan het doel van vandaag: %s' % response.json()['results'][0]['properties']['Doel van vandaag']['rich_text'][0]['plain_text']
+		else:
+			result += '\n\nEr is geen doel voor vandag gedefinieerd'
 		
 		return result

@@ -77,7 +77,33 @@ for task in response.json()['results']:
 	
 	result += "- %s (%s) \n" % (task['properties']['Name']['title'][0]['plain_text'],status)
 
-#print()
+	## *** Journal goal retrieving ***
+	
+	payload = {"filter": {
+		"or" : [
+		{
+			"property" : "title",
+			"title" : {
+				"starts_with" : today
+			}
+		},
+		{
+			"property" : "Date",
+			"date" : {
+				"equals" : today
+			}
+		}
+		]
+	}
+	}
+	
+	request_URL = 'https://api.notion.com/v1/databases/%s/query' % configParser.get('notion','INBOX_JOURNAL_KEY')
+	response = requests.post(request_URL, json = payload,headers=headers)
+	
+	if len(response.json()['results']) > 0 and len(response.json()['results'][0]['properties']['Doel van vandaag']['rich_text']) > 0:
+		result += '\n\nDenk aan het doel van vandaag: %s' % response.json()['results'][0]['properties']['Doel van vandaag']['rich_text'][0]['plain_text']
+	else:
+		result += '\n\nEr is geen doel voor vandag gedefinieerd'
 
 # the telegram URL to send a message to myself
 telegramURL = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=" % (configParser.get('telegram','TELEGRAM_API_TOKEN'),configParser.get('telegram','TELEGRAM_CHAT_ID'))
