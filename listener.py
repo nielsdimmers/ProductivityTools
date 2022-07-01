@@ -1,5 +1,5 @@
 import configparser
-from telegram.ext import Application, InlineQueryHandler, CommandHandler
+from telegram.ext import Updater, InlineQueryHandler, CommandHandler
 import telegram
 import sys
 import notionInterface
@@ -26,20 +26,20 @@ class Listener:
 			textMessage = textMessage.replace(specialKey,specialChars[specialKey])
 		return textMessage
 
-	async def sendTelegramReply(self, update, replyMessage):
-		await update.message.reply_text(replyMessage,quote=False)
+	def sendTelegramReply(self, update, replyMessage):
+		update.message.reply_text(self.escapeString(replyMessage),quote=False,parse_mode=telegram.ParseMode.MARKDOWN_V2)
 		
-	async def dailyData(self,update,context):
-		await self.sendTelegramReply(update, notion.getDailyData())
+	def dailyData(self,update,context):
+		self.sendTelegramReply(update, notion.getDailyData())
 	
-	async def groceryList(self,update,context):
+	def groceryList(self,update,context):
 		if update.message.from_user.id != int(configParser.get('telegram','TELEGRAM_CHAT_ID')):
 			return
 		pageKey = configParser.get('notion','GROCERIES_PAGE_KEY')
 
 		if len(update.message.text) > 3:
 			notionAppendResponse = notion.addGrocery(update.message.text[3:])
-			await self.sendTelegramReply(update,notionAppendResponse)
+			self.sendTelegramReply(update,notionAppendResponse)
 		
 		else:
 			# The actual call		
@@ -58,24 +58,26 @@ class Listener:
 				messageReply += todoText
 
 			messageReply += '\nGrocerylist in notion: %s' % configParser.get('notion','GROCERIES_PAGE_URL')
-			await self.sendTelegramReply(update,messageReply)
+			self.sendTelegramReply(update,messageReply)
 
 	
-	async def newTask(self,update,context):
+	def newTask(self,update,context):
 		# Check if it is me (just to be 100% sure nobody is messing with me)
 		if update.message.from_user.id == int(configParser.get('telegram','TELEGRAM_CHAT_ID')):
 			messageReply = notion.createTask(update.message.text[4:])
 
-			await self.sendTelegramReply(update,messageReply)
+			self.sendTelegramReply(update,messageReply)
 	
 	def main(self):
 		global notion
 		notion = notionInterface.notion(configParser)
-		application = Application.builder().token(configParser.get('telegram','TELEGRAM_API_TOKEN')).build()
-		application.add_handler(CommandHandler('daily',self.dailyData), True)
-		application.add_handler(CommandHandler('tk',self.newTask), True)
-		application.add_handler(CommandHandler('b',self.groceryList), True)
-		application.run_polling()
+		updater = Updater(configParser.get('telegram','TELEGRAM_API_TOKEN'), use_context=True)
+		dp = updater.dispatcher
+		dp.add_handler(CommandHandler('daily',self.dailyData), True)
+		dp.add_handler(CommandHandler('tk',self.newTask), True)
+		dp.add_handler(CommandHandler('b',self.groceryList), True)
+		updater.start_polling()
+		updater.idle()
 
 if __name__ == '__main__':
 	bot = Listener()
