@@ -35,7 +35,6 @@ class Listener:
 	def groceryList(self,update,context):
 		if update.message.from_user.id != int(configParser.get('telegram','TELEGRAM_CHAT_ID')):
 			return
-		pageKey = configParser.get('notion','GROCERIES_PAGE_KEY')
 
 		if len(update.message.text) > 3:
 			notionAppendResponse = notion.addGrocery(update.message.text[3:])
@@ -57,7 +56,7 @@ class Listener:
 					messageReply += '[X] ' if paragraph['to_do']['checked'] else '[] '
 				messageReply += todoText
 
-			messageReply += '\nGrocerylist in notion: %s' % configParser.get('notion','GROCERIES_PAGE_URL')
+			messageReply += '\nGrocerylist in notion: %s' % notion.getGroceriesURL()
 			self.sendTelegramReply(update,messageReply)
 
 	

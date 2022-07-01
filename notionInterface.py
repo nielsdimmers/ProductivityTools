@@ -37,6 +37,9 @@ class notion:
 		appendResponse = requests.patch('https://api.notion.com/v1/blocks/%s/children' % configParser.get('notion','GROCERIES_PAGE_KEY'),json=newGrocery,headers=self.getNotionHeaders())
 		return 'Added grocery: %s' % grocery
 		
+	def getGroceriesURL(self):
+		return configParser.get('notion','GROCERIES_PAGE_URL')
+		
 	def getDailyData(self):
 		# Url for the notion call
 		request_URL = 'https://api.notion.com/v1/databases/%s/query' % configParser.get('notion','TASK_DATABASE_KEY')

@@ -4,6 +4,10 @@ Tools to help me be more productive
 # Change log
 (most recent on top)
 
+## 2022-07-01.3 Duplicate code removal
++ Removed A LOT of duplicate code, by making daily.py use the notion interface instead of its own code.
++ removed a call to a notion config in the listener, by making a separate notion iterface sub for it
+
 ## 2022-07-01.2 Fix repeating goal message
 + The goal message was added to every task, found out in production. Fortunately, it was a quick fix.
 
@@ -93,3 +97,4 @@ Tools to help me be more productive
 + Add info from opensource parlement to daily list
 + Create an interface for the config file as well, otherwise it's going to get messy
 + upgrade to newest version of python bot: ``pip install -U --pre python-telegram-bot`` and still support it
++ Make a separate notion queries class, so it doesn't clutter the interface
