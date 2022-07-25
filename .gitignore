@@ -1,7 +1,7 @@
 .DS_Store
 .config
 config
-
+productivityTools.log
 
 # Automated python ignoring files...
 # Byte-compiled / optimized / DLL files

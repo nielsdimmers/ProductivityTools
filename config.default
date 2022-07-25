@@ -1,3 +1,6 @@
+[general]
+LOGFILE_NAME = <logfile location here>
+
 [notion]
 
 ACCESS_KEY = <notion API key here>
