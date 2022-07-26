@@ -4,6 +4,10 @@ Tools to help me be more productive
 # Change log
 (most recent on top)
 
+## 2022-07-26 Sonarqube safe (naming conventions...)
++ removed addToInbox.py, it did not have any added value anymore
++ Installed sonarqube and removed all errors and warnings. Naming conventions are a bit diffrent from Java which I was used to.
+
 ## 2022-07-25 Config and logging updates
 + Added separate config class to ease up the config handling
 + Added separate log class for the same reason, if you are upgrading to this version, make sure to add a new config section [general] with the item LOGFILE_NAME, see config.default .

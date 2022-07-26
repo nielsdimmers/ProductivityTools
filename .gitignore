@@ -2,6 +2,7 @@
 .config
 config
 productivityTools.log
+.scannerwork/
 
 # Automated python ignoring files...
 # Byte-compiled / optimized / DLL files

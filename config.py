@@ -6,14 +6,14 @@ class config:
 
 	def __init__(self):
 		if len(sys.argv) >= 3 and sys.argv[1]=='--config':
-			configFile = sys.argv[2]
+			_config_file = sys.argv[2]
 		else:
-			configFile = 'config'
+			_config_file = 'config'
 		
 		# Parse the notion vars from the config file
 		global configParser 
 		configParser = configparser.RawConfigParser()
-		configParser.read(configFile)
+		configParser.read(_config_file)
 			
-	def getItem(self,category,configItem):
-		return (configParser.get(category,configItem))
+	def get_item(self,category,_config_item):
+		return (configParser.get(category,_config_item))

@@ -6,43 +6,43 @@ import datetime
 class notion:
 
 	# Initialise config parser, given from source	
-	def __init__(self, configParser):
+	def __init__(self, _config_parser):
 		global config
-		config = configParser
+		config = _config_parser
 
 	# Returns the headers of the notion message
-	def getNotionHeaders(self):
-		return {'Authorization': 'Bearer %s' % config.getItem('notion','ACCESS_KEY'), 'Content-Type':'application/json','Notion-Version':'2022-02-22'}
+	def get_notion_headers(self):
+		return {'Authorization': 'Bearer %s' % config.get_item('notion','ACCESS_KEY'), 'Content-Type':'application/json','Notion-Version':'2022-02-22'}
 	
 	# Returns the JSON part of the groceries page
-	def getGroceries(self):
-		response = requests.get('https://api.notion.com/v1/blocks/%s/children' % config.getItem('notion','GROCERIES_PAGE_KEY') ,headers=self.getNotionHeaders())
+	def get_groceries(self):
+		response = requests.get('https://api.notion.com/v1/blocks/%s/children' % config.get_item('notion','GROCERIES_PAGE_KEY') ,headers=self.get_notion_headers())
 		return response.json()
 	
 	# create a task object based on the given title
 	# Returns a string representation of what happened (succesful, error, what kind of error...)
-	def createTask(self,taskTitle):
+	def create_task(self,_task_title):
 		# JSON body
-		dictionary = {'parent':{'database_id':config.getItem('notion','INBOX_DATABASE_KEY')}, 'properties':{'title':{'title':[{"text":{"content":taskTitle}}]}}}
+		dictionary = {'parent':{'database_id':config.get_item('notion','INBOX_DATABASE_KEY')}, 'properties':{'title':{'title':[{"text":{"content":_task_title}}]}}}
 
 		# The creation of the task
-		response = requests.post('https://api.notion.com/v1/pages', json=dictionary,headers=self.getNotionHeaders())
+		response = requests.post('https://api.notion.com/v1/pages', json=dictionary,headers=self.get_notion_headers())
 		
 		# Setup the response telegram message
 		return "Created task with id [%s](%s). Status code: %s (%s)" % (response.json()['id'],response.json()['url'],response.status_code,response.reason)
 
-	# add a grocery to the grocery pae
-	def addGrocery(self,grocery):
-		newGrocery = {'children':[{'object':'block', 'type':'to_do', 'to_do':{'rich_text':[{'type':'text','text': {'content': grocery} }] }}]}
-		appendResponse = requests.patch('https://api.notion.com/v1/blocks/%s/children' % config.getItem('notion','GROCERIES_PAGE_KEY'),json=newGrocery,headers=self.getNotionHeaders())
-		return 'Added grocery: %s' % grocery
+	# add a grocery to the grocery list
+	def add_grocery(self,_grocery):
+		new_grocery = {'children':[{'object':'block', 'type':'to_do', 'to_do':{'rich_text':[{'type':'text','text': {'content': _grocery} }] }}]}
+		requests.patch('https://api.notion.com/v1/blocks/%s/children' % config.get_item('notion','GROCERIES_PAGE_KEY'),json=new_grocery,headers=self.get_notion_headers())
+		return 'Added grocery: %s' % _grocery
 		
-	def getGroceriesURL(self):
-		return config.getItem('notion','GROCERIES_PAGE_URL')
+	def get_groceries_url(self):
+		return config.get_item('notion','GROCERIES_PAGE_URL')
 		
-	def getDailyData(self):
+	def get_daily_data(self):
 		# Url for the notion call
-		request_URL = 'https://api.notion.com/v1/databases/%s/query' % config.getItem('notion','TASK_DATABASE_KEY')
+		request_url = 'https://api.notion.com/v1/databases/%s/query' % config.get_item('notion','TASK_DATABASE_KEY')
 
 		 # Today's date formatted in a way notion likes it, for the payload json
 		today = datetime.datetime.now().strftime("%Y-%m-%d")
@@ -83,7 +83,7 @@ class notion:
 		}
 
 		# Get the notion stuff
-		response = requests.post(request_URL, json=payload,headers=self.getNotionHeaders())
+		response = requests.post(request_url, json=payload,headers=self.get_notion_headers())
 		
 		result = ""
 		result += "Good morning Niels, for today, there are a total of %s tasks:\n" % len(response.json()['results'])
@@ -112,9 +112,9 @@ class notion:
 		}
 		}
 		
-		request_URL = 'https://api.notion.com/v1/databases/%s/query' % config.getItem('notion','INBOX_JOURNAL_KEY')
+		request_url = 'https://api.notion.com/v1/databases/%s/query' % config.get_item('notion','INBOX_JOURNAL_KEY')
 		
-		response = requests.post(request_URL, json = payload,headers=self.getNotionHeaders())
+		response = requests.post(request_url, json = payload,headers=self.get_notion_headers())
 		
 		if len(response.json()['results']) > 0 and len(response.json()['results'][0]['properties']['Doel van vandaag']['rich_text']) > 0:
 			result += '\n\nDenk aan het doel van vandaag: %s' % response.json()['results'][0]['properties']['Doel van vandaag']['rich_text'][0]['plain_text']

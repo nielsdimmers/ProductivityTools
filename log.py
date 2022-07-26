@@ -9,7 +9,7 @@ class log:
 		global config
 		config = config.config()
 		
-		logging.basicConfig(filename=config.getItem('general','LOGFILE_NAME'), filemode='a', format='%(asctime)s - %(levelname)s - %(message)s')
+		logging.basicConfig(filename=config.get_item('general','LOGFILE_NAME'), filemode='a', format='%(asctime)s - %(levelname)s - %(message)s')
 	
 	# Log the actual message
 	def log(self,severity="INFO",message="no message provided"):
