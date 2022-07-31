@@ -4,6 +4,10 @@ Tools to help me be more productive
 # Change log
 (most recent on top)
 
+## 2022-07-31 Commander's Intent
++ Renamed the goal, so need to rename it in this app as well
++ Added some future ideas to the Readme
+
 ## 2022-07-26 Sonarqube safe (naming conventions...)
 + removed addToInbox.py, it did not have any added value anymore
 + Installed sonarqube and removed all errors and warnings. Naming conventions are a bit diffrent from Java which I was used to.
@@ -108,3 +112,6 @@ Tools to help me be more productive
 + Add info from opensource parlement to daily list
 + upgrade to newest version of python bot: ``pip install -U --pre python-telegram-bot`` and still support it
 + notionInterface.py is too long (max length is 100 lines)
++ Fix that, if a task does not have a status, it does not show up.
++ Create a "I'm going to leave the house" list using a telegram command
++ A graph with my weight

@@ -116,9 +116,9 @@ class notion:
 		
 		response = requests.post(request_url, json = payload,headers=self.get_notion_headers())
 		
-		if len(response.json()['results']) > 0 and len(response.json()['results'][0]['properties']['Doel van vandaag']['rich_text']) > 0:
-			result += '\n\nDenk aan het doel van vandaag: %s' % response.json()['results'][0]['properties']['Doel van vandaag']['rich_text'][0]['plain_text']
+		if len(response.json()['results']) > 0 and len(response.json()['results'][0]['properties']['Doel (Commander\'s Intent)']['rich_text']) > 0:
+			result += '\n\nThe goal for today (Commander\'s Intent): %s' % response.json()['results'][0]['properties']['Doel (Commander\'s Intent)']['rich_text'][0]['plain_text']
 		else:
-			result += '\n\nEr is geen doel voor vandag gedefinieerd'
+			result += '\n\nThere is no goal defined for today'
 		
 		return result
