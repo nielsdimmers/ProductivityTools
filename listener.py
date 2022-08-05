@@ -4,7 +4,8 @@ import notion_interface
 import requests
 import config
 import log
-import global_vars
+from global_vars import global_vars
+import datetime
 
 # Telegram listener class to respond to telegram messages.
 class Listener:
@@ -32,17 +33,23 @@ class Listener:
 			message = 'The logfile %s is %s lines long.' % (config.get_item('general','LOGFILE_NAME'), num_lines)
 			self.send_telegram_reply(update,message)
 		else:
-			log.log('WARNING',USER_NOT_ALLOWED_ERROR % (update.message.from_user.name,update.message.from_user.id))
+			log.log('WARNING', global_vars.USER_NOT_ALLOWED_ERROR % (update.message.from_user.name,update.message.from_user.id))
 		
+	def week_number(self,update,context):
+		if update.message.from_user.id == int(config.get_item('telegram','TELEGRAM_CHAT_ID')):
+			self.send_telegram_reply(update, global_vars.DATETIME_WEEK_NUMBER % datetime.date.today().strftime("%W"))
+		else:
+			log.log('WARNING',global_vars.USER_NOT_ALLOWED_ERROR % (update.message.from_user.name,update.message.from_user.id))
+	
 	def daily_data(self,update,context):
 		if update.message.from_user.id == int(config.get_item('telegram','TELEGRAM_CHAT_ID')):
 			self.send_telegram_reply(update, notion.get_daily_data())
 		else:
-			log.log('WARNING',USER_NOT_ALLOWED_ERROR % (update.message.from_user.name,update.message.from_user.id))
+			log.log('WARNING', global_vars.USER_NOT_ALLOWED_ERROR % (update.message.from_user.name,update.message.from_user.id))
 	
 	def grocery_list(self,update,context):
 		if update.message.from_user.id != int(config.get_item('telegram','TELEGRAM_CHAT_ID')):
-			log.log('WARNING',USER_NOT_ALLOWED_ERROR % (update.message.from_user.name,update.message.from_user.id))
+			log.log('WARNING', global_vars.USER_NOT_ALLOWED_ERROR % (update.message.from_user.name,update.message.from_user.id))
 			return
 
 		if len(update.message.text) > 3:
@@ -50,7 +57,6 @@ class Listener:
 			self.send_telegram_reply(update,notion_append_response)
 		
 		else:
-			# The actual call		
 			response = notion.get_groceries()
 		
 			# reply with the full groceries list
@@ -74,7 +80,7 @@ class Listener:
 			message_reply = notion.create_task(update.message.text[4:])
 			self.send_telegram_reply(update,message_reply)
 		else:
-			log.log('WARNING',USER_NOT_ALLOWED_ERROR % (update.message.from_user.name,update.message.from_user.id))
+			log.log('WARNING', global_vars.USER_NOT_ALLOWED_ERROR % (update.message.from_user.name,update.message.from_user.id))
 	
 	def main(self):
 		global notion
@@ -85,6 +91,7 @@ class Listener:
 		dp.add_handler(CommandHandler('tk',self.new_task), True)
 		dp.add_handler(CommandHandler('b',self.grocery_list), True)
 		dp.add_handler(CommandHandler('log',self.log_size), True)
+		dp.add_handler(CommandHandler('week',self.week_number), True)
 		updater.start_polling()
 		updater.idle()
 

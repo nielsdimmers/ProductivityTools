@@ -4,6 +4,13 @@ Tools to help me be more productive
 # Change log
 (most recent on top)
 
+## 2022-08-05 weeknumber command and task contents
++ Added /week command to get the current week number
++ use // when creating a task to add content (text only) (NOTE: Adding (a lot of) content might take a bit longer, since they require separata API calls to notion)
++ Fixed a bug with global commands
++ Allow for tasks without a status
++ shortened the notion interface
+
 ## 2022-07-31 Commander's Intent
 + Renamed the goal, so need to rename it in this app as well
 + Added some future ideas to the Readme
@@ -111,7 +118,5 @@ Tools to help me be more productive
 + Change options using telegram
 + Add info from opensource parlement to daily list
 + upgrade to newest version of python bot: ``pip install -U --pre python-telegram-bot`` and still support it
-+ notionInterface.py is too long (max length is 100 lines)
-+ Fix that, if a task does not have a status, it does not show up.
 + Create a "I'm going to leave the house" list using a telegram command
 + A graph with my weight
