@@ -4,6 +4,13 @@ Tools to help me be more productive
 # Change log
 (most recent on top)
 
+## 2022-08-07 The config separator
++ Instead of using globals (very unsafe!) I  now use class variables to keep things a bit safer. For log, config and other classes which are needed amongst subs
++ split the config in two files, a config, with telegram and general settings, and config_notion, with the notion specific settings. Now, telegram doesn't have (direct) access to the notion API key and vice versa.
+
+## 2022-08-06 notion_journal_interface
++ Created notion_journal to support future additional features to fill the journal from telegram
+
 ## 2022-08-05 weeknumber command and task contents
 + Added /week command to get the current week number
 + use // when creating a task to add content (text only) (NOTE: Adding (a lot of) content might take a bit longer, since they require separata API calls to notion)

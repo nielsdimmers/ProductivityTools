@@ -1,6 +1,7 @@
 .DS_Store
 .config
 config
+config_notion
 productivityTools.log
 .scannerwork/
 
