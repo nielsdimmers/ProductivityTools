@@ -1,7 +1,6 @@
 from telegram.ext import Updater, InlineQueryHandler, CommandHandler
 import telegram
 import notion_interface
-import requests
 import config
 import log
 from global_vars import global_vars
@@ -11,9 +10,6 @@ import datetime
 class Listener:
 
 	config = config.config()
-	
-	notion = notion_interface.notion()
-
 	log = log.log()
 
 	# Telegram message escape a string
@@ -26,69 +22,52 @@ class Listener:
 	def send_telegram_reply(self, update, _reply_message):
 		update.message.reply_text(self.escape_string(_reply_message),quote=False,parse_mode=telegram.ParseMode.MARKDOWN_V2)
 		
-	def log_size(self,update,context):
-		if update.message.from_user.id == int(self.config.get_item('telegram','TELEGRAM_CHAT_ID')):
-			num_lines = sum(1 for _ in open(self.config.get_item('general','LOGFILE_NAME')))
-			message = 'The logfile %s is %s lines long.' % (self.config.get_item('general','LOGFILE_NAME'), num_lines)
-			self.send_telegram_reply(update,message)
-		else:
-			self.log.log('WARNING', global_vars.USER_NOT_ALLOWED_ERROR % (update.message.from_user.name,update.message.from_user.id))
-		
-	def week_number(self,update,context):
-		if update.message.from_user.id == int(self.config.get_item('telegram','TELEGRAM_CHAT_ID')):
-			self.send_telegram_reply(update, global_vars.DATETIME_WEEK_NUMBER % datetime.date.today().strftime("%W"))
-		else:
-			self.log.log('WARNING',global_vars.USER_NOT_ALLOWED_ERROR % (update.message.from_user.name,update.message.from_user.id))
-	
-	def daily_data(self,update,context):
-		if update.message.from_user.id == int(self.config.get_item('telegram','TELEGRAM_CHAT_ID')):
-			self.send_telegram_reply(update, self.notion.get_daily_data())
-		else:
-			self.log.log('WARNING', global_vars.USER_NOT_ALLOWED_ERROR % (update.message.from_user.name,update.message.from_user.id))
-	
-	def grocery_list(self,update,context):
-		if update.message.from_user.id != int(self.config.get_item('telegram','TELEGRAM_CHAT_ID')):
-			self.log.log('WARNING', global_vars.USER_NOT_ALLOWED_ERROR % (update.message.from_user.name,update.message.from_user.id))
-			return
-
+	def grocery_list(self,update,notion):
 		if len(update.message.text) > 3:
-			notion_append_response = self.notion.add_grocery(update.message.text[3:])
+			notion_append_response = notion.add_grocery(update.message.text[3:])
 			self.send_telegram_reply(update,notion_append_response)
 		
 		else:
-			response = self.notion.get_groceries()
+			response = notion.get_groceries()
 		
 			# reply with the full groceries list
-			message_reply = "**BOODSCHAPPEN**\n"
+			message_reply = "**BOODSCHAPPEN**\n\n"
 			for paragraph in response['results']:
-				message_reply += "\n"
-				todo_text = ""
-				if len(paragraph[paragraph['type']]['rich_text']) > 0:
-					todo_text += paragraph[paragraph['type']]['rich_text'][0]['plain_text']
 				if paragraph['type'] == 'to_do': 
 					message_reply += '[X] ' if paragraph['to_do']['checked'] else '[] '
-				message_reply += todo_text
+				if len(paragraph[paragraph['type']]['rich_text']) > 0:
+					message_reply += paragraph[paragraph['type']]['rich_text'][0]['plain_text']
+				message_reply += "\n"
 
-			message_reply += '\nGrocerylist in notion: %s' % self.notion.get_groceries_url()
+			message_reply += 'Grocerylist in notion: %s' % notion.get_groceries_url()
 			self.send_telegram_reply(update,message_reply)
 
-	
-	def new_task(self,update,context):
-		# Check if it is me (just to be 100% sure nobody is messing with me)
-		if update.message.from_user.id == int(self.config.get_item('telegram','TELEGRAM_CHAT_ID')):
-			message_reply = self.notion.create_task(update.message.text[4:])
-			self.send_telegram_reply(update,message_reply)
-		else:
+	def execute_command(self,update,context):
+		if update.message.from_user.id != int(self.config.get_item('telegram','TELEGRAM_CHAT_ID')):
 			self.log.log('WARNING', global_vars.USER_NOT_ALLOWED_ERROR % (update.message.from_user.name,update.message.from_user.id))
-	
+			return
+		command = update.message.text.split(' ')[0][1:] # Split the message by space, get the first part and remove first character, e.g.: split the command from the message!
+		notion = notion_interface.notion()
+		
+		if command == 'daily':
+			self.send_telegram_reply(update, notion.get_daily_data())
+		elif command == 'b':
+			self.grocery_list(update,notion)
+		elif command == 'tk':
+			self.send_telegram_reply(update, notion.create_task(update.message.text[4:]))
+		elif command == 'log':
+			self.send_telegram_reply(update, self.log.get_size_message())
+		elif command == 'week':
+			self.send_telegram_reply(update, global_vars.DATETIME_WEEK_NUMBER % datetime.date.today().strftime("%W"))
+			
 	def main(self):
 		updater = Updater(self.config.get_item('telegram','TELEGRAM_API_TOKEN'), use_context=True)
 		dp = updater.dispatcher
-		dp.add_handler(CommandHandler('daily',self.daily_data), True)
-		dp.add_handler(CommandHandler('tk',self.new_task), True)
-		dp.add_handler(CommandHandler('b',self.grocery_list), True)
-		dp.add_handler(CommandHandler('log',self.log_size), True)
-		dp.add_handler(CommandHandler('week',self.week_number), True)
+		dp.add_handler(CommandHandler('daily',self.execute_command), True)
+		dp.add_handler(CommandHandler('tk',self.execute_command), True)
+		dp.add_handler(CommandHandler('b',self.execute_command), True)
+		dp.add_handler(CommandHandler('log',self.execute_command), True)
+		dp.add_handler(CommandHandler('week',self.execute_command), True)
 		updater.start_polling()
 		updater.idle()
 

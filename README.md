@@ -4,6 +4,16 @@ Tools to help me be more productive
 # Change log
 (most recent on top)
 
+## 2022-08-09 Listener overhaul and cleanup
++ Forgot to save the config.default, so it still has notion defaults in it which were moved to config_notion. Removed them.
++ Minor sonarqube fixes in config.py
++ Switched the task split from // to \n (newline)
++ Fixed bug which resulted in a crash when calling daily with a config file
++ Did quite a major overhaul of the listener, shortening it with about 20 lines. Instead of separate functions, a command executer is called which handles the commands. This saves a lot of if-statements checking for the user, but also allows for single line methods to be in the switch and the notion object is only created when needed. This had some effect in the log as well, where two new methods have been created removing them from the listener.
++ Log now also uses local config variable instead of global
++ Shortened the grocery list method and reordered it a bit
++ made global variable in notion journal interface more local
+
 ## 2022-08-07 The config separator
 + Instead of using globals (very unsafe!) I  now use class variables to keep things a bit safer. For log, config and other classes which are needed amongst subs
 + split the config in two files, a config, with telegram and general settings, and config_notion, with the notion specific settings. Now, telegram doesn't have (direct) access to the notion API key and vice versa.

@@ -23,10 +23,10 @@ class notion:
 	# Returns a string representation of what happened (succesful, error, what kind of error...)
 	def create_task(self,_task_data):
 		
-		task_data = _task_data.split('//') # Split the task data by the delimiter defining between title [0] and the contents [1..*]
+		task_data = _task_data.split('\n') # Split the task data by the delimiter defining between title [0] and the contents [1..*]
 		
 		# JSON body
-		dictionary = {'parent':{'database_id':config.get_item('notion','INBOX_DATABASE_KEY')}, 'properties':{'title':{'title':[{"text":{"content":task_data[0]}}]}}}
+		dictionary = {'parent':{'database_id':self.config.get_item('notion','INBOX_DATABASE_KEY')}, 'properties':{'title':{'title':[{"text":{"content":task_data[0]}}]}}}
 
 		# The creation of the task
 		response = requests.post('https://api.notion.com/v1/pages', json=dictionary,headers=self.get_notion_headers())
@@ -72,7 +72,7 @@ class notion:
 		## *** Journal goal retrieving ***
 		
 		# Result should be added...
-		journal = notion_journal(config)
+		journal = notion_journal(self.config)
 		result += '\n\nToday\'s goal: %s' % journal.get_goal()
 		
 		return result

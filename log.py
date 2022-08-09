@@ -4,12 +4,19 @@ import config
 # Handles (correctly) logging of files, even when (for instance) an incorrect severity is given.
 class log:
 	
+	config = config.config()
+	
 	# Get the config and initialise log
 	def __init__(self):
-		global config
-		config = config.config()
+		logging.basicConfig(filename=self.config.get_item('general','LOGFILE_NAME'), filemode='a', format='%(asctime)s - %(levelname)s - %(message)s')
+	
+	# return log file size
+	def get_size(self):
+		return sum(1 for _ in open(self.config.get_item('general','LOGFILE_NAME')))
 		
-		logging.basicConfig(filename=config.get_item('general','LOGFILE_NAME'), filemode='a', format='%(asctime)s - %(levelname)s - %(message)s')
+	# returns human readabale message about the logfile name and size
+	def get_size_message(self):
+		return 'The logfile %s is %s lines long.' % (self.config.get_item('general','LOGFILE_NAME'), self.get_size())
 	
 	# Log the actual message
 	def log(self,severity="INFO",message="no message provided"):
