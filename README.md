@@ -4,6 +4,9 @@ Tools to help me be more productive
 # Change log
 (most recent on top)
 
+## 2022-08-24.1
++ Added error handling when telegram returns a network error, also logs the telegram message
+
 ## 2022-08-24
 + Fix bug where daily message was not sent when journal was not available because of config issues
 

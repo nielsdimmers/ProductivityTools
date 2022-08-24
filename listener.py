@@ -20,7 +20,11 @@ class Listener:
 		return _text_message
 
 	def send_telegram_reply(self, update, _reply_message):
-		update.message.reply_text(self.escape_string(_reply_message),quote=False,parse_mode=telegram.ParseMode.MARKDOWN_V2)
+		try:
+			update.message.reply_text(self.escape_string(_reply_message),quote=False,parse_mode=telegram.ParseMode.MARKDOWN_V2)
+		except NetworkError as error:
+			self.log.log('EXCEPTION', global_vars.TELEGRAM_SEND_ERROR % _reply_message)
+			self.log.log('EXCEPTION', error)
 		
 	def grocery_list(self,update,notion):
 		if len(update.message.text) > 3:

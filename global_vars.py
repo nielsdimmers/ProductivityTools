@@ -7,3 +7,5 @@ class global_vars:
 	NOTION_CHILDREN_URL = 'https://api.notion.com/v1/blocks/%s/children'
 	
 	DAYS_OF_WEEK = ['maandag','dinsdag','woensdag','donderdag','vrijdag','zaterdag','zondag']
+	
+	TELEGRAM_SEND_ERROR = 'Error sending message to Telegram: \n%s\n\n'
