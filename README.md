@@ -4,6 +4,9 @@ Tools to help me be more productive
 # Change log
 (most recent on top)
 
+## 2022-08-24
++ Fix bug where daily message was not sent when journal was not available because of config issues
+
 ## 2022-08-09 Listener overhaul and cleanup
 + Forgot to save the config.default, so it still has notion defaults in it which were moved to config_notion. Removed them.
 + Minor sonarqube fixes in config.py

@@ -28,7 +28,7 @@ class notion_journal:
 			self.journal_id = response.json()['results'][0]['id'] # journal bestaat, geef ID terug
 		else:
 			journal_title = '%s %s' % (today,global_vars.DAYS_OF_WEEK[datetime.datetime.now().weekday()]) # hij bestaat niet, maak hem aan
-			journal_content = {'parent':{'database_id':config.get_item('notion','INBOX_JOURNAL_KEY')}, 'properties':{'title':{'title':[{"text":{"content":journal_title}}]},'Date':{'date':{'start':today}}}}
+			journal_content = {'parent':{'database_id':self.config.get_item('notion','INBOX_JOURNAL_KEY')}, 'properties':{'title':{'title':[{"text":{"content":journal_title}}]},'Date':{'date':{'start':today}}}}
 			response = requests.post('https://api.notion.com/v1/pages', json=journal_content,headers=self.get_notion_headers()) # Deze regel maakt de journal aan
 			self.journal_id = response.json()['id']
 
