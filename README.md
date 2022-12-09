@@ -4,6 +4,9 @@ Tools to help me be more productive
 # Change log
 (most recent on top)
 
+## 2022-12-09
++ Moved my goals to "Goals", so I needed to switch database. Added the config to the config file as well.
+
 ## 2022-08-24.1
 + Added error handling when telegram returns a network error, also logs the telegram message
 
@@ -136,7 +139,6 @@ Tools to help me be more productive
 # Todo/wishlist
 
 + Fix the telegram URL, markup does not work.
-+ Add tekst (content) to a note
 + Exception handling when either telegram is not working (auto come back alive), or Notion is not working (send error message to user)
 + Change options using telegram
 + Add info from opensource parlement to daily list

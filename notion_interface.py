@@ -40,6 +40,10 @@ class notion:
 		# Setup the response telegram message
 		return "Created task with id [%s](%s). Status code: %s (%s)" % (response.json()['id'],response.json()['url'],response.status_code,response.reason)
 
+	def set_weight(self,_message_text):
+		journal = notion_journal(self.config)
+		journal.add_weight(_message_text)
+
 	# add a grocery to the grocery list
 	def add_grocery(self,_grocery):
 		new_grocery = {'children':[{'object':'block', 'type':'to_do', 'to_do':{'rich_text':[{'type':'text','text': {'content': _grocery} }] }}]}

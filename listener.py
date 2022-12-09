@@ -63,6 +63,8 @@ class Listener:
 			self.send_telegram_reply(update, self.log.get_size_message())
 		elif command == 'week':
 			self.send_telegram_reply(update, global_vars.DATETIME_WEEK_NUMBER % datetime.date.today().strftime("%W"))
+		elif command == 'weight':
+			self.send_telegram_reply(update, notion.set_weight(update.message.text))
 			
 	def main(self):
 		updater = Updater(self.config.get_item('telegram','TELEGRAM_API_TOKEN'), use_context=True)
@@ -72,6 +74,7 @@ class Listener:
 		dp.add_handler(CommandHandler('b',self.execute_command), True)
 		dp.add_handler(CommandHandler('log',self.execute_command), True)
 		dp.add_handler(CommandHandler('week',self.execute_command), True)
+		dp.add_handler(CommandHandler('weight',self.execute_command), True)
 		updater.start_polling()
 		updater.idle()
 

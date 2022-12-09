@@ -6,6 +6,8 @@ TASK_DATABASE_KEY = <notion key of tasks database here>
 
 INBOX_DATABASE_KEY = <notion key of inbox database here>
 
+GOAL_DATABASE_KEY = <notion key of goal database here>
+
 GROCERIES_PAGE_KEY = <notion key of groceries page here>
 
 GROCERIES_PAGE_URL = <notion URL of groceries page here>
