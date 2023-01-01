@@ -1,4 +1,4 @@
-from telegram.ext import Updater, InlineQueryHandler, CommandHandler
+from telegram.ext import Application, Updater, InlineQueryHandler, CommandHandler
 import telegram
 import notion_interface
 import config
@@ -19,9 +19,9 @@ class Listener:
 			_text_message = _text_message.replace(special_key,special_chars[special_key])
 		return _text_message
 
-	def send_telegram_reply(self, update, _reply_message):
+	async def send_telegram_reply(self, update, _reply_message):
 		try:
-			update.message.reply_text(self.escape_string(_reply_message),quote=False,parse_mode=telegram.ParseMode.MARKDOWN_V2)
+			await update.message.reply_text(_reply_message,quote=False)
 		except NetworkError as error:
 			self.log.log('EXCEPTION', global_vars.TELEGRAM_SEND_ERROR % _reply_message)
 			self.log.log('EXCEPTION', error)
@@ -46,7 +46,7 @@ class Listener:
 			message_reply += 'Grocerylist in notion: %s' % notion.get_groceries_url()
 			self.send_telegram_reply(update,message_reply)
 
-	def execute_command(self,update,context):
+	async def execute_command(self,update,context):
 		if update.message.from_user.id != int(self.config.get_item('telegram','TELEGRAM_CHAT_ID')):
 			self.log.log('WARNING', global_vars.USER_NOT_ALLOWED_ERROR % (update.message.from_user.name,update.message.from_user.id))
 			return
@@ -54,29 +54,39 @@ class Listener:
 		notion = notion_interface.notion()
 		
 		if command == 'daily':
-			self.send_telegram_reply(update, notion.get_daily_data())
+			await self.send_telegram_reply(update, notion.get_daily_data())
 		elif command == 'b':
-			self.grocery_list(update,notion)
+			await self.grocery_list(update,notion)
 		elif command == 'tk':
-			self.send_telegram_reply(update, notion.create_task(update.message.text[4:]))
+			await self.send_telegram_reply(update, notion.create_task(update.message.text[4:]))
 		elif command == 'log':
-			self.send_telegram_reply(update, self.log.get_size_message())
+			await self.send_telegram_reply(update, self.log.get_size_message())
 		elif command == 'week':
-			self.send_telegram_reply(update, global_vars.DATETIME_WEEK_NUMBER % datetime.date.today().strftime("%W"))
+			await self.send_telegram_reply(update, global_vars.DATETIME_WEEK_NUMBER % datetime.date.today().strftime("%W"))
 		elif command == 'weight':
-			self.send_telegram_reply(update, notion.set_weight(update.message.text))
+			await self.send_telegram_reply(update, notion.set_weight(update.message.text))
+		elif command == 'grateful':
+			await self.send_telegram_reply(update, notion.set_grateful(update.message.text[10:]))
+		elif command == 'goal':
+			await self.send_telegram_reply(update, notion.set_goal(update.message.text[6:]))
 			
 	def main(self):
-		updater = Updater(self.config.get_item('telegram','TELEGRAM_API_TOKEN'), use_context=True)
-		dp = updater.dispatcher
-		dp.add_handler(CommandHandler('daily',self.execute_command), True)
-		dp.add_handler(CommandHandler('tk',self.execute_command), True)
-		dp.add_handler(CommandHandler('b',self.execute_command), True)
-		dp.add_handler(CommandHandler('log',self.execute_command), True)
-		dp.add_handler(CommandHandler('week',self.execute_command), True)
-		dp.add_handler(CommandHandler('weight',self.execute_command), True)
-		updater.start_polling()
-		updater.idle()
+# 		updater = Updater(self.config.get_item('telegram','TELEGRAM_API_TOKEN'))
+		application = Application.builder().token(self.config.get_item('telegram','TELEGRAM_API_TOKEN')).build()
+# 		dp = updater.dispatcher
+		application.add_handler(CommandHandler('daily',self.execute_command), True)
+		application.add_handler(CommandHandler('tk',self.execute_command), True)
+		application.add_handler(CommandHandler('b',self.execute_command), True)
+		application.add_handler(CommandHandler('log',self.execute_command), True)
+		application.add_handler(CommandHandler('week',self.execute_command), True)
+		application.add_handler(CommandHandler('weight',self.execute_command), True)
+		application.add_handler(CommandHandler('grateful',self.execute_command), True)
+		application.add_handler(CommandHandler('goal',self.execute_command), True)
+		
+		application.run_polling()
+		 
+# 		updater.start_polling()
+# 		updater.idle()
 
 if __name__ == '__main__':
 	bot = Listener()

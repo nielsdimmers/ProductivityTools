@@ -4,6 +4,12 @@ Tools to help me be more productive
 # Change log
 (most recent on top)
 
+## 2023-01-01
+Happy new year!
++ Fixed my changing the status property from a select to a status, breaking the daily.
++ Added /goal command to retrieve and set the goal of today
++ added /grateful command to set what I'm grateful for today
+
 ## 2022-12-09
 + Moved my goals to "Goals", so I needed to switch database. Added the config to the config file as well.
 

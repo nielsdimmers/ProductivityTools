@@ -53,25 +53,35 @@ class notion:
 	def get_groceries_url(self):
 		return self.config.get_item('notion','GROCERIES_PAGE_URL')
 		
+	def set_grateful(self,_grateful_message):
+		journal = notion_journal(self.config)
+		return journal.set_grateful(_grateful_message)
+		
+	def set_goal(self,_goal):
+		journal = notion_journal(self.config)
+		return journal.set_goal(_goal)
+	
 	def get_daily_data(self):
 		# Url for the notion call
 		request_url = 'https://api.notion.com/v1/databases/%s/query' % self.config.get_item('notion','TASK_DATABASE_KEY')
 
 		# Payload json to filter out done, dropped and not yet due tasks
 		today = datetime.datetime.now().strftime("%Y-%m-%d")
-		payload = {"filter": { "and": [{"property": "Status", "select" : { "does_not_equal": "Done 🙌" } },  { "property": "Status", "select" : { "does_not_equal": "Dropped 🔥" } }, {  "or": [ { "property":"Due date", "date" :{ "on_or_before":today } }, { "property":"Action date", "date" : { "on_or_before":today } } ] } ] } }
+		payload = {"filter": { "and": [{"property": "Status", "status" : { "does_not_equal": "Done 🙌" } },  { "property": "Status", "status" : { "does_not_equal": "Dropped 🔥" } }, {  "or": [ { "property":"Due date", "date" :{ "on_or_before":today } }, { "property":"Action date", "date" : { "on_or_before":today } } ] } ] } }
 
 		# Get the notion stuff
 		response = requests.post(request_url, json=payload,headers=self.get_notion_headers())
+		
+		print(response.content)
 		
 		result = "Good morning Niels, for today, there are a total of %s tasks:\n" % len(response.json()['results'])
 		
 		# Generate a list of tasks
 		for task in response.json()['results']:
-			if(task['properties']['Status']['select'] is None):
+			if(task['properties']['Status']['status'] is None):
 				result += "- %s (%s) \n" % (task['properties']['Name']['title'][0]['plain_text'],'no status')			
 			else:
-				result += "- %s (%s) \n" % (task['properties']['Name']['title'][0]['plain_text'],task['properties']['Status']['select']['name'])
+				result += "- %s (%s) \n" % (task['properties']['Name']['title'][0]['plain_text'],task['properties']['Status']['status']['name'])
 		
 		## *** Journal goal retrieving ***
 		

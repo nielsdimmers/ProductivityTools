@@ -31,7 +31,32 @@ class notion_journal:
 			journal_content = {'parent':{'database_id':self.config.get_item('notion','GOAL_DATABASE_KEY')}, 'properties':{'title':{'title':[{"text":{"content":journal_title}}]},'Datum':{'date':{'start':today}}}}
 			response = requests.post('https://api.notion.com/v1/pages', json=journal_content,headers=self.get_notion_headers()) # Deze regel maakt de journal aan
 			self.journal_id = response.json()['id']
-
+	
+	def set_grateful(self,_grateful_message):
+		return self.set_journal_property('Grateful',_grateful_message)
+	
+	# Set a journal text property
+	def set_journal_property(self,_property,_value):
+		request_url = 'https://api.notion.com/v1/pages/%s' % self.journal_id
+		return_message = {'properties': { _property : {'rich_text': [{'text': {'content' : _value}}]}}}
+		response = requests.patch(request_url, headers = self.get_notion_headers(),json=return_message)
+		response = requests.get(request_url ,headers=self.get_notion_headers())
+		retrieved_value = response.json()['properties'][_property]['rich_text'][0]['plain_text']
+		
+		result = ''
+		if(retrieved_value == _value):
+			result = 'Set %s to \'%s\'' % (_property, retrieved_value)
+		else:
+			result = '%s update failed, value is %s' % (_property, retrieved_value)
+		return result
+	
+	# 
+	def set_goal(self,_goal):
+		if _goal == "":
+			return 'The current goal is: %s' % self.get_goal()
+		else:
+			return self.set_journal_property('Goal (commander\'s intent)',_goal)
+	
 	# Get the goal, always retrieves the journal because it could be updated.
 	def get_goal(self):
 		request_url = 'https://api.notion.com/v1/pages/%s' % self.journal_id
