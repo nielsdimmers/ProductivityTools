@@ -4,9 +4,11 @@ Tools to help me be more productive
 # Change log
 (most recent on top)
 
+## 2023-01-01-2
+Removed annoying print printing responses
+
 ## 2023-01-01.1
 Forgot the most important one! Moved to Python telegram bot 20.0b, so you need to update!
-
 
 ## 2023-01-01
 Happy new year!

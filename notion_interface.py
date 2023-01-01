@@ -72,8 +72,6 @@ class notion:
 		# Get the notion stuff
 		response = requests.post(request_url, json=payload,headers=self.get_notion_headers())
 		
-		print(response.content)
-		
 		result = "Good morning Niels, for today, there are a total of %s tasks:\n" % len(response.json()['results'])
 		
 		# Generate a list of tasks
