@@ -4,7 +4,14 @@ Tools to help me be more productive
 # Change log
 (most recent on top)
 
-## 2023-01-01-2
+## 2023-01-02
++ (minor)  fixed the date on the previous update
++ (minor)  removed some commented-out code in the listener
++ (medium) removed the escape text function, since it wasn't used
++ (major)  added micro journaling functionality, based on everything I send to the bot
++ (minor)  added change impact to items (minor, medium, major, breaking)
+
+## 2023-01-01.2
 Removed annoying print printing responses
 
 ## 2023-01-01.1

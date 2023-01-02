@@ -61,6 +61,11 @@ class notion:
 		journal = notion_journal(self.config)
 		return journal.set_goal(_goal)
 	
+	# Add a micro journal entry
+	def micro_journal(self,_journal):
+		journal = notion_journal(self.config)
+		return journal.micro_journal(_journal)
+	
 	def get_daily_data(self):
 		# Url for the notion call
 		request_url = 'https://api.notion.com/v1/databases/%s/query' % self.config.get_item('notion','TASK_DATABASE_KEY')

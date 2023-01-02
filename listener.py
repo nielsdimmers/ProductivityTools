@@ -1,4 +1,4 @@
-from telegram.ext import Application, Updater, InlineQueryHandler, CommandHandler
+from telegram.ext import Application, Updater, InlineQueryHandler, CommandHandler, filters, MessageHandler
 import telegram
 import notion_interface
 import config
@@ -11,13 +11,6 @@ class Listener:
 
 	config = config.config()
 	log = log.log()
-
-	# Telegram message escape a string
-	def escape_string(self, _text_message):
-		special_chars = {'\\':'\\\\','`':'&#96;','*':'\*','_':'\_','{':'\{','}':'\}','[':'\[',']':'\]','(':'\(',')':'\)','#':'\#','+':'\+','-':'\-','.':'\.','!':'\!','=':'\='}
-		for special_key in special_chars:
-			_text_message = _text_message.replace(special_key,special_chars[special_key])
-		return _text_message
 
 	async def send_telegram_reply(self, update, _reply_message):
 		try:
@@ -70,10 +63,14 @@ class Listener:
 		elif command == 'goal':
 			await self.send_telegram_reply(update, notion.set_goal(update.message.text[6:]))
 			
+			
+	# Decided to put this micro_journal in a separate method, since it might be just one word and might break the execute_command
+	async def micro_journal(self, update, context):
+		notion = notion_interface.notion()
+		await self.send_telegram_reply(update, notion.micro_journal(update.message.text))
+			
 	def main(self):
-# 		updater = Updater(self.config.get_item('telegram','TELEGRAM_API_TOKEN'))
 		application = Application.builder().token(self.config.get_item('telegram','TELEGRAM_API_TOKEN')).build()
-# 		dp = updater.dispatcher
 		application.add_handler(CommandHandler('daily',self.execute_command), True)
 		application.add_handler(CommandHandler('tk',self.execute_command), True)
 		application.add_handler(CommandHandler('b',self.execute_command), True)
@@ -83,10 +80,10 @@ class Listener:
 		application.add_handler(CommandHandler('grateful',self.execute_command), True)
 		application.add_handler(CommandHandler('goal',self.execute_command), True)
 		
+		# assume default texts are micro journal
+		application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, self.micro_journal))
+		
 		application.run_polling()
-		 
-# 		updater.start_polling()
-# 		updater.idle()
 
 if __name__ == '__main__':
 	bot = Listener()
