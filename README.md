@@ -1,8 +1,28 @@
 # productivity tools
 Tools to help me be more productive
 
+Currently, the tool supports the following commands:
+
+tk - add a task
+log - do a log check
+daily - get a daily update
+b - add a grocery (send empty to get list)
+week - return the week number
+weight - set your weight
+grateful - set your grateful thought
+goal - set your goal (or leave empty to get it)
+
+Add a / before it in telegram to execute them when sending messages to the bot.
+
 # Change log
 (most recent on top)
+
+## 2023-01-08
++ (medium) Added feedback to micro journal (you now get a confirmation message or error message)
++ (minor)  Added a list of commands to the README file
++ (minor)  Fixed a bug with command ``/b`` where there wasn't a response (related to ``async`` / ``await``)
++ (medium) Added functionality so that an empty ``/grateful`` shows the grateful message
++ (minor)  Added markup to more explicitly show commands in the readme
 
 ## 2023-01-02
 + (minor)  fixed the date on the previous update
@@ -20,8 +40,8 @@ Forgot the most important one! Moved to Python telegram bot 20.0b, so you need t
 ## 2023-01-01
 Happy new year!
 + Fixed my changing the status property from a select to a status, breaking the daily.
-+ Added /goal command to retrieve and set the goal of today
-+ added /grateful command to set what I'm grateful for today
++ Added ``/goal`` command to retrieve and set the goal of today
++ added ``/grateful`` command to set what I'm grateful for today
 
 ## 2022-12-09
 + Moved my goals to "Goals", so I needed to switch database. Added the config to the config file as well.
@@ -50,7 +70,7 @@ Happy new year!
 + Created notion_journal to support future additional features to fill the journal from telegram
 
 ## 2022-08-05 weeknumber command and task contents
-+ Added /week command to get the current week number
++ Added ``/week`` command to get the current week number
 + use // when creating a task to add content (text only) (NOTE: Adding (a lot of) content might take a bit longer, since they require separata API calls to notion)
 + Fixed a bug with global commands
 + Allow for tasks without a status
@@ -67,7 +87,7 @@ Happy new year!
 ## 2022-07-25 Config and logging updates
 + Added separate config class to ease up the config handling
 + Added separate log class for the same reason, if you are upgrading to this version, make sure to add a new config section [general] with the item LOGFILE_NAME, see config.default .
-+ Added a script to cronjob to tell me how big the logfile is, it is also possible to send the /log command now
++ Added a script to cronjob to tell me how big the logfile is, it is also possible to send the ``/log`` command now
 + small change in daily uses string replacement instead of concatenation to prevent (accidental) text issues
 + small change in daily script to URL encode the result
 
@@ -95,7 +115,7 @@ Happy new year!
 + added default config.default. Enter details en rename to config to use this
 
 ## 2022-06-26.3
-+ added /daily command to show daily info
++ added ``/daily`` command to show daily info
 
 ## 2022-06-26.2
 + Moved the add grocery functionality to notion class
@@ -108,7 +128,7 @@ Happy new year!
 
 ## 2022-06-26
 + To enable for public: removed chat ID from the code
-+ added the ability to add groceries using the /b command, it now shows groceries when empty, but adds a grocery when not empty
++ added the ability to add groceries using the ``/b`` command, it now shows groceries when empty, but adds a grocery when not empty
 + Added link to grocery list from config
 + Instead of creating the URL myself, just grab the URL from the task response (DUH!)
 + Tried to refactor as much as possible to get it below 100 lines, but ended up creating another todo
@@ -116,10 +136,10 @@ Happy new year!
 ## 2022-06-20 listener updates
 + Removed some notion direct links from the listener
 + Remove some test based printlines
-+ Added /b command, which shows the grocery list
++ Added ``/b`` command, which shows the grocery list
 
 ## 2022-06-19 Added the listener
-+ Added a listener.py which starts a listener on /tk commands and creates a task in the inbox.
++ Added a listener.py which starts a listener on ``/tk`` commands and creates a task in the inbox.
 
 ## 2022-06-18 Dynamic config file
 + To support crontab automation, a cmd option is enabled to support for a dynamic config file

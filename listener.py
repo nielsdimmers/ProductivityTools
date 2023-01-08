@@ -19,10 +19,10 @@ class Listener:
 			self.log.log('EXCEPTION', global_vars.TELEGRAM_SEND_ERROR % _reply_message)
 			self.log.log('EXCEPTION', error)
 		
-	def grocery_list(self,update,notion):
+	async def grocery_list(self,update,notion):
 		if len(update.message.text) > 3:
 			notion_append_response = notion.add_grocery(update.message.text[3:])
-			self.send_telegram_reply(update,notion_append_response)
+			await self.send_telegram_reply(update,notion_append_response)
 		
 		else:
 			response = notion.get_groceries()
@@ -37,7 +37,7 @@ class Listener:
 				message_reply += "\n"
 
 			message_reply += 'Grocerylist in notion: %s' % notion.get_groceries_url()
-			self.send_telegram_reply(update,message_reply)
+			await self.send_telegram_reply(update,message_reply)
 
 	async def execute_command(self,update,context):
 		if update.message.from_user.id != int(self.config.get_item('telegram','TELEGRAM_CHAT_ID')):

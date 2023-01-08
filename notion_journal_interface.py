@@ -33,7 +33,18 @@ class notion_journal:
 			self.journal_id = response.json()['id']
 	
 	def set_grateful(self,_grateful_message):
-		return self.set_journal_property('Grateful',_grateful_message)
+		if _grateful_message == "":
+			return 'Today, you are grateful for: %s.' % self.get_grateful()
+		else:
+			return self.set_journal_property('Grateful',_grateful_message)
+		
+	def get_grateful(self):
+		request_url = 'https://api.notion.com/v1/pages/%s' % self.journal_id
+		response = requests.get(request_url ,headers=self.get_notion_headers())
+		if len(response.json()['properties']['Grateful']['rich_text']) > 0:
+			return response.json()['properties']['Grateful']['rich_text'][0]['plain_text']
+		else:
+			return 'no grateful message defined'
 	
 	# Set a journal text property
 	def set_journal_property(self,_property,_value):
@@ -53,9 +64,15 @@ class notion_journal:
 	# Add a micro journal entry, with the current time.
 	def micro_journal(self,_journal):
 		journal_entry = '(%s) %s' % (datetime.datetime.now().strftime("%H:%M:%S"),_journal)
+		request_url = 'https://api.notion.com/v1/pages/%s' % self.journal_id
 		new_journal = {'children':[{'object':'block', 'type':'paragraph', 'paragraph':{'rich_text':[{'type':'text','text': {'content': journal_entry} }] }}]}
 		response = requests.patch(global_vars.NOTION_CHILDREN_URL % self.journal_id,json=new_journal,headers=self.get_notion_headers())
-		return response
+		result = ''
+		if response.status_code == 200:
+			result = 'Micro journal added.'
+		else:
+			result = 'Error response code %s. Full json follows: \n%s' % (response.status_code, response.json())
+		return result
 	
 	# 
 	def set_goal(self,_goal):
