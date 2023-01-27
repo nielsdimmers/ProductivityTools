@@ -24,8 +24,6 @@ class notion:
 	def create_task(self,_task_data):
 		
 		task_data = _task_data.split('\n') # Split the task data by the delimiter defining between title [0] and the contents [1..*]
-		
-		# JSON body
 		dictionary = {'parent':{'database_id':self.config.get_item('notion','INBOX_DATABASE_KEY')}, 'properties':{'title':{'title':[{"text":{"content":task_data[0]}}]}}}
 
 		# The creation of the task

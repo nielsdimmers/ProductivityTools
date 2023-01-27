@@ -15,7 +15,7 @@ class Listener:
 
 	async def send_telegram_reply(self, update, _reply_message):
 		try:
-			await update.message.reply_text(_reply_message,quote=False)
+			await update.message.reply_text(_reply_message,quote=False, parse_mode='Markdown')
 		except NetworkError as error:
 			self.log.log('EXCEPTION', global_vars.TELEGRAM_SEND_ERROR % _reply_message)
 			self.log.log('EXCEPTION', error)
@@ -31,13 +31,13 @@ class Listener:
 			# reply with the full groceries list
 			message_reply = "**BOODSCHAPPEN**\n\n"
 			for paragraph in response['results']:
-				if paragraph['type'] == 'to_do': 
-					message_reply += '[X] ' if paragraph['to_do']['checked'] else '[] '
-				if len(paragraph[paragraph['type']]['rich_text']) > 0:
-					message_reply += paragraph[paragraph['type']]['rich_text'][0]['plain_text']
-				message_reply += "\n"
+				if paragraph['type'] == 'to_do' and len(paragraph[paragraph['type']]['rich_text']) > 0:
+					if paragraph['to_do']['checked']:
+						message_reply += '✅ _%s_\n' % paragraph[paragraph['type']]['rich_text'][0]['plain_text']
+					else:
+					 message_reply += '⬜️ %s\n' % paragraph[paragraph['type']]['rich_text'][0]['plain_text']
 
-			message_reply += 'Grocerylist in notion: %s' % notion.get_groceries_url()
+			message_reply += '[Grocerylist in notion](%s)' % notion.get_groceries_url()
 			await self.send_telegram_reply(update,message_reply)
 
 	async def execute_command(self,update,context):
