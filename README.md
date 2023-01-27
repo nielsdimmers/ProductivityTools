@@ -3,6 +3,7 @@ Tools to help me be more productive
 
 Currently, the tool supports the following commands:
 
+```
 tk - add a task
 log - do a log check
 daily - get a daily update
@@ -11,11 +12,19 @@ week - return the week number
 weight - set your weight
 grateful - set your grateful thought
 goal - set your goal (or leave empty to get it)
+```
 
 Add a / before it in telegram to execute them when sending messages to the bot.
 
 # Change log
 (most recent on top)
+
+## 2023-01-27
++ (minor)  fixed command list above to use newlines
++ (major)  fixed weight command
++ (minor)  removed wishlist from readme page, it's in the todo list now.
++ (major)  big overhaul of the journal and notion pages, not naming functions by property name caused removal of duplicate code
++ (medium) the listener can now directly use journal instead of going through notion. 
 
 ## 2023-01-08
 + (medium) Added feedback to micro journal (you now get a confirmation message or error message)
@@ -175,12 +184,3 @@ Happy new year!
 + Added the first version of a more complete readme
 + Expanded the commands to contain an easier wordcount command
 
-# Todo/wishlist
-
-+ Fix the telegram URL, markup does not work.
-+ Exception handling when either telegram is not working (auto come back alive), or Notion is not working (send error message to user)
-+ Change options using telegram
-+ Add info from opensource parlement to daily list
-+ upgrade to newest version of python bot: ``pip install -U --pre python-telegram-bot`` and still support it
-+ Create a "I'm going to leave the house" list using a telegram command
-+ A graph with my weight

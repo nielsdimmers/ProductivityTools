@@ -4,6 +4,7 @@ import notion_interface
 import config
 import log
 from global_vars import global_vars
+from notion_journal_interface import notion_journal
 import datetime
 
 # Telegram listener class to respond to telegram messages.
@@ -45,6 +46,7 @@ class Listener:
 			return
 		command = update.message.text.split(' ')[0][1:] # Split the message by space, get the first part and remove first character, e.g.: split the command from the message!
 		notion = notion_interface.notion()
+		journal = notion_journal()
 		
 		if command == 'daily':
 			await self.send_telegram_reply(update, notion.get_daily_data())
@@ -57,17 +59,18 @@ class Listener:
 		elif command == 'week':
 			await self.send_telegram_reply(update, global_vars.DATETIME_WEEK_NUMBER % datetime.date.today().strftime("%W"))
 		elif command == 'weight':
-			await self.send_telegram_reply(update, notion.set_weight(update.message.text))
+			await self.send_telegram_reply(update, journal.journal_property('Gewicht (Kg)',update.message.text[8:]))
 		elif command == 'grateful':
-			await self.send_telegram_reply(update, notion.set_grateful(update.message.text[10:]))
+			await self.send_telegram_reply(update, journal.journal_property('Grateful',update.message.text[10:]))
 		elif command == 'goal':
-			await self.send_telegram_reply(update, notion.set_goal(update.message.text[6:]))
+			await self.send_telegram_reply(update, journal.journal_property('Goal (commander\'s intent)',update.message.text[6:]))
 			
 			
 	# Decided to put this micro_journal in a separate method, since it might be just one word and might break the execute_command
 	async def micro_journal(self, update, context):
-		notion = notion_interface.notion()
+		notion = notion_journal()
 		await self.send_telegram_reply(update, notion.micro_journal(update.message.text))
+
 			
 	def main(self):
 		application = Application.builder().token(self.config.get_item('telegram','TELEGRAM_API_TOKEN')).build()

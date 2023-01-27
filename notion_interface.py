@@ -40,10 +40,6 @@ class notion:
 		# Setup the response telegram message
 		return "Created task with id [%s](%s). Status code: %s (%s)" % (response.json()['id'],response.json()['url'],response.status_code,response.reason)
 
-	def set_weight(self,_message_text):
-		journal = notion_journal(self.config)
-		journal.add_weight(_message_text)
-
 	# add a grocery to the grocery list
 	def add_grocery(self,_grocery):
 		new_grocery = {'children':[{'object':'block', 'type':'to_do', 'to_do':{'rich_text':[{'type':'text','text': {'content': _grocery} }] }}]}
@@ -52,14 +48,6 @@ class notion:
 		
 	def get_groceries_url(self):
 		return self.config.get_item('notion','GROCERIES_PAGE_URL')
-		
-	def set_grateful(self,_grateful_message):
-		journal = notion_journal(self.config)
-		return journal.set_grateful(_grateful_message)
-		
-	def set_goal(self,_goal):
-		journal = notion_journal(self.config)
-		return journal.set_goal(_goal)
 	
 	# Add a micro journal entry
 	def micro_journal(self,_journal):
