@@ -20,18 +20,10 @@ class notion_journal:
 	
 	# creates a journal if it doesn't exist
 	def __init__(self,_date =''):
-		if _date == '':
-			today = datetime.datetime.now().strftime("%Y-%m-%d")
-		else:
-			today = _date
-				
+		today = datetime.datetime.now().strftime("%Y-%m-%d") if _date == '' else _date
 		payload = {"filter": { "or" : [ { "property" : "title", "title" : { "starts_with" : today } }, { "property" : "Datum", "date" : { "equals" : today } } ] } }
-		
 		request_url = 'https://api.notion.com/v1/databases/%s/query' % self.config.get_item('notion','GOAL_DATABASE_KEY')
 		response = requests.post(request_url, json = payload,headers=self.get_notion_headers())
-
-		
-		# Controleer of journal is aangemaakt
 		if len(response.json()['results']) > 0:
 			self.journal_id = response.json()['results'][0]['id'] # journal bestaat, geef ID terug
 		else:
@@ -40,8 +32,6 @@ class notion_journal:
 			response = requests.post('https://api.notion.com/v1/pages', json=journal_content,headers=self.get_notion_headers()) # Deze regel maakt de journal aan
 			self.journal_id = response.json()['id']
 	
-	# Retrieve the json of the page for reading purposes. Retrieves a new page if it's more
-	# than 3 seconds old. Looks very singleton, it's for performance.
 	def get_page(self):
 		if self.retrieve_time < (int(time.time()) - 3):
 			request_url = 'https://api.notion.com/v1/pages/%s' % self.journal_id
@@ -80,7 +70,6 @@ class notion_journal:
 			return_message = {'properties': { _property : {'rich_text': [{'text': {'content' : _value}}]}}}
 		elif property_type == 'number':
 			return_message = {'properties': { _property : {'number':float(_value)}}}
-		
 		response = requests.patch(request_url, headers = self.get_notion_headers(),json=return_message)
 		return response
 	
@@ -90,13 +79,11 @@ class notion_journal:
 	def get_journal_property(self,_property):
 		response = self.get_page()
 		property_type = self.get_property_type(_property)
-		retrieved_value = ''
 		if property_type == 'rich_text':
 			if len(response.json()['properties'][_property]['rich_text']) > 0:
-				retrieved_value = response.json()['properties'][_property]['rich_text'][0]['plain_text']
+				return response.json()['properties'][_property]['rich_text'][0]['plain_text']
 		elif property_type == 'number':
-			retrieved_value = response.json()['properties'][_property]['number']
-		return retrieved_value
+			return response.json()['properties'][_property]['number']
 	
 	# Add a micro journal entry, with the current time.
 	def micro_journal(self,_journal):

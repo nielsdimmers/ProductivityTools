@@ -9,3 +9,5 @@ class global_vars:
 	DAYS_OF_WEEK = ['maandag','dinsdag','woensdag','donderdag','vrijdag','zaterdag','zondag']
 	
 	TELEGRAM_SEND_ERROR = 'Error sending message to Telegram: \n%s\n\n'
+	
+	REBOOT_MESSAGE = 'Hallo daar ben ik weer!'

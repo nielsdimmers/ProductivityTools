@@ -13,11 +13,42 @@ weight - set your weight
 grateful - set your grateful thought
 goal - set your goal (or leave empty to get it)
 ```
-
 Add a / before it in telegram to execute them when sending messages to the bot.
+
+# Instructions to auto run
+I finally figured out how to do this, so I'm saving it here. I did this on my raspberry pi.
+
+Add below text to a file in the system services folder (``/etc/systemd/system``). Fill in the correct locations and you might want to change the user and group if you're on a different system.
+
+```
+[Unit]
+Description = Productivity Tools Bot Listener
+After=multi-user.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+ExecStart=python3 <Location of the listener file here>
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory= <folder of the listener file here>
+```
+
+Start the deamon: ``systemctl start <name of the service file>``
+
+Configure to start at boot: ``systemctl enable <name of the service file>``
+
 
 # Change log
 (most recent on top)
+
+## 2023-01-29.1
+Had a lot of pi reboots this week, and restarting the process is something I haven't forgotten yet, but just don't want to be bothered with.
++ (minor) Bot sends me a message when it boots
++ (minor) Added information on how to auto start the bot at reboot
++ (minor) Downsized the journal to 99 lines, but maybe need to split that one op for clarification reasons.
 
 ## 2023-01-29
 + (minor) Fixed daily journal goal

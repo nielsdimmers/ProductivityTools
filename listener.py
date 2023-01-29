@@ -6,6 +6,7 @@ import log
 from global_vars import global_vars
 from notion_journal_interface import notion_journal
 import datetime
+import asyncio
 
 # Telegram listener class to respond to telegram messages.
 class Listener:
@@ -75,6 +76,7 @@ class Listener:
 		application.add_handler(CommandHandler('grateful',self.execute_command), True)
 		application.add_handler(CommandHandler('goal',self.execute_command), True)
 		application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, self.micro_journal))
+		asyncio.get_event_loop().run_until_complete(application.bot.send_message(chat_id=self.config.get_item('telegram','TELEGRAM_CHAT_ID'),text=global_vars.REBOOT_MESSAGE))
 		application.run_polling()
 
 if __name__ == '__main__':
