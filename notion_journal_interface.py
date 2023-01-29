@@ -30,6 +30,7 @@ class notion_journal:
 		request_url = 'https://api.notion.com/v1/databases/%s/query' % self.config.get_item('notion','GOAL_DATABASE_KEY')
 		response = requests.post(request_url, json = payload,headers=self.get_notion_headers())
 
+		
 		# Controleer of journal is aangemaakt
 		if len(response.json()['results']) > 0:
 			self.journal_id = response.json()['results'][0]['id'] # journal bestaat, geef ID terug
@@ -58,6 +59,17 @@ class notion_journal:
 				return 'Set %s to: %s' % (_property, _value)
 			else:
 				return 'Error updating %s to value %s.' % (_property,_value)
+	
+	# counts the number of words of the current journal
+	def count_words(self):
+		request_url = 'https://api.notion.com/v1/blocks/%s/children' % self.journal_id
+		response = requests.get(request_url, headers=self.get_notion_headers())
+		result = 0;
+		for paragraph in response.json()['results']:
+			for text in paragraph['paragraph']['rich_text']:
+				result += len(text['plain_text'].split())
+		self.set_journal_property('Journal length',result)
+		return result
 	
 	# Set a journal text property
 	def set_journal_property(self,_property,_value):

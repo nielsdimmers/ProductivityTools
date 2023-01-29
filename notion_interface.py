@@ -53,6 +53,13 @@ class notion:
 		return journal.micro_journal(_journal)
 	
 	def get_daily_data(self):
+		# number of words of yesterday's journal
+		yesterday = datetime.date.today() - datetime.timedelta(days = 1)
+		
+		yesterday_journal = notion_journal(yesterday.strftime("%Y-%m-%d"))
+		
+		result = 'Good morning Niels, yesterday\'s journal word count is %s.\n' % yesterday_journal.count_words()
+		
 		# Url for the notion call
 		request_url = 'https://api.notion.com/v1/databases/%s/query' % self.config.get_item('notion','TASK_DATABASE_KEY')
 
@@ -63,9 +70,9 @@ class notion:
 		# Get the notion stuff
 		response = requests.post(request_url, json=payload,headers=self.get_notion_headers())
 		
-		result = "Good morning Niels, for today, there are a total of %s tasks:\n" % len(response.json()['results'])
+		result += "For today, there are a total of %s tasks:\n" % len(response.json()['results'])
 		
-		# Generate a list of tasks
+	 	#	Generate a list of tasks
 		for task in response.json()['results']:
 			if(task['properties']['Status']['status'] is None):
 				result += "- %s (%s) \n" % (task['properties']['Name']['title'][0]['plain_text'],'no status')			
@@ -75,7 +82,7 @@ class notion:
 		## *** Journal goal retrieving ***
 		
 		# Result should be added...
-		journal = notion_journal(self.config)
-		result += '\n\nToday\'s goal: %s' % journal.get_goal()
+		journal = notion_journal()
+		result += '\n\nToday\'s goal: %s' % journal.get_journal_property('Goal (commander\'s intent)')
 		
 		return result

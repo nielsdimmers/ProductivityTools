@@ -21,30 +21,25 @@ class Listener:
 			self.log.log('EXCEPTION', error)
 		
 	async def grocery_list(self,update,notion):
+		message_reply = ""
 		if len(update.message.text) > 3:
-			notion_append_response = notion.add_grocery(update.message.text[3:])
-			await self.send_telegram_reply(update,notion_append_response)
-		
+			message_reply = notion.add_grocery(update.message.text[3:])
 		else:
 			response = notion.get_groceries()
-		
-			# reply with the full groceries list
-			message_reply = "**BOODSCHAPPEN**\n\n"
 			for paragraph in response['results']:
 				if paragraph['type'] == 'to_do' and len(paragraph[paragraph['type']]['rich_text']) > 0:
 					if paragraph['to_do']['checked']:
 						message_reply += '✅ _%s_\n' % paragraph[paragraph['type']]['rich_text'][0]['plain_text']
 					else:
 					 message_reply += '⬜️ %s\n' % paragraph[paragraph['type']]['rich_text'][0]['plain_text']
-
 			message_reply += '[Grocerylist in notion](%s)' % notion.get_groceries_url()
-			await self.send_telegram_reply(update,message_reply)
+		await self.send_telegram_reply(update,message_reply)
 
 	async def execute_command(self,update,context):
 		if update.message.from_user.id != int(self.config.get_item('telegram','TELEGRAM_CHAT_ID')):
 			self.log.log('WARNING', global_vars.USER_NOT_ALLOWED_ERROR % (update.message.from_user.name,update.message.from_user.id))
 			return
-		command = update.message.text.split(' ')[0][1:] # Split the message by space, get the first part and remove first character, e.g.: split the command from the message!
+		command = update.message.text.split(' ')[0][1:] # split the command from the message!
 		notion = notion_interface.notion()
 		journal = notion_journal()
 		
@@ -64,14 +59,11 @@ class Listener:
 			await self.send_telegram_reply(update, journal.journal_property('Grateful',update.message.text[10:]))
 		elif command == 'goal':
 			await self.send_telegram_reply(update, journal.journal_property('Goal (commander\'s intent)',update.message.text[6:]))
-			
-			
-	# Decided to put this micro_journal in a separate method, since it might be just one word and might break the execute_command
+	
 	async def micro_journal(self, update, context):
 		notion = notion_journal()
 		await self.send_telegram_reply(update, notion.micro_journal(update.message.text))
-
-			
+	
 	def main(self):
 		application = Application.builder().token(self.config.get_item('telegram','TELEGRAM_API_TOKEN')).build()
 		application.add_handler(CommandHandler('daily',self.execute_command), True)
@@ -82,10 +74,7 @@ class Listener:
 		application.add_handler(CommandHandler('weight',self.execute_command), True)
 		application.add_handler(CommandHandler('grateful',self.execute_command), True)
 		application.add_handler(CommandHandler('goal',self.execute_command), True)
-		
-		# assume default texts are micro journal
 		application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, self.micro_journal))
-		
 		application.run_polling()
 
 if __name__ == '__main__':

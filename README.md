@@ -19,6 +19,10 @@ Add a / before it in telegram to execute them when sending messages to the bot.
 # Change log
 (most recent on top)
 
+## 2023-01-29
++ (minor) Fixed daily journal goal
++ (major) Added word count (including setting the property) to daily journal
+
 ## 2023-01-27.1
 Sorry, but this one was too cool to let it slide!
 + (medium) The Telegram response is sent in markdown! Works for tasks and groceries.
