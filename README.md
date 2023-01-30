@@ -48,6 +48,9 @@ Send an e-mail to the given e-mail address with the in config_mail specified ind
 # Change log
 (most recent on top)
 
+## 2023-01-30.1
++ (minor) Fixed indentation bug
+
 ## 2023-01-30
 + (major) added functionality to be able to write a journal entry based on an e-mail message.
 

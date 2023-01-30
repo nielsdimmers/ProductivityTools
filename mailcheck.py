@@ -51,14 +51,13 @@ for num in data[0].split():
 			isMicroJournalText = True
 	
 	if isSenderOK and isReceiverOK:
-
-# 		notion = notion_journal()
-# 		notion.micro_journal(micro_journal)
-		result = imap.copy(num,config.get_item('mail','archive_folder'))
-		if result[0] == 'OK':
+ 		notion = notion_journal()
+ 		notion.micro_journal(micro_journal)
+ 		result = imap.copy(num,config.get_item('mail','archive_folder'))
+ 		if result[0] == 'OK':
  			imap.store(num,'+FLAGS','\\Deleted')
  			imap.expunge()
  		else:
  			log.log('EXCEPTION', 'Could not archive e-mail, e-mail not deleted, error: %s' % result)
-
+ 			
 imap.close()
