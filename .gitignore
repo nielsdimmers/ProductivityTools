@@ -4,6 +4,7 @@ config
 config_notion
 productivityTools.log
 .scannerwork/
+config_mail
 
 # Automated python ignoring files...
 # Byte-compiled / optimized / DLL files

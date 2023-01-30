@@ -40,9 +40,16 @@ Start the deamon: ``systemctl start <name of the service file>``
 
 Configure to start at boot: ``systemctl enable <name of the service file>``
 
+# How to send an e-mail
+First, make sure the script mailcheck is ran at regular intervals, and create a `config_mail` with the required configuration. See `config_mail.default` for an example
+
+Send an e-mail to the given e-mail address with the in config_mail specified indicators, and the text between the indicators will be added as an journal entry.
 
 # Change log
 (most recent on top)
+
+## 2023-01-30
++ (major) added functionality to be able to write a journal entry based on an e-mail message.
 
 ## 2023-01-29.1
 Had a lot of pi reboots this week, and restarting the process is something I haven't forgotten yet, but just don't want to be bothered with.
