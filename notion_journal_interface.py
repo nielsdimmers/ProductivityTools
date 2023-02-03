@@ -86,8 +86,11 @@ class notion_journal:
 			return response.json()['properties'][_property]['number']
 	
 	# Add a micro journal entry, with the current time.
-	def micro_journal(self,_journal):
-		journal_entry = '(%s) %s' % (datetime.datetime.now().strftime("%H:%M:%S"),_journal)
+	def micro_journal(self,_journal, time_stamp = True):
+		if time_stamp:
+			journal_entry = '(%s) %s' % (datetime.datetime.now().strftime("%H:%M:%S"),_journal)
+		else:
+			journal_entry = _journal
 		request_url = 'https://api.notion.com/v1/pages/%s' % self.journal_id
 		new_journal = {'children':[{'object':'block', 'type':'paragraph', 'paragraph':{'rich_text':[{'type':'text','text': {'content': journal_entry} }] }}]}
 		response = requests.patch(global_vars.NOTION_CHILDREN_URL % self.journal_id,json=new_journal,headers=self.get_notion_headers())

@@ -1,7 +1,7 @@
 # productivity tools
 Tools to help me be more productive
 
-Currently, the tool supports the following commands:
+Currently, the tool supports the following Telegram commands:
 
 ```
 tk - add a task
@@ -48,8 +48,13 @@ Send an e-mail to the given e-mail address with the in config_mail specified ind
 # Change log
 (most recent on top)
 
+## 2023-02-03
++ (major) Completely overhauled the e-mail to micro journal functionality.
++ (minor) The submit journal entry in the notion class now allows setting a variable to leave the timestamp of the entry out. This is to support long e-mail entries.
+The e-mail functionality is still experimental at best. It won't break the system or my journal entry, but that's all the guarantee you get. You might lose some journal entries because they are archived without processing them in notion. You might also get weird error messages. The insecurity sits in the many ways e-mails can be formatted and configured. It is also difficult to get a clear way to get the different parts of an e-mail (like headers and the body) without doing stuff I pretty much copied from the internet. Also, the code can use some maintenance and variable names are sketchy in places.
+
 ## 2023-01-30.2
-+ (minor) renaming the config to `mail_config` to work around the problem of logging wich probably catches the wrong config. Removed the depenency from log to make sure it's fixed.
++ (minor) renaming the config to `mail_config` to work around the problem of logging wich probably catches the wrong config. Removed the dependancy from log to make sure it's fixed.
 
 ## 2023-01-30.1
 + (minor) Fixed indentation bug
