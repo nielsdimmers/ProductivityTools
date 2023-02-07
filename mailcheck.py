@@ -41,10 +41,12 @@ for num in data[0].split():
 	if test_mail.get('From') in ALLOWED_SENDERS and mail_config.get_item('mail','delivered_to') in test_mail.get('To'):
 		micro_journal = ''
 		
+		print('charset %s' % test_mail.get_content_charset())
+		print('type %s ' % test_mail.get_content_type())
 		if test_mail.get_content_charset() != None:
 			body_split = body.decode(test_mail.get_content_charset()).split('\n')
 		else:
-			body_split = body.decode().split('\n')
+			body_split = body.decode('iso-8859-1').split('\n') # see changelog of 2023-02-07 in README.md
 			
 		isMicroJournalText = False		
 		for line in body_split:

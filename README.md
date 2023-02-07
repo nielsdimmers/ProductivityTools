@@ -48,9 +48,16 @@ Send an e-mail to the given e-mail address with the in config_mail specified ind
 # Change log
 (most recent on top)
 
+## 2023-02-07
++ The journal functionality crashes because it's trying to decode iso-8859-1 as utf-8 when none is given. This crashes with special characters (like é). When Outlook sends an iso-8859-1 mail, the charset is configured to None, so now I have no other choice to accept that when None is given, iso-8859-1 is used.
+
+## 2023-02-04
++ (minor) Fixed a bug where the daily would crash if it encountered a different type than paragraph in the text of yesterday's journal when counting words.
+
 ## 2023-02-03
 + (major) Completely overhauled the e-mail to micro journal functionality.
-+ (minor) The submit journal entry in the notion class now allows setting a variable to leave the timestamp of the entry out. This is to support long e-mail entries.
++ (minor) The submit journal entry in the notion class now allows setting a variable to leave the timestamp of the entry out. This is to support long e-mail entries and allow for different e-mail programs to be able to send mail.
+
 The e-mail functionality is still experimental at best. It won't break the system or my journal entry, but that's all the guarantee you get. You might lose some journal entries because they are archived without processing them in notion. You might also get weird error messages. The insecurity sits in the many ways e-mails can be formatted and configured. It is also difficult to get a clear way to get the different parts of an e-mail (like headers and the body) without doing stuff I pretty much copied from the internet. Also, the code can use some maintenance and variable names are sketchy in places.
 
 ## 2023-01-30.2

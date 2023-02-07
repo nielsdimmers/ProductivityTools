@@ -56,7 +56,7 @@ class notion_journal:
 		response = requests.get(request_url, headers=self.get_notion_headers())
 		result = 0;
 		for paragraph in response.json()['results']:
-			for text in paragraph['paragraph']['rich_text']:
+			for text in paragraph[paragraph['type']]['rich_text']:
 				result += len(text['plain_text'].split())
 		self.set_journal_property('Journal length',result)
 		return result
