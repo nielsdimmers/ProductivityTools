@@ -8,7 +8,11 @@ class global_vars:
 	
 	NOTION_DATABASE_QUERY_URL = 'https://api.notion.com/v1/databases/%s/query'
 	
+	NOTION_DATABASE_GET_URL = 'https://api.notion.com/v1/databases/%s'
+	
 	NOTION_PAGE_CREATE_URL = 'https://api.notion.com/v1/pages'
+	
+	NOTION_PROPERTY_GET_URL = 'https://api.notion.com/v1/pages/%s/properties/%s'
 	
 	NOTION_JOURNAL_OK_MSG = 'Micro journal with length %s characters and %s words added.\n'
 	
@@ -25,3 +29,13 @@ class global_vars:
 	TELEGRAM_SEND_ERROR = 'Error sending message to Telegram: \n%s\n\n'
 	
 	REBOOT_MESSAGE = 'Hallo daar ben ik weer!'
+	
+	NOTION_JOURNAL_JSON = '{"children":[{"object":"block", "type":"paragraph", "paragraph":{"rich_text":[{"type":"text","text": {"content": "%s"} }] }}]}'
+	
+	NOTION_NUMBER_PROPERTY_JSON = '{"properties": { "%s" : {"number":%s}}}'
+	
+	NOTION_RICHTEXT_PROPERTY_JSON = '{"properties": { "%s" : {"rich_text": [{"text": {"content" : "%s"}}]}}}'
+	
+	NOTION_PROPERTY_JSON = {'rich_text' : NOTION_RICHTEXT_PROPERTY_JSON,'number' : NOTION_NUMBER_PROPERTY_JSON}
+	
+	NOTION_RETRIEVE_JOURNAL_JSON = '{"filter": { "or" : [ { "property" : "title", "title" : { "starts_with" : "%s" } }, { "property" : "Datum", "date" : { "equals" : "%s" } } ] } }'

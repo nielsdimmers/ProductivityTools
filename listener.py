@@ -55,7 +55,7 @@ class Listener:
 		elif command == 'week':
 			await self.send_telegram_reply(update, global_vars.DATETIME_WEEK_NUMBER % datetime.date.today().strftime("%W"))
 		elif command == 'weight':
-			await self.send_telegram_reply(update, journal.journal_property('Gewicht (Kg)',update.message.text[8:]))
+			await self.send_telegram_reply(update, journal.journal_property('Gewicht (Kg)',int(update.message.text[8:])))
 		elif command == 'grateful':
 			await self.send_telegram_reply(update, journal.journal_property('Grateful',update.message.text[10:]))
 		elif command == 'goal':
