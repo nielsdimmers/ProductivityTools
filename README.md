@@ -46,16 +46,25 @@ First, make sure the script mailcheck is ran at regular intervals, and create a 
 Send an e-mail to the given e-mail address with the in config_mail specified indicators, and the text between the indicators will be added as an journal entry.
 
 # Change log
-(most recent on top)
+Changelog title formatting is (since 2023-02-10.1 (50)): `YYYY-MM-DD.A (B)` where A is a counter for the number of changelogs of that day (omitted if it's the first one) and B is the number of changelog entries in total. The most recent changelog is on top. C is optional and usually the commit message, so a very short summary of what I did.
+
+## 2023-02-10.1 (50) Cosmetics, globalisation and cleanup
++ (minor) Removed a useless check for '\n' in journal interface long message check
++ (minor) Used global_vars more widely throughout the journal interface (for URLs and such)
++ (minor) Made the max journal entry length and minimum page retrieve time a configurable variable
++ (minor) Translated some Dutch inline comments to English
++ (minor) Added a changelog number counter between brackets to the title of the changelog entry. So changelog numbering is now `YYYY-MM-DD.A (B)` where A is a counter for the number of changelogs of that day (omitted if it's the first one) and B is the number of changelog entries in total.
+
+Hooray! Number 50! Never thought I'd get this far.
 
 ## 2023-02-10
-+ Moved the limit check to `notion_journal_interface` so that sending telegram messages longer than 2000 characters is handled OK, without duplicating code, because it's removed from mailcheck now.
++ (major) Moved the limit check to `notion_journal_interface` so that sending telegram messages longer than 2000 characters is handled OK, without duplicating code, because it's removed from mailcheck now.
 
 ## 2023-02-07.1
-+ Remove two debug printlines
++ (minor) Remove two debug printlines
 
 ## 2023-02-07
-+ The journal functionality crashes because it's trying to decode iso-8859-1 as utf-8 when none is given. This crashes with special characters (like é). When Outlook sends an iso-8859-1 mail, the charset is configured to None, so now I have no other choice to accept that when None is given, iso-8859-1 is used.
++ (minor) The journal functionality crashes because it's trying to decode iso-8859-1 as utf-8 when none is given. This crashes with special characters (like é). When Outlook sends an iso-8859-1 mail, the charset is configured to None, so now I have no other choice to accept that when None is given, iso-8859-1 is used.
 
 ## 2023-02-04
 + (minor) Fixed a bug where the daily would crash if it encountered a different type than paragraph in the text of yesterday's journal when counting words.
