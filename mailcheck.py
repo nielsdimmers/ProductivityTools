@@ -41,8 +41,6 @@ for num in data[0].split():
 	if test_mail.get('From') in ALLOWED_SENDERS and mail_config.get_item('mail','delivered_to') in test_mail.get('To'):
 		micro_journal = ''
 		
-		print('charset %s' % test_mail.get_content_charset())
-		print('type %s ' % test_mail.get_content_type())
 		if test_mail.get_content_charset() != None:
 			body_split = body.decode(test_mail.get_content_charset()).split('\n')
 		else:
@@ -62,15 +60,7 @@ for num in data[0].split():
 			continue
 			
 		notion = notion_journal()
-		
-		if len(micro_journal) > 1000:
-			notion.micro_journal('Multi part journal entry follows:')
-			for part in micro_journal.split('\n'):
-				if part == '\n' or part == '' or part == '\r': # skip over empty lines
-					continue
-				notion.micro_journal(part, time_stamp = False)
-		else:
-			notion.micro_journal(micro_journal)
+		notion.micro_journal(micro_journal)
 		result = imap.copy(num,mail_config.get_item('mail','archive_folder'))
 		if result[0] == 'OK':
 			imap.store(num,'+FLAGS','\\Deleted')

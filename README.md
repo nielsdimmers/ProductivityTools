@@ -48,6 +48,12 @@ Send an e-mail to the given e-mail address with the in config_mail specified ind
 # Change log
 (most recent on top)
 
+## 2023-02-10
++ Moved the limit check to `notion_journal_interface` so that sending telegram messages longer than 2000 characters is handled OK, without duplicating code, because it's removed from mailcheck now.
+
+## 2023-02-07.1
++ Remove two debug printlines
+
 ## 2023-02-07
 + The journal functionality crashes because it's trying to decode iso-8859-1 as utf-8 when none is given. This crashes with special characters (like é). When Outlook sends an iso-8859-1 mail, the charset is configured to None, so now I have no other choice to accept that when None is given, iso-8859-1 is used.
 

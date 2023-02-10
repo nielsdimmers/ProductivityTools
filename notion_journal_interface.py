@@ -85,18 +85,40 @@ class notion_journal:
 		elif property_type == 'number':
 			return response.json()['properties'][_property]['number']
 	
-	# Add a micro journal entry, with the current time.
-	def micro_journal(self,_journal, time_stamp = True):
+	# Send the journal to the notion journal page
+	def send_journal(self,_journal,time_stamp = True):
 		if time_stamp:
 			journal_entry = '(%s) %s' % (datetime.datetime.now().strftime("%H:%M:%S"),_journal)
 		else:
-			journal_entry = _journal
+			journal_entry = _journal	
 		request_url = 'https://api.notion.com/v1/pages/%s' % self.journal_id
 		new_journal = {'children':[{'object':'block', 'type':'paragraph', 'paragraph':{'rich_text':[{'type':'text','text': {'content': journal_entry} }] }}]}
 		response = requests.patch(global_vars.NOTION_CHILDREN_URL % self.journal_id,json=new_journal,headers=self.get_notion_headers())
-		result = ''
 		if response.status_code == 200:
-			result = 'Micro journal added.'
+			return 'Micro journal with length %s characters and %s words added.\n' % (len(_journal),len(_journal.split()))
 		else:
-			result = 'Error response code %s. Full json follows: \n%s' % (response.status_code, response.json())
+			return 'Error response code %s. Full json follows: \n%s\n' % (response.status_code, response.json())
+				
+	# Add a micro journal entry, with the current time.
+	def micro_journal(self,_journal):
+		result = ''
+		if len(_journal) > 1000:
+			result += self.send_journal('Multi part journal entry follows:')
+			for part in _journal.split('\n'):
+				if part == '\n' or part == '' or part == '\r': # skip over empty lines
+					continue
+				result += self.send_journal(part, time_stamp = False)
+		else:
+			result += self.send_journal(_journal)
+
 		return result
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
