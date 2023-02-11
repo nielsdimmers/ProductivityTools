@@ -1,5 +1,6 @@
 # productivity tools
-Tools to help me be more productive
+
+This productivity tools program is connecting two api's together. The notion.so api and the telegram api. So it enables me to send stuff to my notion from my telegram, like adding groceries to the list, getting a daily message, set a goal for myself, adding a task or journalling.
 
 Currently, the tool supports the following Telegram commands:
 
@@ -46,11 +47,15 @@ First, make sure the script mailcheck is ran at regular intervals, and create a 
 Send an e-mail to the given e-mail address with the in config_mail specified indicators, and the text between the indicators will be added as an journal entry.
 
 # Change log
-Changelog title formatting is (since 2023-02-10.1 (50)): `YYYY-MM-DD.A (B) C` where A is a counter for the number of changelogs of that day (omitted if it's the first one) and B is the number of changelog entries in total. The most recent changelog is on top. C is optional and usually the commit message, so a very short summary of what I did.
+Changelog title formatting is (since 2023-02-10.1 (50)): `YYYY-MM-DD.A (B) C` where A is a counter for the number of changelogs of that day (omitted if it's the first one) and B is the number of changelog entries in total. C is optional and usually the commit message, so a very short summary of what I did. The most recent changelog is on top.
 
 Impact of change can be any of (minor, medium, major, breaking).
 
-## 2023-02-10.2 (51)
+## 2023-02-11 (52) Fix newline bug
++ (medium) Fix a bug where a newline in a journal would break the journal causing it to not be added to notion, if it's shorter than threshold. The fix is done by always splitting paragraphs in separate messages.
++ (minor) Changed description at top of README to more clarify what this program actuall is.
+
+## 2023-02-10.2 (51) journal overhaul
 + (minor) Fix bug where global var 	`MIN_RETRIEVE_TIME` wasn't converted to int breaking the journal.
 + (major) Did a big efficiency overhaul of the journal interface. It should be (a little bit) faster and is about 1/5th shorter with more functionality
 + (major) Added functionality to delete a journal, only works for specific date (1987-10-20)

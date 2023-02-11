@@ -15,7 +15,6 @@ class notion_journal:
 	retrieve_time = 0
 	
 	def get_notion_headers(self):
-	#	return {'Authorization': 'Bearer %s' % self.config.get_item('notion','ACCESS_KEY'), 'Content-Type':'application/json','Notion-Version':'2022-02-22'}
 		return {'Authorization': 'Bearer %s' % self.config.get_item('notion','ACCESS_KEY'), "accept": "application/json",'Notion-Version':'2022-06-28'}
 	
 	# creates a journal if it doesn't exist
@@ -41,22 +40,18 @@ class notion_journal:
 		if self.get_journal_property('Korte samenvatting').split()[0] == '1987-10-20': # To make sure this class can only delete the test page
 			requests.patch(global_vars.NOTION_PAGE_URL % self.journal_id ,json=json.loads('{"archived" : true}'),headers=self.get_notion_headers())
 
-	
 	# handles the journal property command, returns text
 	def journal_property(self,_property,_value):
 		if _value == "":
 			return 'Current %s is: %s' % (_property,self.get_journal_property(_property))
-		else:
-			if self.set_journal_property(_property,_value).status_code == global_vars.HTTP_OK_CODE:
-				return 'Set %s to: %s' % (_property, _value)
-			else:
-				return 'Error updating %s to value %s.' % (_property,_value)
+		if self.set_journal_property(_property,_value).status_code == global_vars.HTTP_OK_CODE:
+			return 'Set %s to: %s' % (_property, _value)
+		return 'Error updating %s to value %s.' % (_property,_value)
 	
 	# counts the number of words of the current journal
 	def count_words(self):
-		response = requests.get(global_vars.NOTION_CHILDREN_URL  % self.journal_id, headers=self.get_notion_headers())
 		result = 0
-		for paragraph in response.json()['results']:
+		for paragraph in requests.get(global_vars.NOTION_CHILDREN_URL  % self.journal_id, headers=self.get_notion_headers()).json()['results']:
 			for text in paragraph[paragraph['type']]['rich_text']:
 				result += len(text['plain_text'].split())
 		self.set_journal_property('Journal length',result)
@@ -68,7 +63,6 @@ class notion_journal:
 	
 	def get_journal_property(self,_property):
 		result = requests.get(global_vars.NOTION_PROPERTY_GET_URL % (self.journal_id,self.properties[_property]['id']),headers=self.get_notion_headers())
-		
 		if result.json()['object'] == 'property_item':
 			return result.json()[result.json()['type']]
 		else:
@@ -86,15 +80,14 @@ class notion_journal:
 	# Add a micro journal entry
 	def micro_journal(self,_journal):
 		result = ''
-		if len(_journal) > int(self.config.get_item('notion','JOURNAL_ENTRY_MAX_LENGTH')):
+		time_stamp_message = True
+		if len(_journal.split('\n')) > 1:
 			result += self.send_journal(global_vars.NOTION_JOURNAL_MULTIPART_ENTRY)
-			for part in _journal.split('\n'):
-				if part == '' or part == '\r': # skip over empty lines
-					continue
-				result += self.send_journal(part, time_stamp = False)
-		else:
-			result += self.send_journal(_journal)
-
+			time_stamp_message = False
+		for part in _journal.split('\n'):
+			if part == '' or part == '\r': # skip over empty lines
+				continue
+			result += self.send_journal(part, time_stamp = time_stamp_message)
 		return result
 		
 		
