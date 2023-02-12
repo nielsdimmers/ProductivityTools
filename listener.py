@@ -1,7 +1,7 @@
 from telegram.ext import Application, Updater, InlineQueryHandler, CommandHandler, filters, MessageHandler
 import telegram
 import notion_interface
-import config
+from Nconfig import config
 import log
 from global_vars import global_vars
 from notion_journal_interface import notion_journal

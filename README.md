@@ -49,7 +49,22 @@ Send an e-mail to the given e-mail address with the in config_mail specified ind
 # Change log
 Changelog title formatting is (since 2023-02-10.1 (50)): `YYYY-MM-DD.A (B) C` where A is a counter for the number of changelogs of that day (omitted if it's the first one) and B is the number of changelog entries in total. C is optional and usually the commit message, so a very short summary of what I did. The most recent changelog is on top.
 
-Impact of change can be any of (minor, medium, major, breaking, bug).
+Impact of change can be any of:
+
++ `minor` Dotting I's and crossing T's, refactoring and other changes without functional impact. Updates on documentation
++ `medium` There is functional impact, stuff changes, but nothing like a new command.
++ `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
++ `bug` Fixing a bug (introduced with 2023-02-12 (53))
+
+## 2023-02-12.1 (54) create config folder, extend usage of global vars
+NOTE: This is quite a big breaking change. Run the python script `update.py` after you've pulled this release. __You have been warned.__
+
++ (major) Moved all the config files to the config directory
++ (minor) Updated the log cleanup reminder to use `global_vars`
++ (minor) Updated log to use `global_vars` as well
++ (minor) Updated the log cleanup reminder to use `log`, getting rid of some duplicate code
++ (minor) Updated the daily message to use `global_vars` as well, shortening it a bit.
++ (minor) Deprecated breaking impact of change. Added impact of change explanation to README.md
 
 ## 2023-02-12 (53) Fix empty goal bug & testdate is configurable.
 + (minor) Set the test date to a config date, to prevent my date of birth being visible everywhere. The date can be changed now.

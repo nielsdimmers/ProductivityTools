@@ -1,7 +1,7 @@
 import datetime
 import requests
 from global_vars import global_vars
-import config
+from Nconfig import config
 import time
 import json
 

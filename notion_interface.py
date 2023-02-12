@@ -3,7 +3,7 @@ import requests
 import datetime
 from global_vars import global_vars
 from notion_journal_interface import notion_journal
-import config
+from Nconfig import config
 
 # Notion interface to interact with notion
 class notion:

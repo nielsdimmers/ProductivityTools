@@ -39,3 +39,11 @@ class global_vars:
 	NOTION_PROPERTY_JSON = {'rich_text' : NOTION_RICHTEXT_PROPERTY_JSON,'number' : NOTION_NUMBER_PROPERTY_JSON}
 	
 	NOTION_RETRIEVE_JOURNAL_JSON = '{"filter": { "or" : [ { "property" : "title", "title" : { "starts_with" : "%s" } }, { "property" : "Datum", "date" : { "equals" : "%s" } } ] } }'
+	
+	## LOGGING
+	
+	LOG_LENGTH_MESSAGE = 'The logfile %s is %s lines long.'
+	
+	
+	# the telegram URL to send a message to myself
+	TELEGRAM_MSG_URL = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s"

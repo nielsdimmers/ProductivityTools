@@ -1,5 +1,5 @@
 import imaplib
-import config
+from Nconfig import config
 from notion_journal_interface import notion_journal
 #from email.message import EmailMessage
 import email

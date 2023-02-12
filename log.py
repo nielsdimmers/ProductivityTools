@@ -1,5 +1,6 @@
 import logging
-import config
+from Nconfig import config
+from global_vars import global_vars
 
 # Handles (correctly) logging of files, even when (for instance) an incorrect severity is given.
 class log:
@@ -16,7 +17,7 @@ class log:
 		
 	# returns human readabale message about the logfile name and size
 	def get_size_message(self):
-		return 'The logfile %s is %s lines long.' % (self.config.get_item('general','LOGFILE_NAME'), self.get_size())
+		return global_vars.LOG_LENGTH_MESSAGE % (self.config.get_item('general','LOGFILE_NAME'), self.get_size())
 	
 	# Log the actual message
 	def log(self,severity="INFO",message="no message provided"):
