@@ -49,7 +49,14 @@ Send an e-mail to the given e-mail address with the in config_mail specified ind
 # Change log
 Changelog title formatting is (since 2023-02-10.1 (50)): `YYYY-MM-DD.A (B) C` where A is a counter for the number of changelogs of that day (omitted if it's the first one) and B is the number of changelog entries in total. C is optional and usually the commit message, so a very short summary of what I did. The most recent changelog is on top.
 
-Impact of change can be any of (minor, medium, major, breaking).
+Impact of change can be any of (minor, medium, major, breaking, bug).
+
+## 2023-02-12 (53) Fix empty goal bug & testdate is configurable.
++ (minor) Set the test date to a config date, to prevent my date of birth being visible everywhere. The date can be changed now.
++ (minor) Added "bug" impact possibility because frankly, I'm finding a lot of bugs.
++ (bug)   Fixed that if the goal is empty, it would break (fixes other breaks as well)
++ (minor) Added a test for `count_words` and for adding a microjournal.
+
 
 ## 2023-02-11 (52) Fix newline bug
 + (medium) Fix a bug where a newline in a journal would break the journal causing it to not be added to notion, if it's shorter than threshold. The fix is done by always splitting paragraphs in separate messages.

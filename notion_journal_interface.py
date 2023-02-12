@@ -37,7 +37,7 @@ class notion_journal:
 	
 	# USE WITH CAUTION!
 	def delete_journal(self):
-		if self.get_journal_property('Korte samenvatting').split()[0] == '1987-10-20': # To make sure this class can only delete the test page
+		if self.get_journal_property('Korte samenvatting').split()[0] == self.config.get_item('notion','TEST_DATE'): # To make sure this class can only delete the test page
 			requests.patch(global_vars.NOTION_PAGE_URL % self.journal_id ,json=json.loads('{"archived" : true}'),headers=self.get_notion_headers())
 
 	# handles the journal property command, returns text
@@ -65,7 +65,7 @@ class notion_journal:
 		result = requests.get(global_vars.NOTION_PROPERTY_GET_URL % (self.journal_id,self.properties[_property]['id']),headers=self.get_notion_headers())
 		if result.json()['object'] == 'property_item':
 			return result.json()[result.json()['type']]
-		else:
+		elif len(result.json()['results']) > 0:
 			return result.json()['results'][0][result.json()['results'][0]['type']]['plain_text']
 			
 	# Send the journal to the notion journal page

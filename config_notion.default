@@ -15,3 +15,5 @@ GROCERIES_PAGE_URL = <notion URL of groceries page here>
 JOURNAL_ENTRY_MAX_LENGTH = <max length of a journal entry>
 
 MIN_RETRIEVE_TIME = <minimum length to wait before retrieving the journal again>
+
+TEST_DATE = <Set this to a date where there will _never_ be a journal for.>
