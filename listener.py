@@ -63,7 +63,7 @@ class Listener:
 		elif command == 'tomgoal':
 			tomorrow = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
 			tom_journal = notion_journal(tomorrow)
-			await self.send_telegram_reply(update, tom_journal.journal_property('Goal (commander\'s intent)',update.message.text[6:]))
+			await self.send_telegram_reply(update, tom_journal.journal_property('Goal (commander\'s intent)',update.message.text[9:]))
 	
 	async def micro_journal(self, update, context):
 		notion = notion_journal()

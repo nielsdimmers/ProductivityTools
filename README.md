@@ -56,8 +56,12 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
-##
-+ (bug) Fixed when sending a certain double quote (") the journal processing crashes
+## 2023-02-14.1 (56) Cutting off just a little to little
++ (bug) I copied the old goal command without realising the command got longer and now the last two letters of the command are in the goal. Fixed.
+
+## 2023-02-14 (55) Tomorrow`s goal
++ (bug)   Fixed when sending a certain double quote (") the journal processing crashes
++ (major) added command `tomgoal` to set (and get) tomorrow's goal
 
 ## 2023-02-12.1 (54) create config folder, extend usage of global vars
 NOTE: This is quite a big breaking change. Run the python script `update.py` after you've pulled this release. __You have been warned.__
