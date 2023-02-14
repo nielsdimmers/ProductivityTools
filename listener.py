@@ -60,6 +60,10 @@ class Listener:
 			await self.send_telegram_reply(update, journal.journal_property('Grateful',update.message.text[10:]))
 		elif command == 'goal':
 			await self.send_telegram_reply(update, journal.journal_property('Goal (commander\'s intent)',update.message.text[6:]))
+		elif command == 'tomgoal':
+			tomorrow = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+			tom_journal = notion_journal(tomorrow)
+			await self.send_telegram_reply(update, tom_journal.journal_property('Goal (commander\'s intent)',update.message.text[6:]))
 	
 	async def micro_journal(self, update, context):
 		notion = notion_journal()
@@ -75,6 +79,7 @@ class Listener:
 		application.add_handler(CommandHandler('weight',self.execute_command), True)
 		application.add_handler(CommandHandler('grateful',self.execute_command), True)
 		application.add_handler(CommandHandler('goal',self.execute_command), True)
+		application.add_handler(CommandHandler('tomgoal',self.execute_command), True)
 		application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, self.micro_journal))
 		asyncio.get_event_loop().run_until_complete(application.bot.send_message(chat_id=self.config.get_item('telegram','TELEGRAM_CHAT_ID'),text=global_vars.REBOOT_MESSAGE))
 		application.run_polling()

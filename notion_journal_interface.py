@@ -71,6 +71,7 @@ class notion_journal:
 	# Send the journal to the notion journal page
 	def send_journal(self,_journal,time_stamp = True):
 		journal_entry = ('(%s) %s' % (datetime.datetime.now().strftime("%H:%M:%S"),_journal)) if time_stamp else _journal
+		journal_entry = journal_entry.replace('"','\\"')
 		response = requests.patch(global_vars.NOTION_CHILDREN_URL % self.journal_id,json=json.loads(global_vars.NOTION_JOURNAL_JSON % journal_entry),headers=self.get_notion_headers())
 		if response.status_code == global_vars.HTTP_OK_CODE:
 			return global_vars.NOTION_JOURNAL_OK_MSG % (len(_journal),len(_journal.split()))
