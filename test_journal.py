@@ -20,7 +20,13 @@ def test_micro_journal(_text):
 def test_count_words(_words):
 	assert notion_journal.count_words() == _words, "Micro journal count_words not correct. Actual value is %s" % notion_journal.count_words()
 
+def test_link():
+	url = notion_journal.get_url()
+	assert 'https://' in url, "URL Return does not start with https: %s" % url
+	assert config.get_item('notion','TEST_DATE') in url, "URL does not contain date: %s" % url
+
 if __name__ == "__main__":
+	test_link()
 	micro_journal_text = 'Dit is een kort microjournal testbericht'
 	test_number('LinkedIn connections')
 	test_micro_journal(micro_journal_text)

@@ -35,6 +35,9 @@ class notion_journal:
 			self.retrieve_time = int(time.time())
 		return self.page
 	
+	def get_url(self):
+		return self.get_page().json()['url']
+	
 	# USE WITH CAUTION!
 	def delete_journal(self):
 		if self.get_journal_property('Korte samenvatting').split()[0] == self.config.get_item('notion','TEST_DATE'): # To make sure this class can only delete the test page

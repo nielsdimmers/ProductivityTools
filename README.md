@@ -13,6 +13,7 @@ week - return the week number
 weight - set your weight
 grateful - set your grateful thought
 goal - set your goal (or leave empty to get it)
+tomgoal - get or set tomorrow's goal
 ```
 Add a / before it in telegram to execute them when sending messages to the bot.
 
@@ -55,6 +56,12 @@ Impact of change can be any of:
 + `medium` There is functional impact, stuff changes, but nothing like a new command.
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
+
+## 2023-02-17 (57) add links to daily
++ (minor) Added tomorrow's goal command to the documentation above
++ (major) Added links to the daily message to tasks and today's journal
++ (minor) Added a test for the `get_url` of the journal interface
++ (minor) Refactored the notion interface a bit so it is more in line with the journal interface and consumes a few less lines.
 
 ## 2023-02-14.1 (56) Cutting off just a little to little
 + (bug) I copied the old goal command without realising the command got longer and now the last two letters of the command are in the goal. Fixed.
