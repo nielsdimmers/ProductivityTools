@@ -57,9 +57,12 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
-## 2023-02-18-2 (60) test_journal to script
+## 2023-02-18.3 (61) GO TO BED, NOW!
++ (minor) You should have saved README.md before you committed... XD
+
+## 2023-02-18.2 (60) test_journal to script
 + (minor) Turned `test_journal.py` scrip into a class which can now be called from `script.py`
-+ (major) Forgot to add files to previous commit, so they're in this one now.
++ (major) Forgot to add files to previous commit, so they're in this one now, which is lucky, because I had to fix the title of the previous one wich was a mess. Guess I'm tired XD.
 
 ## 2023-02-18.1 (59) new script.py and mailcheck cleanup
 + (major)  Introduced `script.py` to replace `logCleanupReminder.py` and `daily.py` reducing the number of files
