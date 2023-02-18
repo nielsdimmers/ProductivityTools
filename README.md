@@ -57,6 +57,9 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
+## 2023-02-18 (58) Fix config file bug
++ (bug) In some situations, it was difficult to locate the config file, simplified that now. Config should always be in the Nconfig folder, it is not possible anymore to give in a separate config in the commandline. The application assumes Unix based system, but if you want to adapt it to Windows, you should check `confg.py`.
+
 ## 2023-02-17 (57) add links to daily
 + (minor) Added tomorrow's goal command to the documentation above
 + (major) Added links to the daily message to tasks and today's journal
