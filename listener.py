@@ -29,10 +29,8 @@ class Listener:
 			response = notion.get_groceries()
 			for paragraph in response['results']:
 				if paragraph['type'] == 'to_do' and len(paragraph[paragraph['type']]['rich_text']) > 0:
-					if paragraph['to_do']['checked']:
-						message_reply += '✅ _%s_\n' % paragraph[paragraph['type']]['rich_text'][0]['plain_text']
-					else:
-					 message_reply += '⬜️ %s\n' % paragraph[paragraph['type']]['rich_text'][0]['plain_text']
+					message_reply += '✅' if paragraph['to_do']['checked'] else '⬜️'
+					message_reply += '%s\n' % paragraph[paragraph['type']]['rich_text'][0]['plain_text']
 			message_reply += '[Grocerylist in notion](%s)' % notion.get_groceries_url()
 		await self.send_telegram_reply(update,message_reply)
 

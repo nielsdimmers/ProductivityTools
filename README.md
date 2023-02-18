@@ -57,6 +57,15 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
+## 2023-02-18-2 (60) test_journal to script
++ (minor) Turned `test_journal.py` scrip into a class which can now be called from `script.py`
++ (major) Forgot to add files to previous commit, so they're in this one now.
+
+## 2023-02-18.1 (59) new script.py and mailcheck cleanup
++ (major)  Introduced `script.py` to replace `logCleanupReminder.py` and `daily.py` reducing the number of files
++ (bug)    weird stuff would happen if you send a microjournal e-mail with windows whitespaces in them.
++ (medium) In an attempt to shorten the mailcheck, I greatly improved performance and shotened it. It now users an imap query to select the e-mails, instead of filtering for them in code which means retrieving every mail in your inbox. Requires a change in `config_mail`. Look for `allowed_senders_query` in `config_mail.default`
+
 ## 2023-02-18 (58) Fix config file bug
 + (bug) In some situations, it was difficult to locate the config file, simplified that now. Config should always be in the Nconfig folder, it is not possible anymore to give in a separate config in the commandline. The application assumes Unix based system, but if you want to adapt it to Windows, you should check `confg.py`.
 

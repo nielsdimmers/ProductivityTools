@@ -7,6 +7,6 @@ imap_pass = <password>
 
 delivered_to = X-Delivered-to: <the mail address receiving th email>
 
-allowed_senders = <CSV of allowed senders, no spaces!>
+allowed_senders_query = <IMAP Query of mails to look for in inbox>
 
 archive_folder = <the folder to archive to>

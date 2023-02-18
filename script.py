@@ -6,6 +6,7 @@ import sys
 from Nconfig import config
 from global_vars import global_vars
 import log
+from test_journal import test_journal
 
 config = config.config()
 notion = notion_interface.notion()
@@ -24,3 +25,6 @@ if __name__ == '__main__':
 		daily()
 	elif sys.argv[1] == 'logcount':
 		log_count()
+	elif sys.argv[1] == 'test':
+		tester = test_journal()
+		tester.run_test()
