@@ -1,7 +1,7 @@
 from telegram.ext import Application, Updater, InlineQueryHandler, CommandHandler, filters, MessageHandler
 import telegram
 import notion_interface
-from Nconfig import config
+from config import config
 import log
 from global_vars import global_vars
 from notion_journal_interface import notion_journal
@@ -18,50 +18,48 @@ class Listener:
 		try:
 			await update.message.reply_text(_reply_message,quote=False, parse_mode='Markdown')
 		except NetworkError as error:
-			self.log.log('EXCEPTION', global_vars.TELEGRAM_SEND_ERROR % _reply_message)
-			self.log.log('EXCEPTION', error)
+			self.log.log('EXCEPTION', global_vars.TELEGRAM_SEND_ERROR % (_reply_message,error))
 		
-	async def grocery_list(self,update,notion):
-		message_reply = ""
-		if len(update.message.text) > 3:
-			message_reply = notion.add_grocery(update.message.text[3:])
-		else:
-			response = notion.get_groceries()
-			for paragraph in response['results']:
-				if paragraph['type'] == 'to_do' and len(paragraph[paragraph['type']]['rich_text']) > 0:
-					message_reply += '✅' if paragraph['to_do']['checked'] else '⬜️'
-					message_reply += '%s\n' % paragraph[paragraph['type']]['rich_text'][0]['plain_text']
-			message_reply += '[Grocerylist in notion](%s)' % notion.get_groceries_url()
-		await self.send_telegram_reply(update,message_reply)
+	def grocery_list(self,_message,notion):
+		if len(_message) > 0:
+			return notion.add_grocery(_message)
+		message_reply = ''
+		for paragraph in notion.get_groceries()['results']:
+			if paragraph['type'] == 'to_do' and len(paragraph[paragraph['type']]['rich_text']) > 0:
+				message_reply += ('✅' if paragraph['to_do']['checked'] else '⬜️') + paragraph[paragraph['type']]['rich_text'][0]['plain_text'] + '\n'
+		message_reply += '\n[Grocerylist in notion](%s)' % notion.get_groceries_url()
+		return message_reply
 
 	async def execute_command(self,update,context):
 		if update.message.from_user.id != int(self.config.get_item('telegram','TELEGRAM_CHAT_ID')):
 			self.log.log('WARNING', global_vars.USER_NOT_ALLOWED_ERROR % (update.message.from_user.name,update.message.from_user.id))
 			return
 		command = update.message.text.split(' ')[0][1:] # split the command from the message!
+		message = '' if len(update.message.text) <= len(command) + 1 else update.message.text[(len(command)+2):]
 		notion = notion_interface.notion()
 		journal = notion_journal()
 		
 		if command == 'daily':
 			await self.send_telegram_reply(update, notion.get_daily_data())
 		elif command == 'b':
-			await self.grocery_list(update,notion)
+			await self.send_telegram_reply(update,self.grocery_list(message,notion))
 		elif command == 'tk':
-			await self.send_telegram_reply(update, notion.create_task(update.message.text[4:]))
+			await self.send_telegram_reply(update, notion.create_task(message))
 		elif command == 'log':
 			await self.send_telegram_reply(update, self.log.get_size_message())
 		elif command == 'week':
 			await self.send_telegram_reply(update, global_vars.DATETIME_WEEK_NUMBER % datetime.date.today().strftime("%W"))
 		elif command == 'weight':
-			await self.send_telegram_reply(update, journal.journal_property('Gewicht (Kg)',int(update.message.text[8:])))
+			await self.send_telegram_reply(update, journal.journal_property(global_vars.JOURNAL_WEIGHT_KEY,message))
 		elif command == 'grateful':
-			await self.send_telegram_reply(update, journal.journal_property('Grateful',update.message.text[10:]))
+			await self.send_telegram_reply(update, journal.journal_property(global_vars.JOURNAL_GRATEFUL_KEY,message))
 		elif command == 'goal':
-			await self.send_telegram_reply(update, journal.journal_property('Goal (commander\'s intent)',update.message.text[6:]))
+			await self.send_telegram_reply(update, journal.journal_property(global_vars.JOURNAL_GOAL_KEY,message))
 		elif command == 'tomgoal':
 			tomorrow = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
-			tom_journal = notion_journal(tomorrow)
-			await self.send_telegram_reply(update, tom_journal.journal_property('Goal (commander\'s intent)',update.message.text[9:]))
+			await self.send_telegram_reply(update, notion_journal(tomorrow).journal_property(global_vars.JOURNAL_GOAL_KEY,message))
+		elif command == 'legal':
+			await self.send_telegram_reply(update, global_vars.LEGAL_NOTICE)
 	
 	async def micro_journal(self, update, context):
 		notion = notion_journal()
@@ -69,19 +67,9 @@ class Listener:
 	
 	def main(self):
 		application = Application.builder().token(self.config.get_item('telegram','TELEGRAM_API_TOKEN')).build()
-		application.add_handler(CommandHandler('daily',self.execute_command), True)
-		application.add_handler(CommandHandler('tk',self.execute_command), True)
-		application.add_handler(CommandHandler('b',self.execute_command), True)
-		application.add_handler(CommandHandler('log',self.execute_command), True)
-		application.add_handler(CommandHandler('week',self.execute_command), True)
-		application.add_handler(CommandHandler('weight',self.execute_command), True)
-		application.add_handler(CommandHandler('grateful',self.execute_command), True)
-		application.add_handler(CommandHandler('goal',self.execute_command), True)
-		application.add_handler(CommandHandler('tomgoal',self.execute_command), True)
+		telegram_commands = ['daily','tk','b','log','week','weight','grateful','goal','tomgoal','legal']
+		for telegram_command in telegram_commands:
+			application.add_handler(CommandHandler(telegram_command,self.execute_command), True)
 		application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, self.micro_journal))
 		asyncio.get_event_loop().run_until_complete(application.bot.send_message(chat_id=self.config.get_item('telegram','TELEGRAM_CHAT_ID'),text=global_vars.REBOOT_MESSAGE))
 		application.run_polling()
-
-if __name__ == '__main__':
-	bot = Listener()
-	bot.main()

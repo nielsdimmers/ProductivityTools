@@ -1,5 +1,5 @@
 import logging
-from Nconfig import config
+from config import config
 from global_vars import global_vars
 
 # Handles (correctly) logging of files, even when (for instance) an incorrect severity is given.
@@ -22,15 +22,8 @@ class log:
 	# Log the actual message
 	def log(self,severity="INFO",message="no message provided"):
 		severity = severity.upper()
-		severity_dict = {
-			"DEBUG": logging.debug,
-			"INFO" : logging.info,
-			"WARNING": logging.warning,
-			"ERROR": logging.error,
-			"CRITICAL": logging.critical
-		}
+		severity_dict = {"DEBUG": logging.debug,"INFO" : logging.info,"WARNING": logging.warning,"ERROR": logging.error,"CRITICAL": logging.critical}
 		if severity in severity_dict:
-			function = severity_dict[severity]
-			function(message)	
+			function = severity_dict[severity](message)
 		else:
 			logging.error("Severity '%s' for message '%s' is an invalid severity." % (severity,message) )

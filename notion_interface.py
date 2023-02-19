@@ -3,7 +3,7 @@ import requests
 import datetime
 from global_vars import global_vars
 from notion_journal_interface import notion_journal
-from Nconfig import config
+from config import config
 import json
 
 # Notion interface to interact with notion
@@ -21,7 +21,6 @@ class notion:
 		return response.json()
 	
 	# create a task object based on the given title
-	# Returns a string representation of what happened (succesful, error, what kind of error...)
 	def create_task(self,_task_data):
 		
 		task_data = _task_data.split('\n') # Split the task data by the delimiter defining between title [0] and the contents [1..*]
@@ -29,7 +28,6 @@ class notion:
 
 		# The creation of the task
 		response = requests.post('https://api.notion.com/v1/pages', json=dictionary,headers=self.get_notion_headers())
-		
 		task_data.pop(0) ## remove the title from the array
 		
 		for content in task_data:
@@ -50,17 +48,14 @@ class notion:
 	
 	# Add a micro journal entry
 	def micro_journal(self,_journal):
-		journal = notion_journal(self.config)
-		return journal.micro_journal(_journal)
+		return notion_journal(self.config).micro_journal(_journal)
 	
 	def get_daily_data(self):
 		# number of words of yesterday's journal
 		yesterday_journal = notion_journal((datetime.date.today() - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"))
+		today = datetime.datetime.now().strftime("%Y-%m-%d")
 		
 		result = 'Good morning Niels, yesterday\'s journal word count is %s.\n' % yesterday_journal.count_words()
-
-		# Payload json to filter out done, dropped and not yet due tasks
-		today = datetime.datetime.now().strftime("%Y-%m-%d")
 		
 		# Get the notion stuff
 		response = requests.post('https://api.notion.com/v1/databases/%s/query' % self.config.get_item('notion','TASK_DATABASE_KEY'), json=json.loads(global_vars.NOTION_TASKLIST_QUERY_JSON % (today,today)),headers=self.get_notion_headers())
@@ -72,8 +67,7 @@ class notion:
 			status = 'no status' if task['properties']['Status']['status'] is None else task['properties']['Status']['status']['name']
 			result += "- [%s](%s) (%s) \n" % (task['properties']['Name']['title'][0]['plain_text'],task['url'],status)
 		
-		# Result should be added...
 		journal = notion_journal()
-		result += '\n\nToday\'s goal is %s. [Today\'s journal](%s)' % (journal.get_journal_property('Goal (commander\'s intent)'),journal.get_url())
+		result += '\n\nToday\'s goal is %s. [Today\'s journal](%s)' % (journal.get_journal_property(global_vars.JOURNAL_GOAL_KEY),journal.get_url())
 		
 		return result

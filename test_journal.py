@@ -1,4 +1,4 @@
-from Nconfig.config import config
+from config.config import config
 from notion_journal_interface import notion_journal
 from global_vars import global_vars
 
@@ -26,6 +26,7 @@ class test_journal:
 		assert self.config.get_item('notion','TEST_DATE') in url, "URL does not contain date: %s" % url
 
 	def run_test(self):
+		print("starting test script")
 		self.test_link()
 		micro_journal_text = 'Dit is een kort microjournal testbericht'
 		self.test_number('LinkedIn connections')

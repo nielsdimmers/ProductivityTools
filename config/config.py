@@ -10,7 +10,7 @@ class config:
 		
 		# Get the directory bit of the command, and append the folder name to it.
 		config_file = sys.argv[0][:sys.argv[0].rfind('/')] if '/' in sys.argv[0] else '.'
-		config_file += '/Nconfig/%s' % filename
+		config_file += '/config/%s' % filename
 		
 		# Parse the notion vars from the config file
 		self.config_parser.read(config_file)

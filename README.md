@@ -14,6 +14,7 @@ weight - set your weight
 grateful - set your grateful thought
 goal - set your goal (or leave empty to get it)
 tomgoal - get or set tomorrow's goal
+legal - get copyright information
 ```
 Add a / before it in telegram to execute them when sending messages to the bot.
 
@@ -31,11 +32,11 @@ After=multi-user.target
 WantedBy=multi-user.target
 
 [Service]
-ExecStart=python3 <Location of the listener file here>
+ExecStart=python3 <Location of the script file here> listener
 Type=simple
 User=pi
 Group=pi
-WorkingDirectory= <folder of the listener file here>
+WorkingDirectory= <folder of the script file here>
 ```
 
 Start the deamon: ``systemctl start <name of the service file>``
@@ -43,7 +44,7 @@ Start the deamon: ``systemctl start <name of the service file>``
 Configure to start at boot: ``systemctl enable <name of the service file>``
 
 # How to send an e-mail
-First, make sure the script mailcheck is ran at regular intervals, and create a `config_mail` with the required configuration. See `config_mail.default` for an example
+First, make sure the script mailcheck is ran at regular intervals, and create a `config_mail` with the required configuration. See `config_mail.default` for an example.
 
 Send an e-mail to the given e-mail address with the in config_mail specified indicators, and the text between the indicators will be added as an journal entry.
 
@@ -57,20 +58,35 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
+## 2023-02-19 (62) Big script overhaul, cleanup & documentation
++ (major)  Shortened the listener, it should now be started from script.py
++ (major)  Modified the mailcheck so that it can be run from the script now.
++ (medium) Moved the Nconfig folder to config (you know the N stands for Niels, right?)
++ (major)  Added command `legal` to show legal information, can be kicked off from both command line as well as from the bot.
++ (minor)  Added documentation related to a code of conduct, contributing and security
++ (minor)  Moved many of the notion field names to global vars, so they are easier to change
++ (minor)  Deleted `update.py` script, since I'm to scared to do it that way and usually do this manually.
++ (minor)  Updates to previous release notes to correct some typo's and spelling errors
++ (minor)  Minor updates to reduce the number of lines of code and clean up a bit.
+
+Someone forked my code, so I got scared and added a bunch of legal stuff ;-).
+
+If you look at it, it is quite amazing with how much I'm able to achieve with not even 500 lines of python code and some config files (and 300 lines of documentation, but OK). I did some creative actions to really condense the code, and I think there are a few more possible, but this a lot, I'm quite proud of the result I achieved.
+
 ## 2023-02-18.3 (61) GO TO BED, NOW!
 + (minor) You should have saved README.md before you committed... XD
 
 ## 2023-02-18.2 (60) test_journal to script
-+ (minor) Turned `test_journal.py` scrip into a class which can now be called from `script.py`
++ (minor) Turned `test_journal.py` script into a class which can now be called from `script.py`
 + (major) Forgot to add files to previous commit, so they're in this one now, which is lucky, because I had to fix the title of the previous one wich was a mess. Guess I'm tired XD.
 
 ## 2023-02-18.1 (59) new script.py and mailcheck cleanup
 + (major)  Introduced `script.py` to replace `logCleanupReminder.py` and `daily.py` reducing the number of files
 + (bug)    weird stuff would happen if you send a microjournal e-mail with windows whitespaces in them.
-+ (medium) In an attempt to shorten the mailcheck, I greatly improved performance and shotened it. It now users an imap query to select the e-mails, instead of filtering for them in code which means retrieving every mail in your inbox. Requires a change in `config_mail`. Look for `allowed_senders_query` in `config_mail.default`
++ (medium) In an attempt to shorten the mailcheck, I greatly improved performance and shortened it. It now uses an IMAP query to select the e-mails, instead of filtering for them in code which means retrieving every mail in your inbox. Requires a change in `config_mail`. Look for `allowed_senders_query` in `config_mail.default`
 
 ## 2023-02-18 (58) Fix config file bug
-+ (bug) In some situations, it was difficult to locate the config file, simplified that now. Config should always be in the Nconfig folder, it is not possible anymore to give in a separate config in the commandline. The application assumes Unix based system, but if you want to adapt it to Windows, you should check `confg.py`.
++ (bug) In some situations, it was difficult to locate the config file, simplified that now. Config should always be in the Nconfig folder, it is not possible anymore to give in a separate config in the command line. The application assumes Unix based system, but if you want to adapt it to Windows, you should check `confg.py`.
 
 ## 2023-02-17 (57) add links to daily
 + (minor) Added tomorrow's goal command to the documentation above

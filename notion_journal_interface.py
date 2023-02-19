@@ -1,7 +1,7 @@
 import datetime
 import requests
 from global_vars import global_vars
-from Nconfig import config
+from config import config
 import time
 import json
 
@@ -25,7 +25,7 @@ class notion_journal:
 			self.journal_id = response.json()['results'][0]['id'] # journal exists, set the ID.
 		else:
 			journal_title = '%s %s' % (journal_date,global_vars.DAYS_OF_WEEK[datetime.datetime.strptime(journal_date, '%Y-%m-%d').weekday()]) # it doesn't exist, create the journal
-			journal_content = {'parent':{'database_id':self.config.get_item('notion','GOAL_DATABASE_KEY')}, 'properties':{'title':{'title':[{"text":{"content":journal_title}}]},'Datum':{'date':{'start':journal_date}}}}
+			journal_content = {'parent':{'database_id':self.config.get_item('notion','GOAL_DATABASE_KEY')}, 'properties':{'title':{'title':[{"text":{"content":journal_title}}]},global_vars.JOURNAL_DATE_KEY:{'date':{'start':journal_date}}}}
 			self.journal_id = requests.post(global_vars.NOTION_PAGE_CREATE_URL, json=journal_content,headers=self.get_notion_headers()).json()['id'] # This line creates journal		
 		self.properties = requests.get(global_vars.NOTION_DATABASE_GET_URL % self.config.get_item('notion','GOAL_DATABASE_KEY'),headers=self.get_notion_headers()).json()['properties']
 	
@@ -57,7 +57,7 @@ class notion_journal:
 		for paragraph in requests.get(global_vars.NOTION_CHILDREN_URL  % self.journal_id, headers=self.get_notion_headers()).json()['results']:
 			for text in paragraph[paragraph['type']]['rich_text']:
 				result += len(text['plain_text'].split())
-		self.set_journal_property('Journal length',result)
+		self.set_journal_property(global_vars.JOURNAL_LENGTH_KEY,result)
 		return result
 	
 	# Set a journal text property
@@ -93,13 +93,3 @@ class notion_journal:
 				continue
 			result += self.send_journal(part, time_stamp = time_stamp_message)
 		return result
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
