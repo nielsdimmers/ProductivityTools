@@ -9,11 +9,12 @@ import json
 # Notion interface to interact with notion
 class notion:
 
-	config = config.config('config_notion')
+	def __init__(self): # see update 63 in readme why this is needed.
+		self.config = config.config('config_notion')
 
 	# Returns the headers of the notion message
 	def get_notion_headers(self):
-		return {'Authorization': 'Bearer %s' % self.config.get_item('notion','ACCESS_KEY'), 'Content-Type':'application/json','Notion-Version':'2022-02-22'}
+		return {'Authorization': 'Bearer %s' % self.config.get_item('notion','ACCESS_KEY'), 'Content-Type':'application/json','Notion-Version':'2022-06-28'}
 	
 	# Returns the JSON part of the groceries page
 	def get_groceries(self):

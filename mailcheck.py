@@ -7,7 +7,8 @@ import log
 
 class mailcheck:
 
-	log = log.log()
+	def __init__(self):
+		self.log = log.log()
 
 	def check_mail(self):
 		mail_config = config.config('config_mail')

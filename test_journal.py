@@ -5,9 +5,11 @@ from global_vars import global_vars
 import datetime
 
 class test_journal:
-	global_vars = global_vars()
-	config = config('config_notion')
-	notion_journal = notion_journal(config.get_item('notion','TEST_DATE'))
+	
+	def __init__(self):
+		self.config = config('config_notion')
+		self.notion_journal = notion_journal(self.config.get_item('notion','TEST_DATE'))
+		self.global_vars = global_vars()
 
 	def test_number(self,_property,_value = 5):
 		self.notion_journal.set_journal_property(_property,_value)

@@ -11,8 +11,9 @@ import asyncio
 # Telegram listener class to respond to telegram messages.
 class Listener:
 
-	config = config.config()
-	log = log.log()
+	def __init__(self):
+		self.config = config.config()
+		self.log = log.log()
 
 	async def send_telegram_reply(self, update, _reply_message):
 		try:

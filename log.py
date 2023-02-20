@@ -5,10 +5,9 @@ from global_vars import global_vars
 # Handles (correctly) logging of files, even when (for instance) an incorrect severity is given.
 class log:
 	
-	config = config.config()
-	
 	# Get the config and initialise log
 	def __init__(self):
+		self.config = config.config()
 		logging.basicConfig(filename=self.config.get_item('general','LOGFILE_NAME'), filemode='a', format='%(asctime)s - %(levelname)s - %(message)s')
 	
 	# return log file size

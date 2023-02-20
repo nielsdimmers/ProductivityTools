@@ -4,10 +4,8 @@ import sys
 # This class handles the config, prevents me using the init code quite a few times
 class config:
 
-	config_parser = configparser.RawConfigParser()
-
 	def __init__(self,filename='config'): # 2022-08-07 Allows for different filenames
-		
+		self.config_parser = configparser.RawConfigParser()
 		# Get the directory bit of the command, and append the folder name to it.
 		config_file = sys.argv[0][:sys.argv[0].rfind('/')] if '/' in sys.argv[0] else '.'
 		config_file += '/config/%s' % filename

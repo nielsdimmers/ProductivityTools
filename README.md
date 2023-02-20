@@ -58,6 +58,20 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
+## 2023-02-20 (63) Performance improvement
++ (minor)  Moved the license back to the root directory, since it wasn't recognised by Github.
++ (minor)  Upgraded the notion version of the notion interface to 2022-06-28, no additional changes were required
++ (minor)  Prevented the test from loading (creating) a journal even though it would never be evoked.
++ (minor)  Shortened notion journal interface a bit.
+
+In attempting to shorten the notion journal, I printed the date of the journal, and found that when the listener was started, the test page (dated according to the test date in the config) was created and opened. This happens because the script loads the test, and the test loads the class, which loads the journal entry by default. I worked around this to create an `__init__`, but it also meant that in the journal entry, the config was loaded which I wanted to prevent (to keep it open for longer than strictly necessary). So I moved that declaration to the init def as well.
+
+This led to me wondering whether it is strictly necessary to declare variables in the class, if they are used (and declared) elsewhere. The answer is no, so I removed a few of those as well. Just make sure you declare them in init and you should be fine.
+
+Performance is now significantly better. It feels more secure as well, although that is marginal.
+
+|Lines of python code: |479|
+
 ## 2023-02-19 (62) Big script overhaul, cleanup & documentation
 + (major)  Shortened the listener, it should now be started from script.py
 + (major)  Modified the mailcheck so that it can be run from the script now.
