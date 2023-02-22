@@ -12,7 +12,7 @@ from mailcheck import mailcheck
 class script_handler:
 
 	def __init__(self):
-		config = config.config()
+		self.config = config.config()
 
 	def log_count(self):
 		requests.get(global_vars.TELEGRAM_MSG_URL % (self.config.get_item('telegram','TELEGRAM_API_TOKEN'),self.config.get_item('telegram','TELEGRAM_CHAT_ID'),urllib.parse.quote(log.log().get_size_message())))

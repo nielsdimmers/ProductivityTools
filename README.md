@@ -58,6 +58,12 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
+## 2023-02-22 (64) script variable bugfix
++ (bug)   `script.py` would not execute because variable was referenced before creation.
++ (minor) Fixed linecount table.
+
+| Lines of python code: | 479 |
+
 ## 2023-02-20 (63) Performance improvement
 + (minor)  Moved the license back to the root directory, since it wasn't recognised by Github.
 + (minor)  Upgraded the notion version of the notion interface to 2022-06-28, no additional changes were required
@@ -70,7 +76,7 @@ This led to me wondering whether it is strictly necessary to declare variables i
 
 Performance is now significantly better. It feels more secure as well, although that is marginal.
 
-|Lines of python code: |479|
+| Lines of python code: | 479 |
 
 ## 2023-02-19 (62) Big script overhaul, cleanup & documentation
 + (major)  Shortened the listener, it should now be started from script.py
