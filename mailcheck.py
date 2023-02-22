@@ -2,7 +2,7 @@ import imaplib
 from config import config
 from notion_journal_interface import notion_journal
 import email
-import global_vars
+from global_vars import global_vars
 import log
 
 class mailcheck:
