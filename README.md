@@ -1,4 +1,4 @@
-# productivity tools
+# Productivity tools
 
 This productivity tools program is connecting two api's together. The notion.so api and the telegram api. So it enables me to send stuff to my notion from my telegram, like adding groceries to the list, getting a daily message, set a goal for myself, adding a task or journalling.
 
@@ -58,16 +58,20 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
+## 2023-06-05 (66) improve log and weirdly fixing journal wrong date
++ (bug) improved error logging by logging all errors, and clarifying which errors are created by the program (easier grep-ing)
++ (bug) the production version of notion currently posts some details to the wrong journal (the one from yesterday), but this seems to be fixed in this version (how? I don't know!)
+
 ## 2023-02-22.1 (65) mailcheck fix
 + (bug)   Mailcheck wouldn't work because the global vars were not accessible.
-+ (minor) Another attempt at the linecount table thing
++ (minor) Another attempt at the line count table thing
 
 ## 2023-02-22 (64) script variable bugfix
 + (bug)   `script.py` would not execute because variable was referenced before creation.
 
 | Property | Value |
-| --- | --- |
-| Lines of python code: | 479 |
+| :--- | :--- |
+| Lines of python code | 479 |
 
 ## 2023-02-20 (63) Performance improvement
 + (minor)  Moved the license back to the root directory, since it wasn't recognised by Github.
@@ -82,8 +86,8 @@ This led to me wondering whether it is strictly necessary to declare variables i
 Performance is now significantly better. It feels more secure as well, although that is marginal.
 
 | Property | Value |
-| --- | --- |
-| Lines of python code: | 479 |
+| :--- | :--- |
+| Lines of python code | 479 |
 
 ## 2023-02-19 (62) Big script overhaul, cleanup & documentation
 + (major)  Shortened the listener, it should now be started from script.py

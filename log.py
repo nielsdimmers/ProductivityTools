@@ -8,7 +8,7 @@ class log:
 	# Get the config and initialise log
 	def __init__(self):
 		self.config = config.config()
-		logging.basicConfig(filename=self.config.get_item('general','LOGFILE_NAME'), filemode='a', format='%(asctime)s - %(levelname)s - %(message)s')
+		logging.basicConfig(filename=self.config.get_item('general','LOGFILE_NAME'), filemode='a', format='NPRODTOOL: %(asctime)s - %(levelname)s - %(message)s')
 	
 	# return log file size
 	def get_size(self):

@@ -18,7 +18,7 @@ class Listener:
 	async def send_telegram_reply(self, update, _reply_message):
 		try:
 			await update.message.reply_text(_reply_message,quote=False, parse_mode='Markdown')
-		except NetworkError as error:
+		except Exception as error:
 			self.log.log('EXCEPTION', global_vars.TELEGRAM_SEND_ERROR % (_reply_message,error))
 		
 	def grocery_list(self,_message,notion):
