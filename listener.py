@@ -61,6 +61,10 @@ class Listener:
 			await self.send_telegram_reply(update, notion_journal(tomorrow).journal_property(global_vars.JOURNAL_GOAL_KEY,message))
 		elif command == 'legal':
 			await self.send_telegram_reply(update, global_vars.LEGAL_NOTICE)
+		
+		# Destroy the journal to prevent singleton onto the date the script was started
+		del journal
+		del notion
 	
 	async def micro_journal(self, update, context):
 		notion = notion_journal()

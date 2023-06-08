@@ -58,6 +58,10 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
+## 2023-06-08 (67)
+Ok, so the bug is still here and I think how it works. It looks like it opens the notion record at boot (or at least, very early) and then keeps it open. So the next day, it doesn't recognise a day has passed and just updates the same record. The changes in this release should solve that, but I'm honestly not sure, because I can only test it when a day has passed.
++ (bug) Another attempt at the wrong journal bug.
+
 ## 2023-06-05 (66) improve log and weirdly fixing journal wrong date
 + (bug) improved error logging by logging all errors, and clarifying which errors are created by the program (easier grep-ing)
 + (bug) the production version of notion currently posts some details to the wrong journal (the one from yesterday), but this seems to be fixed in this version (how? I don't know!)
