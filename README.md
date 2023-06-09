@@ -58,7 +58,11 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
-## 2023-06-08 (67)
+## 2023-06-09 (68) Force fix date bug
+Yesterday's fix wasn't working, so reverted it. Now I've forced the date onto the journal to make sure it updates the correct date.
++ (bug) And another attempt at this pesky bug!
+
+## 2023-06-08 (67) Attempt to solve date bug
 Ok, so the bug is still here and I think how it works. It looks like it opens the notion record at boot (or at least, very early) and then keeps it open. So the next day, it doesn't recognise a day has passed and just updates the same record. The changes in this release should solve that, but I'm honestly not sure, because I can only test it when a day has passed.
 + (bug) Another attempt at the wrong journal bug.
 

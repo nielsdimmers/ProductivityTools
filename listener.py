@@ -38,7 +38,7 @@ class Listener:
 		command = update.message.text.split(' ')[0][1:] # split the command from the message!
 		message = '' if len(update.message.text) <= len(command) + 1 else update.message.text[(len(command)+2):]
 		notion = notion_interface.notion()
-		journal = notion_journal()
+		journal = notion_journal(datetime.datetime.now().strftime("%Y-%m-%d"))
 		
 		if command == 'daily':
 			await self.send_telegram_reply(update, notion.get_daily_data())
@@ -62,9 +62,6 @@ class Listener:
 		elif command == 'legal':
 			await self.send_telegram_reply(update, global_vars.LEGAL_NOTICE)
 		
-		# Destroy the journal to prevent singleton onto the date the script was started
-		del journal
-		del notion
 	
 	async def micro_journal(self, update, context):
 		notion = notion_journal()
