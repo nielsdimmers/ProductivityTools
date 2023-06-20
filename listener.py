@@ -64,7 +64,7 @@ class Listener:
 		
 	
 	async def micro_journal(self, update, context):
-		notion = notion_journal()
+		notion = notion_journal(datetime.datetime.now().strftime("%Y-%m-%d"))
 		await self.send_telegram_reply(update, notion.micro_journal(update.message.text))
 	
 	def main(self):

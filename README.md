@@ -58,6 +58,9 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
+## 2023-06-20 (69) telegram micro Journal wrong date fix
++ So (68) was fine for fields (like weight) but not for journal entries, where the journal was created on a different place. This resulted in different behaviour between telegram journal entries, and pretty much everything else. This should fix that now.
+
 ## 2023-06-09 (68) Force fix date bug
 Yesterday's fix wasn't working, so reverted it. Now I've forced the date onto the journal to make sure it updates the correct date.
 + (bug) And another attempt at this pesky bug!
