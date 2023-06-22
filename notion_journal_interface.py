@@ -39,9 +39,9 @@ class notion_journal:
 
 	def journal_property(self,_property,_value): 	# handles the journal property command, returns text
 		if _value == "":
-			return 'Current %s is: %s' % (_property,self.get_journal_property(_property))
+			return 'In journal dated %s, current %s is: %s' % (self.get_journal_property('Datum'),_property,self.get_journal_property(_property))
 		if self.set_journal_property(_property,_value).status_code == global_vars.HTTP_OK_CODE:
-			return 'Set %s to: %s' % (_property, _value)
+			return 'In journal dated %s, set %s to: %s' % (self.get_journal_property('Datum'),_property, _value)
 		return 'Error updating %s to value %s.' % (_property,_value)
 	
 	def count_words(self): # counts the number of words of the current journal
@@ -58,6 +58,8 @@ class notion_journal:
 	def get_journal_property(self,_property):
 		result = requests.get(global_vars.NOTION_PROPERTY_GET_URL % (self.journal_id,self.properties[_property]['id']),headers=self.get_notion_headers())
 		if result.json()['object'] == 'property_item':
+			if result.json()['type'] == 'date':
+				return result.json()['date']['start']
 			return result.json()[result.json()['type']]
 		elif len(result.json()['results']) > 0:
 			return result.json()['results'][0][result.json()['results'][0]['type']]['plain_text']
@@ -68,7 +70,7 @@ class notion_journal:
 		journal_entry = journal_entry.replace('"','\\"')
 		response = requests.patch(global_vars.NOTION_CHILDREN_URL % self.journal_id,json=json.loads(global_vars.NOTION_JOURNAL_JSON % journal_entry.strip()),headers=self.get_notion_headers())
 		if response.status_code == global_vars.HTTP_OK_CODE:
-			return global_vars.NOTION_JOURNAL_OK_MSG % (len(_journal),len(_journal.split()))
+			return global_vars.NOTION_JOURNAL_OK_MSG % (self.get_journal_property('Datum'),len(_journal),len(_journal.split()))
 		else:
 			return global_vars.NOTION_JOURNAL_NOK_MSG % (response.status_code, response.json())
 				
