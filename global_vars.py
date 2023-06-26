@@ -21,9 +21,13 @@ class global_vars:
 	
 	NOTION_PROPERTY_GET_URL = 'https://api.notion.com/v1/pages/%s/properties/%s'
 	
+	NOTION_JOURNAL_LENGTH_MSG = 'Journal is %s words long.'
+	
 	NOTION_JOURNAL_OK_MSG = 'Added a new micro journal to the journal dated %s, journal has length %s characters and %s words.\n'
 	
 	NOTION_JOURNAL_NOK_MSG = 'Error response code %s. Full json follows: \n%s\n'
+	
+	JOURNAL_LENGTH_MESSAGE = 'With %s words you are at %s%% of your words goal of %s.'
 	
 	HTTP_OK_CODE = 200
 	

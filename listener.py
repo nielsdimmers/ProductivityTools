@@ -61,6 +61,8 @@ class Listener:
 			await self.send_telegram_reply(update, notion_journal(tomorrow).journal_property(global_vars.JOURNAL_GOAL_KEY,message))
 		elif command == 'legal':
 			await self.send_telegram_reply(update, global_vars.LEGAL_NOTICE)
+		elif command == 'words':
+			await self.send_telegram_reply(update, global_vars.NOTION_JOURNAL_LENGTH_MSG % journal.count_words())
 		
 	
 	async def micro_journal(self, update, context):
@@ -69,7 +71,7 @@ class Listener:
 	
 	def main(self):
 		application = Application.builder().token(self.config.get_item('telegram','TELEGRAM_API_TOKEN')).build()
-		telegram_commands = ['daily','tk','b','log','week','weight','grateful','goal','tomgoal','legal']
+		telegram_commands = ['daily','tk','b','log','week','weight','grateful','goal','tomgoal','legal','words']
 		for telegram_command in telegram_commands:
 			application.add_handler(CommandHandler(telegram_command,self.execute_command), True)
 		application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, self.micro_journal))

@@ -58,7 +58,10 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
-## 2023-06-22 (70) 	Add date to response message
+## 2023-06-26 (71) Add `words` command
+ + (major) Added a new script command and a listener command, 'word', which gives the length of the journal of that day.
+
+## 2023-06-22 (70) Add date to response message
 + (medium) When retrieving or setting a property, the date of the journal is set on or retrieved from is given to make an additional check.
 
 ## 2023-06-20 (69) telegram micro Journal wrong date fix

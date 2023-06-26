@@ -8,6 +8,8 @@ import log
 from test_journal import test_journal
 from listener import Listener
 from mailcheck import mailcheck
+from notion_journal_interface import notion_journal
+import datetime
 
 class script_handler:
 
@@ -19,6 +21,13 @@ class script_handler:
 
 	def daily(self):
 		requests.get(global_vars.TELEGRAM_MSG_URL % (self.config.get_item('telegram','TELEGRAM_API_TOKEN'),self.config.get_item('telegram','TELEGRAM_CHAT_ID'),urllib.parse.quote(notion_interface.notion().get_daily_data())))
+		
+	def words (self):
+		journal_length = notion_journal(datetime.datetime.now().strftime("%Y-%m-%d")).count_words()
+		notion_config = config.config('config_notion')
+		journal_length_percentage = (journal_length/int(notion_config.get_item('notion','JOURNAL_DESIRED_LENGTH'))) * 100
+		message = global_vars.JOURNAL_LENGTH_MESSAGE % (journal_length,journal_length_percentage,notion_config.get_item('notion','JOURNAL_DESIRED_LENGTH'))
+		requests.get(global_vars.TELEGRAM_MSG_URL % (self.config.get_item('telegram','TELEGRAM_API_TOKEN'),self.config.get_item('telegram','TELEGRAM_CHAT_ID'),urllib.parse.quote(message)))
 	
 if __name__ == '__main__':
 	if len(sys.argv) != 2:
@@ -35,5 +44,7 @@ if __name__ == '__main__':
 		Listener().main()
 	elif sys.argv[1] == 'legal':
 		print(global_vars.LEGAL_NOTICE)
+	elif sys.argv[1] == 'words':
+		script_handler().words()
 	else:
 		print(global_vars.SCRIPT_USAGE)
