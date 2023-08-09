@@ -58,8 +58,17 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
+## 2023-08-09 (72) New commands: onepercent, frog, tomfrog. Remove groceries command
++ (minor)  Updated the notion_config.default with a required variable for the words command
++ (major)  Rmoved the /b command and all code related to it, since grocery list is kept elsewhere
++ (major)  Added command `onepercent` to set the one percent improvement
++ (major)  Added command `frog` to check (and set) today's frog you're going to eat
++ (major)  Added command `tomfrog` for tomorrow's frog
++ (minor)  Clarified hidden commands in the script
++ (medium) Updated the words command a bit, to show percentage towards goal
+
 ## 2023-06-26 (71) Add `words` command
- + (major) Added a new script command and a listener command, 'word', which gives the length of the journal of that day.
+ + (major) Added a new script command and a listener command, 'words', which gives the length of the journal of that day.
 
 ## 2023-06-22 (70) Add date to response message
 + (medium) When retrieving or setting a property, the date of the journal is set on or retrieved from is given to make an additional check.

@@ -21,7 +21,7 @@ class global_vars:
 	
 	NOTION_PROPERTY_GET_URL = 'https://api.notion.com/v1/pages/%s/properties/%s'
 	
-	NOTION_JOURNAL_LENGTH_MSG = 'Journal is %s words long.'
+	NOTION_JOURNAL_LENGTH_MSG = 'Journal is %s words long, which is %s%% of the goal.'
 	
 	NOTION_JOURNAL_OK_MSG = 'Added a new micro journal to the journal dated %s, journal has length %s characters and %s words.\n'
 	
@@ -53,6 +53,10 @@ class global_vars:
 	
 	JOURNAL_LENGTH_KEY = 'Journal length'
 	
+	JOURNAL_ONE_PERCENT_KEY = '1% better action'
+	
+	JOURNAL_FROG_KEY = 'Welke kikker ga je eten?'
+	
 	JOURNAL_GOAL_KEY = 'Goal (commander\'s intent)'
 	
 	JOURNAL_GRATEFUL_KEY = 'Grateful'
@@ -62,7 +66,7 @@ class global_vars:
 	## LOGGING
 	LOG_LENGTH_MESSAGE = 'The logfile %s is %s lines long.'
 		
-	SCRIPT_USAGE = "Usage:\n python3 ./script.py <command>\n - daily for daily data\n - logcount count of log length\n - test run automated tests\n - legal for copyright information"
+	SCRIPT_USAGE = "Usage:\n python3 ./script.py <command>\n - daily for daily data\n - logcount count of log length\n - test run automated tests\n - legal for copyright information\n - listener to start the listener\n - mailcheck to check the mail\n - words to send a wordcount message."
 	
 	LEGAL_NOTICE = "This program is licensed under the GNU General Public License version 3.0 (2007). For the full text, see [the license file on github](https://github.com/nielsdimmers/ProductivityTools/blob/main/LICENSE). The code to my bot can be found on [github](https://github.com/nielsdimmers/ProductivityTools)."
 	

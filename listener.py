@@ -20,16 +20,6 @@ class Listener:
 			await update.message.reply_text(_reply_message,quote=False, parse_mode='Markdown')
 		except Exception as error:
 			self.log.log('EXCEPTION', global_vars.TELEGRAM_SEND_ERROR % (_reply_message,error))
-		
-	def grocery_list(self,_message,notion):
-		if len(_message) > 0:
-			return notion.add_grocery(_message)
-		message_reply = ''
-		for paragraph in notion.get_groceries()['results']:
-			if paragraph['type'] == 'to_do' and len(paragraph[paragraph['type']]['rich_text']) > 0:
-				message_reply += ('✅' if paragraph['to_do']['checked'] else '⬜️') + paragraph[paragraph['type']]['rich_text'][0]['plain_text'] + '\n'
-		message_reply += '\n[Grocerylist in notion](%s)' % notion.get_groceries_url()
-		return message_reply
 
 	async def execute_command(self,update,context):
 		if update.message.from_user.id != int(self.config.get_item('telegram','TELEGRAM_CHAT_ID')):
@@ -42,8 +32,6 @@ class Listener:
 		
 		if command == 'daily':
 			await self.send_telegram_reply(update, notion.get_daily_data())
-		elif command == 'b':
-			await self.send_telegram_reply(update,self.grocery_list(message,notion))
 		elif command == 'tk':
 			await self.send_telegram_reply(update, notion.create_task(message))
 		elif command == 'log':
@@ -62,8 +50,17 @@ class Listener:
 		elif command == 'legal':
 			await self.send_telegram_reply(update, global_vars.LEGAL_NOTICE)
 		elif command == 'words':
-			await self.send_telegram_reply(update, global_vars.NOTION_JOURNAL_LENGTH_MSG % journal.count_words())
-		
+			words = journal.count_words()
+			notion_config = config.config('config_notion')
+			percentage = round((words/int(notion_config.get_item('notion','JOURNAL_DESIRED_LENGTH'))) * 100,2)
+			await self.send_telegram_reply(update, global_vars.NOTION_JOURNAL_LENGTH_MSG % (words,percentage))
+		elif command == 'onepercent':
+			await self.send_telegram_reply(update, journal.journal_property(global_vars.JOURNAL_ONE_PERCENT_KEY,message))
+		elif command == 'frog':
+			await self.send_telegram_reply(update, journal.journal_property(global_vars.JOURNAL_FROG_KEY,message))
+		elif command == 'tomfrog':
+			tomorrow = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+			await self.send_telegram_reply(update, notion_journal(tomorrow).journal_property(global_vars.JOURNAL_FROG_KEY,message))
 	
 	async def micro_journal(self, update, context):
 		notion = notion_journal(datetime.datetime.now().strftime("%Y-%m-%d"))
@@ -71,7 +68,7 @@ class Listener:
 	
 	def main(self):
 		application = Application.builder().token(self.config.get_item('telegram','TELEGRAM_API_TOKEN')).build()
-		telegram_commands = ['daily','tk','b','log','week','weight','grateful','goal','tomgoal','legal','words']
+		telegram_commands = ['daily','tk','log','week','weight','grateful','goal','tomgoal','legal','words','onepercent','frog','tomfrog']
 		for telegram_command in telegram_commands:
 			application.add_handler(CommandHandler(telegram_command,self.execute_command), True)
 		application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, self.micro_journal))

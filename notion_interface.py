@@ -16,11 +16,6 @@ class notion:
 	def get_notion_headers(self):
 		return {'Authorization': 'Bearer %s' % self.config.get_item('notion','ACCESS_KEY'), 'Content-Type':'application/json','Notion-Version':'2022-06-28'}
 	
-	# Returns the JSON part of the groceries page
-	def get_groceries(self):
-		response = requests.get(global_vars.NOTION_CHILDREN_URL % self.config.get_item('notion','GROCERIES_PAGE_KEY') ,headers=self.get_notion_headers())
-		return response.json()
-	
 	# create a task object based on the given title
 	def create_task(self,_task_data):
 		
@@ -44,8 +39,6 @@ class notion:
 		requests.patch(global_vars.NOTION_CHILDREN_URL % self.config.get_item('notion','GROCERIES_PAGE_KEY'),json=new_grocery,headers=self.get_notion_headers())
 		return 'Added grocery: %s' % _grocery
 		
-	def get_groceries_url(self):
-		return self.config.get_item('notion','GROCERIES_PAGE_URL')
 	
 	# Add a micro journal entry
 	def micro_journal(self,_journal):
