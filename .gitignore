@@ -2,6 +2,7 @@
 .config
 config
 config_notion
+config_habitify
 productivityTools.log
 .scannerwork/
 config_mail

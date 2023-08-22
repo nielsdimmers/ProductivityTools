@@ -8,12 +8,14 @@ Currently, the tool supports the following Telegram commands:
 tk - add a task
 log - do a log check
 daily - get a daily update
-b - add a grocery (send empty to get list)
 week - return the week number
 weight - set your weight
 grateful - set your grateful thought
 goal - set your goal (or leave empty to get it)
 tomgoal - get or set tomorrow's goal
+frog - set today's frog (leave emptyo to get)
+tomfrog - set tomorrow's frog
+onepercent - set the one percent improvement for today
 legal - get copyright information
 ```
 Add a / before it in telegram to execute them when sending messages to the bot.
@@ -57,6 +59,10 @@ Impact of change can be any of:
 + `medium` There is functional impact, stuff changes, but nothing like a new command.
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
+
+## 2023-??-?? (73) 
++ (minor) Updated readme with the new commandslist (see previous commit for new commands)
++ (medium) Daily does not give a list of tasks anymore
 
 ## 2023-08-09 (72) New commands: onepercent, frog, tomfrog. Remove groceries command
 + (minor)  Updated the notion_config.default with a required variable for the words command

@@ -5,6 +5,7 @@ from global_vars import global_vars
 from notion_journal_interface import notion_journal
 from config import config
 import json
+import habitify
 
 # Notion interface to interact with notion
 class notion:
@@ -54,12 +55,12 @@ class notion:
 		# Get the notion stuff
 		response = requests.post('https://api.notion.com/v1/databases/%s/query' % self.config.get_item('notion','TASK_DATABASE_KEY'), json=json.loads(global_vars.NOTION_TASKLIST_QUERY_JSON % (today,today)),headers=self.get_notion_headers())
 		
-		result += "For today, there are a total of %s tasks:\n" % len(response.json()['results'])
+		result += "For today, there are a total of %s tasks.\n" % len(response.json()['results'])
 		
-	 	#	Generate a list of tasks
-		for task in response.json()['results']:
-			status = 'no status' if task['properties']['Status']['status'] is None else task['properties']['Status']['status']['name']
-			result += "- [%s](%s) (%s) \n" % (task['properties']['Name']['title'][0]['plain_text'],task['url'],status)
+		habitify_interface = habitify.habitify()
+		self_attention_time = habitify_interface.getCurrentValue(habitify_interface.config.get_item('habitify','HABIT_ID'))
+		
+		result += '\nYou are at %s minutes of your self focus goal.' % self_attention_time
 		
 		journal = notion_journal()
 		result += '\n\nToday\'s goal is %s. [Today\'s journal](%s)' % (journal.get_journal_property(global_vars.JOURNAL_GOAL_KEY),journal.get_url())
