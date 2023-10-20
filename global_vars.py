@@ -21,13 +21,11 @@ class global_vars:
 	
 	NOTION_PROPERTY_GET_URL = 'https://api.notion.com/v1/pages/%s/properties/%s'
 	
-	NOTION_JOURNAL_LENGTH_MSG = 'Journal is %s words long, which is %s%% of the goal.'
+	NOTION_JOURNAL_LENGTH_MSG = 'With %s words you are at %s%% of your words goal of %s.'
 	
 	NOTION_JOURNAL_OK_MSG = 'Added a new micro journal to the journal dated %s, journal has length %s characters and %s words.\n'
 	
 	NOTION_JOURNAL_NOK_MSG = 'Error response code %s. Full json follows: \n%s\n'
-	
-	JOURNAL_LENGTH_MESSAGE = 'With %s words you are at %s%% of your words goal of %s.'
 	
 	HTTP_OK_CODE = 200
 	
@@ -45,23 +43,19 @@ class global_vars:
 	
 	NOTION_PROPERTY_JSON = {'rich_text' : NOTION_RICHTEXT_PROPERTY_JSON,'number' : NOTION_NUMBER_PROPERTY_JSON}
 	
-	NOTION_RETRIEVE_JOURNAL_JSON = '{"filter": { "or" : [ { "property" : "title", "title" : { "starts_with" : "%s" } }, { "property" : "Datum", "date" : { "equals" : "%s" } } ] } }'
+	NOTION_RETRIEVE_JOURNAL_JSON = '{"filter": { "or" : [ { "property" : "title", "title" : { "starts_with" : "%s" } }, { "property" : "Date", "date" : { "equals" : "%s" } } ] } }'
 	
 	NOTION_TASKLIST_QUERY_JSON = '{"filter": { "and": [{"property": "Status", "status" : { "does_not_equal": "Done 🙌" } },  { "property": "Status", "status" : { "does_not_equal": "Dropped 🔥" } }, {  "or": [ { "property":"Due date", "date" :{ "on_or_before":"%s" } }, { "property":"Action date", "date" : { "on_or_before":"%s" } } ] } ] } }'
 	
-	JOURNAL_DATE_KEY = 'Datum'
+	JOURNAL_DATE_KEY = 'Date'
 	
 	JOURNAL_LENGTH_KEY = 'Journal length'
 	
-	JOURNAL_ONE_PERCENT_KEY = '1% better action'
+	JOURNAL_ONE_PERCENT_KEY = '1% better'
 	
-	JOURNAL_FROG_KEY = 'Welke kikker ga je eten?'
+	JOURNAL_GOAL_KEY = 'Goal'
 	
-	JOURNAL_GOAL_KEY = 'Goal (commander\'s intent)'
-	
-	JOURNAL_GRATEFUL_KEY = 'Grateful'
-	
-	JOURNAL_WEIGHT_KEY = 'Gewicht (Kg)'
+	JOURNAL_WEIGHT_KEY = 'Weight (Kg)'
 	
 	## LOGGING
 	LOG_LENGTH_MESSAGE = 'The logfile %s is %s lines long.'

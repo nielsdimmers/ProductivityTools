@@ -40,8 +40,6 @@ class Listener:
 			await self.send_telegram_reply(update, global_vars.DATETIME_WEEK_NUMBER % datetime.date.today().strftime("%W"))
 		elif command == 'weight':
 			await self.send_telegram_reply(update, journal.journal_property(global_vars.JOURNAL_WEIGHT_KEY,message))
-		elif command == 'grateful':
-			await self.send_telegram_reply(update, journal.journal_property(global_vars.JOURNAL_GRATEFUL_KEY,message))
 		elif command == 'goal':
 			await self.send_telegram_reply(update, journal.journal_property(global_vars.JOURNAL_GOAL_KEY,message))
 		elif command == 'tomgoal':
@@ -53,14 +51,9 @@ class Listener:
 			words = journal.count_words()
 			notion_config = config.config('config_notion')
 			percentage = round((words/int(notion_config.get_item('notion','JOURNAL_DESIRED_LENGTH'))) * 100,2)
-			await self.send_telegram_reply(update, global_vars.NOTION_JOURNAL_LENGTH_MSG % (words,percentage))
+			await self.send_telegram_reply(update, global_vars.NOTION_JOURNAL_LENGTH_MSG % (words,percentage,notion_config.get_item('notion','JOURNAL_DESIRED_LENGTH')))
 		elif command == 'onepercent':
 			await self.send_telegram_reply(update, journal.journal_property(global_vars.JOURNAL_ONE_PERCENT_KEY,message))
-		elif command == 'frog':
-			await self.send_telegram_reply(update, journal.journal_property(global_vars.JOURNAL_FROG_KEY,message))
-		elif command == 'tomfrog':
-			tomorrow = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
-			await self.send_telegram_reply(update, notion_journal(tomorrow).journal_property(global_vars.JOURNAL_FROG_KEY,message))
 	
 	async def micro_journal(self, update, context):
 		notion = notion_journal(datetime.datetime.now().strftime("%Y-%m-%d"))
@@ -68,7 +61,7 @@ class Listener:
 	
 	def main(self):
 		application = Application.builder().token(self.config.get_item('telegram','TELEGRAM_API_TOKEN')).build()
-		telegram_commands = ['daily','tk','log','week','weight','grateful','goal','tomgoal','legal','words','onepercent','frog','tomfrog']
+		telegram_commands = ['daily','tk','log','week','weight','goal','tomgoal','legal','words','onepercent']
 		for telegram_command in telegram_commands:
 			application.add_handler(CommandHandler(telegram_command,self.execute_command), True)
 		application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, self.micro_journal))

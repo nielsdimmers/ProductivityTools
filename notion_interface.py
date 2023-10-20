@@ -57,11 +57,6 @@ class notion:
 		
 		result += "For today, there are a total of %s tasks.\n" % len(response.json()['results'])
 		
-		habitify_interface = habitify.habitify()
-		self_attention_time = habitify_interface.getCurrentValue(habitify_interface.config.get_item('habitify','HABIT_ID'))
-		
-		result += '\nYou are at %s minutes of your self focus goal.' % self_attention_time
-		
 		journal = notion_journal()
 		result += '\n\nToday\'s goal is %s. [Today\'s journal](%s)' % (journal.get_journal_property(global_vars.JOURNAL_GOAL_KEY),journal.get_url())
 		

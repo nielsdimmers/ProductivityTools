@@ -10,11 +10,8 @@ log - do a log check
 daily - get a daily update
 week - return the week number
 weight - set your weight
-grateful - set your grateful thought
 goal - set your goal (or leave empty to get it)
 tomgoal - get or set tomorrow's goal
-frog - set today's frog (leave emptyo to get)
-tomfrog - set tomorrow's frog
 onepercent - set the one percent improvement for today
 legal - get copyright information
 ```
@@ -60,9 +57,16 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
-## 2023-??-?? (73) 
+## 2023-10-19 (74) Updating commands for the new year
++ (major) Removed commands `grateful`, `frog` and `tomfrog` because they've been gotten out of use. Note that this also removes some config values from the config, check the config_notion.default to see which ones they are.
++ (major) Removed the focus goal, because that habitify task has become obsolete
++ (major) Changed some global vars to fit with the new variable descriptions. This is a major change, because this might break implementations elsewhere.
++ (medium) The words reply message now also shows the words target
+
+## 2023-08-22 (73) Added personal focus goal in daily message, removed task list
 + (minor) Updated readme with the new commandslist (see previous commit for new commands)
 + (medium) Daily does not give a list of tasks anymore
++ (major) Added habitify interface and a message saying something about my personal focus goal.
 
 ## 2023-08-09 (72) New commands: onepercent, frog, tomfrog. Remove groceries command
 + (minor)  Updated the notion_config.default with a required variable for the words command

@@ -14,6 +14,7 @@ class notion_journal:
 	def __init__(self,_date = datetime.datetime.now().strftime("%Y-%m-%d")): # creates a journal if it doesn't exist
 		self.config = config.config('config_notion')
 		response = requests.post(global_vars.NOTION_DATABASE_QUERY_URL % self.config.get_item('notion','GOAL_DATABASE_KEY'), json = json.loads(global_vars.NOTION_RETRIEVE_JOURNAL_JSON % (_date,_date)),headers=self.get_notion_headers())
+		print(response.text)
 		if len(response.json()['results']) > 0:
 			self.journal_id = response.json()['results'][0]['id'] # journal exists, set the ID.
 		else:
@@ -39,9 +40,9 @@ class notion_journal:
 
 	def journal_property(self,_property,_value): 	# handles the journal property command, returns text
 		if _value == "":
-			return 'In journal dated %s, current %s is: %s' % (self.get_journal_property('Datum'),_property,self.get_journal_property(_property))
+			return 'In journal dated %s, current %s is: %s' % (self.get_journal_property(global_vars.JOURNAL_DATE_KEY),_property,self.get_journal_property(_property))
 		if self.set_journal_property(_property,_value).status_code == global_vars.HTTP_OK_CODE:
-			return 'In journal dated %s, set %s to: %s' % (self.get_journal_property('Datum'),_property, _value)
+			return 'In journal dated %s, set %s to: %s' % (self.get_journal_property(global_vars.JOURNAL_DATE_KEY),_property, _value)
 		return 'Error updating %s to value %s.' % (_property,_value)
 	
 	def count_words(self): # counts the number of words of the current journal
@@ -70,7 +71,7 @@ class notion_journal:
 		journal_entry = journal_entry.replace('"','\\"')
 		response = requests.patch(global_vars.NOTION_CHILDREN_URL % self.journal_id,json=json.loads(global_vars.NOTION_JOURNAL_JSON % journal_entry.strip()),headers=self.get_notion_headers())
 		if response.status_code == global_vars.HTTP_OK_CODE:
-			return global_vars.NOTION_JOURNAL_OK_MSG % (self.get_journal_property('Datum'),len(_journal),len(_journal.split()))
+			return global_vars.NOTION_JOURNAL_OK_MSG % (self.get_journal_property(global_vars.JOURNAL_DATE_KEY),len(_journal),len(_journal.split()))
 		else:
 			return global_vars.NOTION_JOURNAL_NOK_MSG % (response.status_code, response.json())
 				
