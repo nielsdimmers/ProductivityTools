@@ -57,6 +57,11 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
+## 2023-10-20 (75) New command: Domain!
++ (major) added a new command, `domain` gives you the pihole most accessed domains form the last 24 hours (give a number to adjust the hours)
++ (bug) removed a forgotten printline command
+Want to use the new `domain` command? fill in the default domaincheck config file and remove the .defailt!
+
 ## 2023-10-19 (74) Updating commands for the new year
 + (major) Removed commands `grateful`, `frog` and `tomfrog` because they've been gotten out of use. Note that this also removes some config values from the config, check the config_notion.default to see which ones they are.
 + (major) Removed the focus goal, because that habitify task has become obsolete

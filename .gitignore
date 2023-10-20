@@ -3,9 +3,11 @@
 config
 config_notion
 config_habitify
+config_DomainCheck
 productivityTools.log
 .scannerwork/
 config_mail
+pihole-FTL.db
 
 # Automated python ignoring files...
 # Byte-compiled / optimized / DLL files

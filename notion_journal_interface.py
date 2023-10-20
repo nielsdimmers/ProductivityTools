@@ -14,7 +14,6 @@ class notion_journal:
 	def __init__(self,_date = datetime.datetime.now().strftime("%Y-%m-%d")): # creates a journal if it doesn't exist
 		self.config = config.config('config_notion')
 		response = requests.post(global_vars.NOTION_DATABASE_QUERY_URL % self.config.get_item('notion','GOAL_DATABASE_KEY'), json = json.loads(global_vars.NOTION_RETRIEVE_JOURNAL_JSON % (_date,_date)),headers=self.get_notion_headers())
-		print(response.text)
 		if len(response.json()['results']) > 0:
 			self.journal_id = response.json()['results'][0]['id'] # journal exists, set the ID.
 		else:
