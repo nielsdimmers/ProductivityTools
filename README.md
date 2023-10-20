@@ -57,6 +57,10 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
+## 2023-10-20.1 (76) New command: Domain overview!
++ (major) moved the functionality of command `domain` to the new command `domainoverview`
++ (major) the now `domain` command requires a domain name and shows the clients which connected to that domain
+
 ## 2023-10-20 (75) New command: Domain!
 + (major) added a new command, `domain` gives you the pihole most accessed domains form the last 24 hours (give a number to adjust the hours)
 + (bug) removed a forgotten printline command

@@ -55,9 +55,12 @@ class Listener:
 			await self.send_telegram_reply(update, global_vars.NOTION_JOURNAL_LENGTH_MSG % (words,percentage,notion_config.get_item('notion','JOURNAL_DESIRED_LENGTH')))
 		elif command == 'onepercent':
 			await self.send_telegram_reply(update, journal.journal_property(global_vars.JOURNAL_ONE_PERCENT_KEY,message))
+		elif command == 'domainoverview':
+			checker = DomainCheck()
+			await self.send_telegram_reply(update, checker.domain_overview(message))
 		elif command == 'domain':
 			checker = DomainCheck()
-			await self.send_telegram_reply(update, checker.checkDomain(message))
+			await self.send_telegram_reply(update, checker.domain_check(message))
 	
 	async def micro_journal(self, update, context):
 		notion = notion_journal(datetime.datetime.now().strftime("%Y-%m-%d"))
@@ -65,7 +68,7 @@ class Listener:
 	
 	def main(self):
 		application = Application.builder().token(self.config.get_item('telegram','TELEGRAM_API_TOKEN')).build()
-		telegram_commands = ['daily','tk','log','week','weight','goal','tomgoal','legal','words','onepercent','domain']
+		telegram_commands = ['daily','tk','log','week','weight','goal','tomgoal','legal','words','onepercent','domainoverview','domain']
 		for telegram_command in telegram_commands:
 			application.add_handler(CommandHandler(telegram_command,self.execute_command), True)
 		application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, self.micro_journal))
