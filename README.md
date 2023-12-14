@@ -14,6 +14,8 @@ goal - set your goal (or leave empty to get it)
 tomgoal - get or set tomorrow's goal
 onepercent - set the one percent improvement for today
 legal - get copyright information
+fun - get or set the fun action for today
+tomfun - get or set the fun action for tomorrow
 ```
 Add a / before it in telegram to execute them when sending messages to the bot.
 
@@ -56,6 +58,10 @@ Impact of change can be any of:
 + `medium` There is functional impact, stuff changes, but nothing like a new command.
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
+
+## 2023-12-14 (77) Fun and removed domain
++ (major) Removed the commands `domain` and `domainoverview` because they didn't really work and didn't turn out to add value
++ (major) Added commands `fun` and `tomfun` to describe the fun thing I want to do for this day (and this one is actually the one for today!)
 
 ## 2023-10-20.1 (76) New command: Domain overview!
 + (major) moved the functionality of command `domain` to the new command `domainoverview`

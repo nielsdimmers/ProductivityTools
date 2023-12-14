@@ -57,6 +57,8 @@ class global_vars:
 	
 	JOURNAL_WEIGHT_KEY = 'Weight (Kg)'
 	
+	JOURNAL_FUN_KEY = 'Fun for today'
+	
 	## LOGGING
 	LOG_LENGTH_MESSAGE = 'The logfile %s is %s lines long.'
 		
