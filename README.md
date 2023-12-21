@@ -59,6 +59,9 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
+## 2023-12-21 (78) Tomorrow's fun updated goal
++ (bug) Fixed a bug where command `tomfun` updates the goal instead of the fun in Notion
+
 ## 2023-12-14 (77) Fun and removed domain
 + (major) Removed the commands `domain` and `domainoverview` because they didn't really work and didn't turn out to add value
 + (major) Added commands `fun` and `tomfun` to describe the fun thing I want to do for this day (and this one is actually the one for today!)

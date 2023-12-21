@@ -58,7 +58,7 @@ class Listener:
 			await self.send_telegram_reply(update, journal.journal_property(global_vars.JOURNAL_FUN_KEY,message))
 		elif command == 'tomfun':
 			tomorrow = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
-			await self.send_telegram_reply(update, notion_journal(tomorrow).journal_property(global_vars.JOURNAL_GOAL_KEY,message))
+			await self.send_telegram_reply(update, notion_journal(tomorrow).journal_property(global_vars.JOURNAL_FUN_KEY,message))
 	
 	async def micro_journal(self, update, context):
 		notion = notion_journal(datetime.datetime.now().strftime("%Y-%m-%d"))
