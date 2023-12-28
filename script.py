@@ -10,6 +10,7 @@ from listener import Listener
 from mailcheck import mailcheck
 from notion_journal_interface import notion_journal
 import datetime
+import report
 
 class script_handler:
 
@@ -21,6 +22,8 @@ class script_handler:
 
 	def daily(self):
 		requests.get(global_vars.TELEGRAM_MSG_URL % (self.config.get_item('telegram','TELEGRAM_API_TOKEN'),self.config.get_item('telegram','TELEGRAM_CHAT_ID'),urllib.parse.quote(notion_interface.notion().get_daily_data())))
+		report.report().send_graph()
+		
 		
 	def words (self):
 		journal_length = notion_journal(datetime.datetime.now().strftime("%Y-%m-%d")).count_words()

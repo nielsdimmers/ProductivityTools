@@ -5,3 +5,6 @@ LOGFILE_NAME = <logfile location here>
 TELEGRAM_API_TOKEN = <telegram API code here>
 
 TELEGRAM_CHAT_ID = <telegram user sending messages here>
+
+[report]
+REPORT_LOOKBACK_LENGTH = 10

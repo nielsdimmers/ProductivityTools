@@ -59,6 +59,10 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
+## 2023-12-28 (79) Weight Graph
+In order to be able to keep using the daily command or daily update, you need a new config item in the generic config. Create a new section `report` and add a config item `REPORT_LOOKBACK_LENGTH`. The script now also needs a temporary folder called `tmp`
++ (major) Added a graph with weight history to the daily graph
+
 ## 2023-12-21 (78) Tomorrow's fun updated goal
 + (bug) Fixed a bug where command `tomfun` updates the goal instead of the fun in Notion
 

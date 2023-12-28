@@ -67,3 +67,11 @@ class global_vars:
 	LEGAL_NOTICE = "This program is licensed under the GNU General Public License version 3.0 (2007). For the full text, see [the license file on github](https://github.com/nielsdimmers/ProductivityTools/blob/main/LICENSE). The code to my bot can be found on [github](https://github.com/nielsdimmers/ProductivityTools)."
 	
 	MAIL_JOURNAL_BLOCK = '---MICROJOURNAL---'
+	
+	REPORT_GRAPH_FILE = 'tmp/plot.jpg'
+	
+	REPORT_GRAPH_TITLE = 'Weight histograph'
+	
+	REPORT_GRAPH_Y_LABEL = 'Weight (Kg)'
+	
+	REPORT_GRAPH_X_LABEL = 'Days ago'
