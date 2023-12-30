@@ -6,8 +6,8 @@ import datetime
 from config import config
 import asyncio
 import os
-# start by generating a report
 
+# This is a class to generate a report
 class report:
 	
 	def __init__(self):
@@ -25,7 +25,7 @@ class report:
 			# Show the grid
 			plt.grid(True)
 
-			# Show the plot
+			# Save the plot to file
 			plt.savefig(global_vars.REPORT_GRAPH_FILE)
 
 	def retrieve_weights(self):
@@ -48,10 +48,15 @@ class report:
 	def send_graph(self):
 		# Customize the title and labels as needed
 		[y_values,x_values] = self.retrieve_weights()
-# 		print('x values are %s and y values are %s' % (x_values,y_values))
 		self.plot_graph(x_values, y_values, title=global_vars.REPORT_GRAPH_TITLE, x_label=global_vars.REPORT_GRAPH_X_LABEL, y_label=global_vars.REPORT_GRAPH_Y_LABEL)
 
 		application = Application.builder().token(self.config.get_item('telegram','TELEGRAM_API_TOKEN')).build()
-		asyncio.get_event_loop().run_until_complete(application.bot.send_photo(chat_id=self.config.get_item('telegram','TELEGRAM_CHAT_ID'),photo=open(global_vars.REPORT_GRAPH_FILE, 'rb')))
+		
+		if os.path.exists(file_path):
+			asyncio.get_event_loop().run_until_complete(application.bot.send_photo(chat_id=self.config.get_item('telegram','TELEGRAM_CHAT_ID'), photo=open(global_vars.REPORT_GRAPH_FILE, 'rb')))
+		else:
+			asyncio.get_event_loop().run_until_complete(application.bot.send_message(chat_id=self.config.get_item('telegram','TELEGRAM_CHAT_ID'), text=global_vars.REPORT_IMAGE_NOT_FOUND_ERR))
+		
+		
 		
 		os.remove(global_vars.REPORT_GRAPH_FILE)

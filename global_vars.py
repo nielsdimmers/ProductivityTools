@@ -75,3 +75,5 @@ class global_vars:
 	REPORT_GRAPH_Y_LABEL = 'Weight (Kg)'
 	
 	REPORT_GRAPH_X_LABEL = 'Days ago'
+	
+	REPORT_IMAGE_NOT_FOUND_ERR = 'Error: graph image not found'

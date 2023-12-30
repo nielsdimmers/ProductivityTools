@@ -5,7 +5,6 @@ import sys
 from config import config
 from global_vars import global_vars
 import log
-from test_journal import test_journal
 from listener import Listener
 from mailcheck import mailcheck
 from notion_journal_interface import notion_journal
@@ -39,8 +38,6 @@ if __name__ == '__main__':
 		script_handler().daily()
 	elif sys.argv[1] == 'logcount':
 		script_handler().log_count()
-	elif sys.argv[1] == 'test':
-		test_journal().run_test()
 	elif sys.argv[1] == 'mailcheck':
 		mailcheck().check_mail()
 	elif sys.argv[1] == 'listener':

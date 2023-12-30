@@ -59,8 +59,14 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
+## 2023-12-30 (80) bugfixes and removal of test journal
++ (minor) forgot to add to previous commit it requires matplotlib from now on.
++ (bug) Added a check for existence of image before sending to prevent erroring out
++ (minor) removed the test journal script because it's gotten out of use
++ (bug) removed the import of the test journal which prevents the script from running
+
 ## 2023-12-28 (79) Weight Graph
-In order to be able to keep using the daily command or daily update, you need a new config item in the generic config. Create a new section `report` and add a config item `REPORT_LOOKBACK_LENGTH`. The script now also needs a temporary folder called `tmp`
+In order to be able to keep using the daily command or daily update, you need a new config item in the generic config. Create a new section `report` and add a config item `REPORT_LOOKBACK_LENGTH`. The script now also needs a temporary folder called `tmp`, and matplotlib needs to be installed.
 + (major) Added a graph with weight history to the daily graph
 
 ## 2023-12-21 (78) Tomorrow's fun updated goal
