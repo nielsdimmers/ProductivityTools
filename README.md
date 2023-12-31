@@ -59,11 +59,18 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
-## 2023-12-XX (81) Separate telegram interface
-Quite a big overhaul with no functional change (yet), but put the telegram interface functionality in a separate class. This gives more flexibility on the view part (which is now truly separate from the controller). I got the idea when making the report required me to implement telegram code I've implemented a few times before, indicating that this telegram code is not truly separate.
+## XXXX-XX-XX (82)
++ (bug) Removed the test journal for sure (See #80)
++ (minor) Rearranged the imports in the script
++ (major) Added a text interface, with additional functionality for giving the interface on the commandline, doing a little overhaul of the commandline argument functionality
++ (medium) Fixed the telegram interface so it doesn't use Request anymore, which is kinda an ugly way to talk to Telegram
++ (minor) The listener script gets an interface from the generic script, and doesn't create it itself, which allows for more flexibility
+
+## 2023-12-31 (81) Separate telegram interface
+I put the telegram interface functionality in a separate class. This gives more flexibility on the view part (which is now truly separate from the controller). I got the idea when making the report required me to implement telegram code I've implemented a few times before, indicating that this telegram code is not truly separate.
 + (major) Created "telegram_interface" which is exactly that, an interface for telegram.
-+ (medium) Buffed up the weight graph in the daily report a little, so it now shows values and some other nicities. Colors are better.
-+ (medium) The weight graph doesn't use a file anymore, so the tmp folder has become obsolete
++ (medium) Buffed up the weight graph in the daily report a little, so it now shows values and some other niceties. Colors are better.
++ (medium) The report module doesn't use a file anymore, so the tmp folder has become obsolete
 + (bug) removed the test command from the usage script, which has been removed
 
 ## 2023-12-30 (80) bugfixes and removal of test journal

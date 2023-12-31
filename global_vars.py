@@ -5,6 +5,10 @@ class global_vars:
 	TELEGRAM_SEND_ERROR = 'Error sending message to Telegram: \n%s\n\nError message: %s'
 
 	REBOOT_MESSAGE = 'Hi I\'m back again!'
+	
+	QUIT_MESSAGE = 'Quit command received, goodbye'
+	
+	IMAGE_TEXT_REPLACEMENT = "Wanted to send an image, but since this interface is text only, that's not possible."
 
 	DATETIME_WEEK_NUMBER = 'The current week number is %s.'
 
@@ -63,6 +67,12 @@ class global_vars:
 	LOG_LENGTH_MESSAGE = 'The logfile %s is %s lines long.'
 		
 	SCRIPT_USAGE = "Usage:\n python3 ./script.py <command>\n - daily for daily data\n - logcount count of log length\n - legal for copyright information\n - listener to start the listener\n - mailcheck to check the mail\n - words to send a wordcount message."
+	
+	SCRIPT_ACTION_USAGE = "An action to execute"
+	
+	SCRIPT_INTERFACE_USAGE = "Specify either 'telegram' or 'text' for the interface. Telegram by default" 
+	
+	SCRIPT_DESCRIPTION = "A script to control my productivity tools"
 	
 	LEGAL_NOTICE = "This program is licensed under the GNU General Public License version 3.0 (2007). For the full text, see [the license file on github](https://github.com/nielsdimmers/ProductivityTools/blob/main/LICENSE). The code to my bot can be found on [github](https://github.com/nielsdimmers/ProductivityTools)."
 	

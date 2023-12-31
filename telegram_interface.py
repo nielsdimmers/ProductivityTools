@@ -1,9 +1,7 @@
 from telegram.ext import Application, Updater, InlineQueryHandler, CommandHandler, filters, MessageHandler
 from config import config
 from global_vars import global_vars
-import requests
 import log
-import urllib
 import asyncio
 
 # Interface with telegram
@@ -19,7 +17,6 @@ class telegram_interface:
 	def send_message(self, message):
 		chat_id = self.config.get_item('telegram','TELEGRAM_CHAT_ID')
 		asyncio.get_event_loop().run_until_complete(self.application.bot.send_message(chat_id=chat_id,text=message))
-# 		requests.get(global_vars.TELEGRAM_MSG_URL % (self.config.get_item('telegram','TELEGRAM_API_TOKEN'),self.config.get_item('telegram','TELEGRAM_CHAT_ID'),urllib.parse.quote(message)))
 	
 	# return an image
 	# image is the image buffer to return

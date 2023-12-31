@@ -1,19 +1,17 @@
-import telegram
 import notion_interface
 from config import config
 from global_vars import global_vars
 from notion_journal_interface import notion_journal
 import datetime
-from telegram_interface import telegram_interface
 import log
 
 # Telegram listener class to respond to telegram messages.
 class Listener:
 
-	def __init__(self):
+	def __init__(self, _message_interface):
 		self.config = config.config()
 		self.log = log.log()
-		self.message_interface = telegram_interface()
+		self.message_interface = _message_interface
 
 	def execute(self,command,message):
 		notion = notion_interface.notion()
