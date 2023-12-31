@@ -59,6 +59,13 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
+## 2023-12-XX (81) Separate telegram interface
+Quite a big overhaul with no functional change (yet), but put the telegram interface functionality in a separate class. This gives more flexibility on the view part (which is now truly separate from the controller). I got the idea when making the report required me to implement telegram code I've implemented a few times before, indicating that this telegram code is not truly separate.
++ (major) Created "telegram_interface" which is exactly that, an interface for telegram.
++ (medium) Buffed up the weight graph in the daily report a little, so it now shows values and some other nicities. Colors are better.
++ (medium) The weight graph doesn't use a file anymore, so the tmp folder has become obsolete
++ (bug) removed the test command from the usage script, which has been removed
+
 ## 2023-12-30 (80) bugfixes and removal of test journal
 + (minor) forgot to add to previous commit it requires matplotlib from now on.
 + (bug) Added a check for existence of image before sending to prevent erroring out
