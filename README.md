@@ -59,7 +59,10 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
-## XXXX-XX-XX (82)
+## 2023-12-31.2 (83) Save the readme
++ (bug) Forgot to save the readme, showing weird text instead of the update below
+
+## 2023-12-31.1 (82) Text interface and bugfixes
 + (bug) Removed the test journal for sure (See #80)
 + (minor) Rearranged the imports in the script
 + (major) Added a text interface, with additional functionality for giving the interface on the commandline, doing a little overhaul of the commandline argument functionality
