@@ -49,6 +49,8 @@ class global_vars:
 	
 	NOTION_RETRIEVE_JOURNAL_JSON = '{"filter": { "or" : [ { "property" : "title", "title" : { "starts_with" : "%s" } }, { "property" : "Date", "date" : { "equals" : "%s" } } ] } }'
 	
+	NOTION_REPORT_JOURNAL_JSON = '{"filter": { "property" : "Date", "date" : { "on_or_before" : "%s" } }'
+	
 	NOTION_TASKLIST_QUERY_JSON = '{"filter": { "and": [{"property": "Status", "status" : { "does_not_equal": "Done 🙌" } },  { "property": "Status", "status" : { "does_not_equal": "Dropped 🔥" } }, {  "or": [ { "property":"Due date", "date" :{ "on_or_before":"%s" } }, { "property":"Action date", "date" : { "on_or_before":"%s" } } ] } ] } }'
 	
 	JOURNAL_DATE_KEY = 'Date'
@@ -84,6 +86,6 @@ class global_vars:
 	
 	REPORT_GRAPH_Y_LABEL = 'Weight (Kg)'
 	
-	REPORT_GRAPH_X_LABEL = 'Days ago'
+	REPORT_GRAPH_X_LABEL = 'Day of month'
 	
 	REPORT_IMAGE_NOT_FOUND_ERR = 'Error: graph image not found'

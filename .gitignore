@@ -9,6 +9,9 @@ productivityTools.log
 config_mail
 pihole-FTL.db
 
+# Script used to test code
+tester.py
+
 # Automated python ignoring files...
 # Byte-compiled / optimized / DLL files
 __pycache__/

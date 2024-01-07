@@ -46,16 +46,18 @@ class report:
 		x_values = []
 		
 		# get the past X weights
-		offset = 0 - int(self.config.get_item('report','REPORT_LOOKBACK_LENGTH'))
+		offset = 0
 		
 		# NOTE: This part of the code is highly inefficient, better would be to get all journal entries in one go.
-		while offset < 0:
+		while offset >= -int(self.config.get_item('report','REPORT_LOOKBACK_LENGTH')):
 			date = (datetime.datetime.now() + datetime.timedelta(days=offset)).strftime("%Y-%m-%d")
 			weight = notion_journal(date).get_journal_property(global_vars.JOURNAL_WEIGHT_KEY)
 			if isinstance(weight, (int, float, complex)):
 				y_values.append(weight)
-				x_values.append(abs(offset))
-			offset += 1
+				x_values.append(str(date[-2:]))
+			offset -= 1
+		y_values = y_values[::-1]
+		x_values = x_values[::-1]
 		return [y_values,x_values]
 
 	def send_graph(self):

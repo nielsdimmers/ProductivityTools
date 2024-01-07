@@ -4,13 +4,14 @@ from global_vars import global_vars
 from config import config
 import time
 import json
+import notion_json_builder
 
 # Models a journal, which is created on init, or retrieved on init
 class notion_journal:
 		
 	def get_notion_headers(self):
-		return {'Authorization': 'Bearer %s' % self.config.get_item('notion','ACCESS_KEY'), "accept": "application/json",'Notion-Version':'2022-06-28'}
-	
+		return  notion_json_builder.NotionHeaders(self.config.get_item('notion','ACCESS_KEY')).__dict__
+			
 	def __init__(self,_date = datetime.datetime.now().strftime("%Y-%m-%d")): # creates a journal if it doesn't exist
 		self.config = config.config('config_notion')
 		response = requests.post(global_vars.NOTION_DATABASE_QUERY_URL % self.config.get_item('notion','GOAL_DATABASE_KEY'), json = json.loads(global_vars.NOTION_RETRIEVE_JOURNAL_JSON % (_date,_date)),headers=self.get_notion_headers())
@@ -18,7 +19,8 @@ class notion_journal:
 			self.journal_id = response.json()['results'][0]['id'] # journal exists, set the ID.
 		else:
 			journal_title = '%s %s' % (_date,global_vars.DAYS_OF_WEEK[datetime.datetime.strptime(_date, '%Y-%m-%d').weekday()]) # it doesn't exist, create the journal
-			journal_content = {'parent':{'database_id':self.config.get_item('notion','GOAL_DATABASE_KEY')}, 'properties':{'title':{'title':[{"text":{"content":journal_title}}]},global_vars.JOURNAL_DATE_KEY:{'date':{'start':_date}}}}
+			journal_content = notion_json_builder.NotionPage(self.config.get_item('notion','GOAL_DATABASE_KEY'),[journal_title],_date).__dict__
+			
 			self.journal_id = requests.post(global_vars.NOTION_PAGE_CREATE_URL, json=journal_content,headers=self.get_notion_headers()).json()['id'] # This line creates journal		
 		self.retrieve_time = 0
 		self.properties = requests.get(global_vars.NOTION_DATABASE_GET_URL % self.config.get_item('notion','GOAL_DATABASE_KEY'),headers=self.get_notion_headers()).json()['properties']
@@ -32,11 +34,6 @@ class notion_journal:
 	def get_url(self):
 		return self.get_page().json()['url']
 	
-	# USE WITH CAUTION!
-	def delete_journal(self):
-		if self.get_journal_property('Korte samenvatting').split()[0] == self.config.get_item('notion','TEST_DATE'): # To make sure this class can only delete the test page
-			requests.patch(global_vars.NOTION_PAGE_URL % self.journal_id ,json=json.loads('{"archived" : true}'),headers=self.get_notion_headers())
-
 	def journal_property(self,_property,_value): 	# handles the journal property command, returns text
 		if _value == "":
 			return 'In journal dated %s, current %s is: %s' % (self.get_journal_property(global_vars.JOURNAL_DATE_KEY),_property,self.get_journal_property(_property))
@@ -56,13 +53,13 @@ class notion_journal:
 		return requests.patch(global_vars.NOTION_PAGE_URL % self.journal_id, headers = self.get_notion_headers(),json=json.loads(global_vars.NOTION_PROPERTY_JSON[self.properties[_property]['type']] % (_property,_value)))
 	
 	def get_journal_property(self,_property):
-		result = requests.get(global_vars.NOTION_PROPERTY_GET_URL % (self.journal_id,self.properties[_property]['id']),headers=self.get_notion_headers())
-		if result.json()['object'] == 'property_item':
-			if result.json()['type'] == 'date':
-				return result.json()['date']['start']
-			return result.json()[result.json()['type']]
-		elif len(result.json()['results']) > 0:
-			return result.json()['results'][0][result.json()['results'][0]['type']]['plain_text']
+		property_data = (requests.get(global_vars.NOTION_PROPERTY_GET_URL % (self.journal_id,self.properties[_property]['id']),headers=self.get_notion_headers())).json()
+		if property_data['object'] == 'property_item':
+			if property_data['type'] == 'date':
+				return property_data['date']['start']
+			return property_data[property_data['type']]
+		elif len(property_data['results']) > 0:
+			return property_data['results'][0][property_data['results'][0]['type']]['plain_text']
 			
 	# Send the journal to the notion journal page
 	def send_journal(self,_journal,time_stamp = True):

@@ -59,6 +59,12 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
+## 2024-01-XX (84) 
++ (minor) Removed an old add grocery function from notion
++ (minor) Removed a test function from the notion journal interface
++ (minor) Cleaned up the `get_journal_property` function in the journal interface
++ (major) Added `notion_json_builder` and moved most of the json texts (except those in global_vars) to that file as classes for readability
+
 ## 2023-12-31.2 (83) Save the readme
 + (bug) Forgot to save the readme, showing weird text instead of the update below
 
