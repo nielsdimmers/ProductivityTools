@@ -59,6 +59,18 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
+To count the lines of code, use `find . -type f -name "*.py" -exec wc -l {} +`
+
+## 2024-01-10.2 (87) Fix AI bot count in wrong journal
++ (bug) In the daily message, I report on yesterday's AI usage, but put the value in today's journal. Fixed that.
++ (minor) Removed an unneeded dependency from the script (still quite a lot of dependencies there...)
++ (minor) Removed some unneeded comments from the json builder.
++ (minor) Added the command to count the number of lines of code to the README
+
+| Property | Value |
+| :--- | :--- |
+| Lines of python code | 805 |
+
 ## 2024-01-10.1 (86) Count AI uses
 + (major) Added a new interface with a new database which contains AI uses. The number for today is counted and put into the journal field, so I can keep track. This needs a new config variable with the databse ID of the AI uses count.
 

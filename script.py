@@ -5,7 +5,6 @@ from global_vars import global_vars
 from listener import Listener
 from mailcheck import mailcheck
 from notion_journal_interface import notion_journal
-import notion_interface
 from telegram_interface import telegram_interface
 from text_interface import text_interface
 from report import report

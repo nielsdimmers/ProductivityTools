@@ -30,7 +30,7 @@ class daily:
 		
 		result += 'You used the AI bot %s times yesterday.\n' % ai_uses
 		
-		journal.set_journal_property(global_vars.JOURNAL_AICOUNT_KEY,ai_uses)
+		yesterday_journal.set_journal_property(global_vars.JOURNAL_AICOUNT_KEY,ai_uses)
 		
 		# Get the notion stuff
 		task_count = notion().get_task_count(today)

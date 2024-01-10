@@ -79,11 +79,3 @@ class NotionCreatedTime:
 	def __init__(self,create_date):
 		setattr(self,'after','%s 00:00:00' % create_date)
 		setattr(self,'before','%s 23:59:59' % create_date)
-# {
-#   "filter": {
-#     "timestamp": "created_time",
-#     "created_time": {
-#       "after": "2022-04-11T07:04:00"
-#     }
-#   }
-# }
