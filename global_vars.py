@@ -65,6 +65,8 @@ class global_vars:
 	
 	JOURNAL_FUN_KEY = 'Fun for today'
 	
+	JOURNAL_PROMPT_KEY = 'Journal question'
+	
 	## LOGGING
 	LOG_LENGTH_MESSAGE = 'The logfile %s is %s lines long.'
 		

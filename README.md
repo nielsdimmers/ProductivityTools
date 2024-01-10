@@ -59,7 +59,10 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
-## 2024-01-XX (84) 
+## 2024-01-10 (85) Add journal prompt
++ (major) Added a journal prompt (question), shown in the daily update and filled in in the journal of today. You can add your own prompts to journal_prompts, remove as you like.
+
+## 2024-01-07 (84) JSON to class 
 + (minor) Removed an old add grocery function from notion
 + (minor) Removed a test function from the notion journal interface
 + (minor) Cleaned up the `get_journal_property` function in the journal interface

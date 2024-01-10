@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import requests
 from global_vars import global_vars
 from config import config
@@ -12,13 +12,13 @@ class notion_journal:
 	def get_notion_headers(self):
 		return  notion_json_builder.NotionHeaders(self.config.get_item('notion','ACCESS_KEY')).__dict__
 			
-	def __init__(self,_date = datetime.datetime.now().strftime("%Y-%m-%d")): # creates a journal if it doesn't exist
+	def __init__(self,_date = datetime.now().strftime("%Y-%m-%d")): # creates a journal if it doesn't exist
 		self.config = config.config('config_notion')
 		response = requests.post(global_vars.NOTION_DATABASE_QUERY_URL % self.config.get_item('notion','GOAL_DATABASE_KEY'), json = json.loads(global_vars.NOTION_RETRIEVE_JOURNAL_JSON % (_date,_date)),headers=self.get_notion_headers())
 		if len(response.json()['results']) > 0:
 			self.journal_id = response.json()['results'][0]['id'] # journal exists, set the ID.
 		else:
-			journal_title = '%s %s' % (_date,global_vars.DAYS_OF_WEEK[datetime.datetime.strptime(_date, '%Y-%m-%d').weekday()]) # it doesn't exist, create the journal
+			journal_title = '%s %s' % (_date,global_vars.DAYS_OF_WEEK[datetime.strptime(_date, '%Y-%m-%d').weekday()]) # it doesn't exist, create the journal
 			journal_content = notion_json_builder.NotionPage(self.config.get_item('notion','GOAL_DATABASE_KEY'),[journal_title],_date).__dict__
 			
 			self.journal_id = requests.post(global_vars.NOTION_PAGE_CREATE_URL, json=journal_content,headers=self.get_notion_headers()).json()['id'] # This line creates journal		
@@ -63,7 +63,7 @@ class notion_journal:
 			
 	# Send the journal to the notion journal page
 	def send_journal(self,_journal,time_stamp = True):
-		journal_entry = ('(%s) %s' % (datetime.datetime.now().strftime("%H:%M:%S"),_journal)) if time_stamp else _journal
+		journal_entry = ('(%s) %s' % (datetime.now().strftime("%H:%M:%S"),_journal)) if time_stamp else _journal
 		journal_entry = journal_entry.replace('"','\\"')
 		response = requests.patch(global_vars.NOTION_CHILDREN_URL % self.journal_id,json=json.loads(global_vars.NOTION_JOURNAL_JSON % journal_entry.strip()),headers=self.get_notion_headers())
 		if response.status_code == global_vars.HTTP_OK_CODE:

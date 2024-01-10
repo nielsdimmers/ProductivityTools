@@ -1,5 +1,4 @@
 import requests
-import datetime
 from global_vars import global_vars
 from notion_journal_interface import notion_journal
 from config import config
@@ -37,20 +36,7 @@ class notion:
 	def micro_journal(self,_journal):
 		return notion_journal(self.config).micro_journal(_journal)
 	
-	def get_daily_data(self):
-		# number of words of yesterday's journal
-		yesterday_journal = notion_journal((datetime.date.today() - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"))
-		today = datetime.datetime.now().strftime("%Y-%m-%d")
-		
-		result = 'Good morning Niels, yesterday\'s journal word count is %s.\n' % yesterday_journal.count_words()
-		
-		# Get the notion stuff
-		response = requests.post('https://api.notion.com/v1/databases/%s/query' % self.config.get_item('notion','TASK_DATABASE_KEY'), json=json.loads(global_vars.NOTION_TASKLIST_QUERY_JSON % (today,today)),headers=self.get_notion_headers())
-		
-		
-		result += "For today, there are a total of %s tasks.\n" % len(response.json()['results'])
-		
-		journal = notion_journal()
-		result += '\n\nToday\'s goal is %s. [Today\'s journal](%s)' % (journal.get_journal_property(global_vars.JOURNAL_GOAL_KEY),journal.get_url())
-		
-		return result
+	# get task count based on the notion style date
+	def get_task_count(self,date):
+		response = requests.post('https://api.notion.com/v1/databases/%s/query' % self.config.get_item('notion','TASK_DATABASE_KEY'), json=json.loads(global_vars.NOTION_TASKLIST_QUERY_JSON % (date,date)),headers=self.get_notion_headers())
+		return len(response.json()['results'])
