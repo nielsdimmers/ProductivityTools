@@ -67,6 +67,8 @@ class global_vars:
 	
 	JOURNAL_PROMPT_KEY = 'Journal question'
 	
+	JOURNAL_AICOUNT_KEY = 'AI uses'
+	
 	## LOGGING
 	LOG_LENGTH_MESSAGE = 'The logfile %s is %s lines long.'
 		

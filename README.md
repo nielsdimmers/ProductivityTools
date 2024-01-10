@@ -59,6 +59,9 @@ Impact of change can be any of:
 + `major` Adding functionality or interfaces, adding an entire class (even when it's just refactoring)
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
+## 2024-01-10.1 (86) Count AI uses
++ (major) Added a new interface with a new database which contains AI uses. The number for today is counted and put into the journal field, so I can keep track. This needs a new config variable with the databse ID of the AI uses count.
+
 ## 2024-01-10 (85) Add journal prompt
 + (major) Added a journal prompt (question), shown in the daily update and filled in in the journal of today. You can add your own prompts to journal_prompts, remove as you like.
 

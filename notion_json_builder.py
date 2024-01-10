@@ -66,3 +66,24 @@ class NotionTitleText:
 	def __init__(self,content):
 		setattr(self, 'text', NotionTextblock(content).__dict__)
 
+class NotionCreateDateFilter:
+	def __init__(self,create_date):
+		setattr(self,'filter',NotionCreateDateFilterSub(create_date).__dict__)
+		
+class NotionCreateDateFilterSub:
+	def __init__(self,create_date):
+		setattr(self,'timestamp','created_time')
+		setattr(self,'created_time', NotionCreatedTime(create_date).__dict__)
+
+class NotionCreatedTime:
+	def __init__(self,create_date):
+		setattr(self,'after','%s 00:00:00' % create_date)
+		setattr(self,'before','%s 23:59:59' % create_date)
+# {
+#   "filter": {
+#     "timestamp": "created_time",
+#     "created_time": {
+#       "after": "2022-04-11T07:04:00"
+#     }
+#   }
+# }
