@@ -4,12 +4,15 @@ import datetime
 from global_vars import global_vars
 import random
 from data_interface import data_interface
+import sys
+import os
 
 class daily:
 	
 	# return a random journal prompt
 	def get_journal_prompt(self):
-		file_path = './journal_prompts.txt'
+		command_directory = directory_part = os.path.dirname(sys.argv[0])
+		file_path = '%s/journal_prompts.txt' % os.path.dirname(sys.argv[0])
 		# Open the file in read mode
 		with open(file_path, 'r') as file:
 		# Read lines and store them in a list
@@ -24,7 +27,7 @@ class daily:
 		
 		result = 'Good morning Niels, yesterday\'s journal word count is %s.\n' % yesterday_journal.count_words()
 
-		journal = notion_journal()
+		journal = notion_journal(today)
 		
 		ai_uses = data_interface().get_data_count(yesterday)
 		

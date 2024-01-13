@@ -53,13 +53,13 @@ class notion_journal:
 		return requests.patch(global_vars.NOTION_PAGE_URL % self.journal_id, headers = self.get_notion_headers(),json=json.loads(global_vars.NOTION_PROPERTY_JSON[self.properties[_property]['type']] % (_property,_value)))
 	
 	def get_journal_property(self,_property):
-		property_data = (requests.get(global_vars.NOTION_PROPERTY_GET_URL % (self.journal_id,self.properties[_property]['id']),headers=self.get_notion_headers())).json()
-		if property_data['object'] == 'property_item':
-			if property_data['type'] == 'date':
-				return property_data['date']['start']
+		property_data = self.get_page().json()['properties'][_property]
+		if property_data['type'] == 'date':
+			return property_data['date']['start']
+		elif property_data['type'] == 'rich_text':
+			return property_data['rich_text'][0]['plain_text']
+		else:
 			return property_data[property_data['type']]
-		elif len(property_data['results']) > 0:
-			return property_data['results'][0][property_data['results'][0]['type']]['plain_text']
 			
 	# Send the journal to the notion journal page
 	def send_journal(self,_journal,time_stamp = True):

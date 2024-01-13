@@ -61,15 +61,24 @@ Impact of change can be any of:
 
 To count the lines of code, use `find . -type f -name "*.py" -exec wc -l {} +`
 
+## 2024-XX-XX (88) removed habitify, bugfixes and minor improvements
++ (minor) The count in the previous release was a little off, fixed that
++ (minor) Made `get_journal_property` in `notion_journal_interface` more efficient by making it use get_page instead of calling the script by itself
++ (bug) When executed from a different folder than the script's root, the daily script would crash because it couldn't find the journal_prompts.txt. Had to import two modules, but fixed it!
++ (minor) Clarified that the min retrieve time should be in seconds in the notion.default settings
++ (bug) forced `get_daily_data` to use today's date, since some of the information it showed was from the date the script was executed.
++ (major) Removed habitify.py, since it wasn't in use.
+
 ## 2024-01-10.2 (87) Fix AI bot count in wrong journal
 + (bug) In the daily message, I report on yesterday's AI usage, but put the value in today's journal. Fixed that.
 + (minor) Removed an unneeded dependency from the script (still quite a lot of dependencies there...)
 + (minor) Removed some unneeded comments from the json builder.
 + (minor) Added the command to count the number of lines of code to the README
 
+
 | Property | Value |
 | :--- | :--- |
-| Lines of python code | 805 |
+| Lines of python code | 796 |
 
 ## 2024-01-10.1 (86) Count AI uses
 + (major) Added a new interface with a new database which contains AI uses. The number for today is counted and put into the journal field, so I can keep track. This needs a new config variable with the databse ID of the AI uses count.

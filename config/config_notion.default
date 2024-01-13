@@ -12,6 +12,6 @@ AI_USAGE_DATABASE_KEY = <notion key of aicount database here>
 
 JOURNAL_ENTRY_MAX_LENGTH = <max length of a journal entry>
 
-MIN_RETRIEVE_TIME = <minimum length to wait before retrieving the journal again>
+MIN_RETRIEVE_TIME = <minimum length to wait before retrieving the journal again in seconds>
 
 JOURNAL_DESIRED_LENGTH = <Length you'd like every notion journal to be>
