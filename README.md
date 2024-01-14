@@ -61,7 +61,16 @@ Impact of change can be any of:
 
 To count the lines of code, use `find . -type f -name "*.py" -exec wc -l {} +`
 
-## 2024-01-14.1 (90) bugfix AI counted all instead of just today
+## 2024-01-14 (91) Refactoring into notion_abstract
++ (major) did a major refactoring resulting in a new abstract class: notion_abstract, containing generic functions in the notion and journal interface
++ (major) Removed daily_model and data_interface files, because their code is now integrated into other classes
++ (minor) Removed the notion_daily sub from the journal interface, since it wasn't called anymore and just called the journal variant
+
+| Property | Value |
+| :--- | :--- |
+| Lines of python code | 785 |
+
+## 2024-01-14.1 (90) bugfix AI counted field
 + (bug) The query done by the script to retrieve the AI count records counted all records in the table, instead of just the ones from today. I fixed that by changing the filter.
 
 | Property | Value |

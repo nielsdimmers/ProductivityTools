@@ -4,7 +4,6 @@ from global_vars import global_vars
 from notion_journal_interface import notion_journal
 import datetime
 import log
-from daily_model import daily
 
 # Telegram listener class to respond to telegram messages.
 class Listener:
@@ -19,7 +18,7 @@ class Listener:
 		journal = notion_journal(datetime.datetime.now().strftime("%Y-%m-%d"))
 		
 		if command == 'daily':
-			return daily().get_daily_data()
+			return notion.get_daily_data()
 		elif command == 'tk':
 			return notion.create_task(message)
 		elif command == 'log':

@@ -5,11 +5,11 @@ from global_vars import global_vars
 from listener import Listener
 from mailcheck import mailcheck
 from notion_journal_interface import notion_journal
+from notion_interface import notion
 from telegram_interface import telegram_interface
 from text_interface import text_interface
 from report import report
 from log import log
-from daily_model import daily
 
 class script_handler:
 
@@ -33,7 +33,7 @@ class script_handler:
 		self.message_interface.send_message(message)
 	
 	def daily(self):
-		self.message_interface.send_message(daily().get_daily_data())
+		self.message_interface.send_message(notion().get_daily_data())
 		self.message_interface.send_image(report().send_graph())
 		
 	def words(self):

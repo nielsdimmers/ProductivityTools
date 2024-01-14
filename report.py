@@ -51,7 +51,7 @@ class report:
 		# NOTE: This part of the code is highly inefficient, better would be to get all journal entries in one go.
 		while offset >= -int(self.config.get_item('report','REPORT_LOOKBACK_LENGTH')):
 			date = (datetime.datetime.now() + datetime.timedelta(days=offset)).strftime("%Y-%m-%d")
-			weight = notion_journal(date).get_journal_property(global_vars.JOURNAL_WEIGHT_KEY)
+			weight = notion_journal(date).get_property(global_vars.JOURNAL_WEIGHT_KEY)
 			if isinstance(weight, (int, float, complex)):
 				y_values.append(weight)
 				x_values.append(str(date[-2:]))
