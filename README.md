@@ -61,6 +61,13 @@ Impact of change can be any of:
 
 To count the lines of code, use `find . -type f -name "*.py" -exec wc -l {} +`
 
+## 2024-01-14.1 (90) bugfix AI counted all instead of just today
++ (bug) The query done by the script to retrieve the AI count records counted all records in the table, instead of just the ones from today. I fixed that by changing the filter.
+
+| Property | Value |
+| :--- | :--- |
+| Lines of python code | 796 |
+
 ## 2024-01-14 (89) bugfix retrieving fields
 + (bug) Fixed a situation where an empty field would cause `get_journal_property` to crash
 + (minor) Fixed the data in the previous update
