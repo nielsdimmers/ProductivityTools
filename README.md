@@ -61,7 +61,11 @@ Impact of change can be any of:
 
 To count the lines of code, use `find . -type f -name "*.py" -exec wc -l {} +`
 
-## 2024-XX-XX (88) removed habitify, bugfixes and minor improvements
+## 2024-01-14 (89) bugfix retrieving fields
++ (bug) Fixed a situation where an empty field would cause `get_journal_property` to crash
++ (minor) Fixed the data in the previous update
+
+## 2024-01-13 (88) removed habitify, bugfixes and minor improvements
 + (minor) The count in the previous release was a little off, fixed that
 + (minor) Made `get_journal_property` in `notion_journal_interface` more efficient by making it use get_page instead of calling the script by itself
 + (bug) When executed from a different folder than the script's root, the daily script would crash because it couldn't find the journal_prompts.txt. Had to import two modules, but fixed it!

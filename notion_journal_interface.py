@@ -57,7 +57,8 @@ class notion_journal:
 		if property_data['type'] == 'date':
 			return property_data['date']['start']
 		elif property_data['type'] == 'rich_text':
-			return property_data['rich_text'][0]['plain_text']
+			if len(property_data['rich_text']) > 0:
+				return property_data['rich_text'][0]['plain_text']
 		else:
 			return property_data[property_data['type']]
 			
