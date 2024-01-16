@@ -21,7 +21,6 @@ class notion(notion_abstract):
 
 		# The creation of the task
 		response = super().post_notion('page','',dictionary)
-		
 		super().patch_notion('children',response.json()['id'],notion_json_builder.NotionChildren(task_data).__dict__)
 		
 		# Setup the response telegram message
@@ -35,16 +34,14 @@ class notion(notion_abstract):
 	# get the data count for date
 	def get_ai_data_count(self,date):
 		response = super().post_notion('database',super().get_config('AI_USAGE_DATABASE_KEY'),notion_json_builder.NotionCreateDateFilter(date).__dict__)
+		print('single page is %s\n\n' % response.json()['results'][0])
 		return len(response.json()['results'])
 		
 	# return a random journal prompt
 	def get_journal_prompt(self):
-		file_path = '%s/journal_prompts.txt' % os.path.dirname(sys.argv[0])
-		# Open the file in read mode
-		with open(file_path, 'r') as file:
-		# Read lines and store them in a list
-			lines = file.readlines().strip()
-		return lines[random.randint(1,len(lines))-1]
+		with open(('%s/journal_prompts.txt' % os.path.dirname(sys.argv[0])), 'r') as file:
+			lines = file.readlines()
+		return lines[random.randint(1,len(lines))-1].strip()
 			
 	def get_daily_data(self):
 		# number of words of yesterday's journal
@@ -59,7 +56,14 @@ class notion(notion_abstract):
 		ai_uses = self.get_ai_data_count(yesterday)
 		result += 'You used the AI bot %s times yesterday.\n' % ai_uses
 		
+		result += 'Summary of yesterday\'s journal is:\n%s\n\n' % yesterday_journal.get_property(global_vars.JOURNAL_SUMMARY_KEY)
+		
 		yesterday_journal.set_property(global_vars.JOURNAL_AICOUNT_KEY,ai_uses)
+		
+		# Make an AI hit.
+		dictionary = notion_json_builder.NotionPage(super().get_config('AI_USAGE_DATABASE_KEY'),['Created by Prod Tools bot']).__dict__
+		dictionary['properties'].update(json.loads(global_vars.NOTION_AIBOT_JSON))
+		response = super().post_notion('page','',dictionary)
 		
 		result += "For today, there are a total of %s tasks.\n\n" % self.get_task_count(today)
 

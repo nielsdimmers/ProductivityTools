@@ -53,6 +53,8 @@ class global_vars:
 	
 	NOTION_TASKLIST_QUERY_JSON = '{"filter": { "and": [{"property": "Status", "status" : { "does_not_equal": "Done 🙌" } },  { "property": "Status", "status" : { "does_not_equal": "Dropped 🔥" } }, {  "or": [ { "property":"Due date", "date" :{ "on_or_before":"%s" } }, { "property":"Action date", "date" : { "on_or_before":"%s" } } ] } ] } }'
 	
+	NOTION_AIBOT_JSON = '{"Number": {"id": "fkgo", "type": "number", "number": 1}, "Select": {"id": "nUgq", "type": "select", "select": {"id": "cbe4cfd6-4e98-4675-b741-b5e277e93ff2", "name": "Field", "color": "green"}}}'
+	
 	JOURNAL_DATE_KEY = 'Date'
 	
 	JOURNAL_LENGTH_KEY = 'Journal length'
@@ -69,7 +71,8 @@ class global_vars:
 	
 	JOURNAL_AICOUNT_KEY = 'AI uses'
 	
-	## LOGGING
+	JOURNAL_SUMMARY_KEY = 'Today\'s lessons'
+	
 	LOG_LENGTH_MESSAGE = 'The logfile %s is %s lines long.'
 		
 	SCRIPT_USAGE = "Usage:\n python3 ./script.py <command>\n - daily for daily data\n - logcount count of log length\n - legal for copyright information\n - listener to start the listener\n - mailcheck to check the mail\n - words to send a wordcount message."
@@ -83,8 +86,6 @@ class global_vars:
 	LEGAL_NOTICE = "This program is licensed under the GNU General Public License version 3.0 (2007). For the full text, see [the license file on github](https://github.com/nielsdimmers/ProductivityTools/blob/main/LICENSE). The code to my bot can be found on [github](https://github.com/nielsdimmers/ProductivityTools)."
 	
 	MAIL_JOURNAL_BLOCK = '---MICROJOURNAL---'
-	
-	REPORT_GRAPH_FILE = 'tmp/plot.jpg'
 	
 	REPORT_GRAPH_TITLE = 'Weight histograph'
 	

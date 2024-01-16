@@ -55,7 +55,7 @@ class notion_journal(notion_abstract):
 			return property_data['date']['start']
 		elif property_data['type'] == 'rich_text':
 			if len(property_data['rich_text']) > 0:
-				return property_data['rich_text'][0]['plain_text']
+				return ''.join([''.join(item['plain_text']) for item in property_data['rich_text']])
 		else:
 			return property_data[property_data['type']]
 			

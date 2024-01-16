@@ -61,7 +61,16 @@ Impact of change can be any of:
 
 To count the lines of code, use `find . -type f -name "*.py" -exec wc -l {} +`
 
-## 2024-01-14 (91) Refactoring into notion_abstract
+## 2024-01-16 (92) AI summary in daily message
++ (minor) Added the correct numbering to previous commit
++ (medium) Added the AI summary of the journal to the daily message
++ (bug) Fixed the reason why daily script didn't work (because I tried to do strip() on an array)
+
+| Property | Value |
+| :--- | :--- |
+| Lines of python code | 790 |
+
+## 2024-01-14.2 (91) Refactoring into notion_abstract
 + (major) did a major refactoring resulting in a new abstract class: notion_abstract, containing generic functions in the notion and journal interface
 + (major) Removed daily_model and data_interface files, because their code is now integrated into other classes
 + (minor) Removed the notion_daily sub from the journal interface, since it wasn't called anymore and just called the journal variant

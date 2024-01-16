@@ -52,7 +52,7 @@ class Listener:
 		return notion.micro_journal(message)
 	
 	def main(self):
-		telegram_commands = ['daily','tk','log','week','weight','goal','tomgoal','legal','words','onepercent','domainoverview','domain','fun','tomfun']
+		telegram_commands = ['daily','tk','log','week','weight','goal','tomgoal','legal','words','onepercent','fun','tomfun']
 		for telegram_command in telegram_commands:
 			self.message_interface.add_command(telegram_command,self)
 		self.message_interface.start_listener(global_vars.REBOOT_MESSAGE)
