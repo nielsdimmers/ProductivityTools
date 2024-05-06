@@ -12,11 +12,11 @@ class global_vars:
 
 	DATETIME_WEEK_NUMBER = 'The current week number is %s.'
 	
-	EVENING_ACTIVITIES_MESSAGE = 'It\'s time for your evening activities! You can find the link [here](%s)'
+	EVENING_ACTIVITIES_MESSAGE = "It's time for your evening activities! You can find the link [here](%s)."
 	
-	MORNING_ACTIVITIES_MESSAGE = 'It\'s time for your morning activities! You can find the link [here](%s)'
+	MORNING_ACTIVITIES_MESSAGE = "It's time for your morning activities! You can find the link [here](%s)."
 	
-	AFTERNOON_ACTIVITIES_MESSAGE = 'It\'s time for your mid day checkup! You can find the link [here](%s)'
+	AFTERNOON_ACTIVITIES_MESSAGE = "It's time for your mid day checkup! You can find the link [here](%s)."
 
 	# the telegram URL to send a message to myself
 	TELEGRAM_MSG_URL = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s&parse_mode=Markdown"

@@ -37,13 +37,13 @@ class script_handler:
 		self.message_interface.send_image(report().send_graph())
 	
 	def evening(self):
-		self.message_interface.send_message(global_vars.EVENING_ACTIVITIES_MESSAGE % notion().get_checklist_url(global_vars.EVENING))
+		self.send_message(global_vars.EVENING_ACTIVITIES_MESSAGE % notion().get_checklist_url(global_vars.EVENING))
 	
 	def morning(self):
-		self.message_interface.send_message(global_vars.MORNING_ACTIVITIES_MESSAGE % notion().get_checklist_url(global_vars.MORNING))
+		self.send_message(global_vars.MORNING_ACTIVITIES_MESSAGE % notion().get_checklist_url(global_vars.MORNING))
 		
 	def afternoon(self):
-		self.message_interface.send_message(global_vars.AFTERNOON_ACTIVITIES_MESSAGE % notion().get_checklist_url(global_vars.AFTERNOON))
+		self.send_message(global_vars.AFTERNOON_ACTIVITIES_MESSAGE % notion().get_checklist_url(global_vars.AFTERNOON))
 		
 	def words(self):
 		journal_length = notion_journal(datetime.datetime.now().strftime("%Y-%m-%d")).count_words()

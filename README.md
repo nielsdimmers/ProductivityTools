@@ -61,7 +61,12 @@ Impact of change can be any of:
 
 To count the lines of code, use `find . -type f -name "*.py" -exec wc -l {} +`
 
-## 2024-05-?? (93) Links to checklists during the day
+## 2024-05-06.1 (94) Fix messages not being sent in markdown
++ (minor) Fixed the date on previous update
++ (minor) Fixed that some messages weren't sent in markdown but just plain text (showing full urls and all...)
++ (minor) Some minor textual fixes, which made stuff look a little better, but didn't solve the problem
+
+## 2024-05-06 (93) Links to checklists during the day
 + (minor) removed debug print statement from notion_interface.py
 + (major) added script commands to generate messages for links for checklists during the day. The messages can be cron-jobbed. For instance, using ``python3 ./script.py evening`` and similarly using ``morning`` and ``afternoon``
 

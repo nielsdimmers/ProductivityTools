@@ -16,7 +16,7 @@ class telegram_interface:
 	# Send a text message using the default configuration
 	def send_message(self, message):
 		chat_id = self.config.get_item('telegram','TELEGRAM_CHAT_ID')
-		asyncio.get_event_loop().run_until_complete(self.application.bot.send_message(chat_id=chat_id,text=message))
+		asyncio.get_event_loop().run_until_complete(self.application.bot.send_message(chat_id=chat_id,text=message,parse_mode="Markdown"))
 	
 	# return an image
 	# image is the image buffer to return
