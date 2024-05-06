@@ -35,6 +35,15 @@ class script_handler:
 	def daily(self):
 		self.message_interface.send_message(notion().get_daily_data())
 		self.message_interface.send_image(report().send_graph())
+	
+	def evening(self):
+		self.message_interface.send_message(global_vars.EVENING_ACTIVITIES_MESSAGE % notion().get_checklist_url(global_vars.EVENING))
+	
+	def morning(self):
+		self.message_interface.send_message(global_vars.MORNING_ACTIVITIES_MESSAGE % notion().get_checklist_url(global_vars.MORNING))
+		
+	def afternoon(self):
+		self.message_interface.send_message(global_vars.AFTERNOON_ACTIVITIES_MESSAGE % notion().get_checklist_url(global_vars.AFTERNOON))
 		
 	def words(self):
 		journal_length = notion_journal(datetime.datetime.now().strftime("%Y-%m-%d")).count_words()
@@ -67,5 +76,11 @@ elif action == 'legal':
 	handler.send_message(global_vars.LEGAL_NOTICE)
 elif action == 'words':
 	handler.words()
+elif action == 'evening':
+	handler.evening()
+elif action == 'morning':
+	handler.morning()
+elif action == 'afternoon':	
+	handler.afternoon()
 else:
 	handler.send_message(global_vars.SCRIPT_USAGE)

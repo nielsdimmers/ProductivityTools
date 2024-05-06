@@ -30,11 +30,22 @@ class notion(notion_abstract):
 	def get_task_count(self,date):	
 		response = super().post_notion('database',super().get_config('TASK_DATABASE_KEY'),json.loads(global_vars.NOTION_TASKLIST_QUERY_JSON % (date,date)))
 		return len(response.json()['results'])
+		
+	# return the currently active evening checklist task
+	def get_checklist_url(self, _checklist_type):
+		request_json = ''
+		if _checklist_type == global_vars.EVENING:
+			request_json = global_vars.NOTION_TASKLIST_EVENING_JSON
+		if _checklist_type == global_vars.MORNING:
+			request_json = global_vars.NOTION_TASKLIST_MORNING_JSON
+		if _checklist_type == global_vars.AFTERNOON:
+			request_json = global_vars.NOTION_TASKLIST_AFTERNOON_JSON			
+		response = super().post_notion('database',super().get_config('TASK_DATABASE_KEY'),json.loads(request_json))
+		return response.json()['results'][0]['url']
 	
 	# get the data count for date
 	def get_ai_data_count(self,date):
 		response = super().post_notion('database',super().get_config('AI_USAGE_DATABASE_KEY'),notion_json_builder.NotionCreateDateFilter(date).__dict__)
-		print('single page is %s\n\n' % response.json()['results'][0])
 		return len(response.json()['results'])
 		
 	# return a random journal prompt

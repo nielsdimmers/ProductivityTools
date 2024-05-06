@@ -11,6 +11,12 @@ class global_vars:
 	IMAGE_TEXT_REPLACEMENT = "Wanted to send an image, but since this interface is text only, that's not possible."
 
 	DATETIME_WEEK_NUMBER = 'The current week number is %s.'
+	
+	EVENING_ACTIVITIES_MESSAGE = 'It\'s time for your evening activities! You can find the link [here](%s)'
+	
+	MORNING_ACTIVITIES_MESSAGE = 'It\'s time for your morning activities! You can find the link [here](%s)'
+	
+	AFTERNOON_ACTIVITIES_MESSAGE = 'It\'s time for your mid day checkup! You can find the link [here](%s)'
 
 	# the telegram URL to send a message to myself
 	TELEGRAM_MSG_URL = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s&parse_mode=Markdown"
@@ -53,6 +59,12 @@ class global_vars:
 	
 	NOTION_TASKLIST_QUERY_JSON = '{"filter": { "and": [{"property": "Status", "status" : { "does_not_equal": "Done 🙌" } },  { "property": "Status", "status" : { "does_not_equal": "Dropped 🔥" } }, {  "or": [ { "property":"Due date", "date" :{ "on_or_before":"%s" } }, { "property":"Action date", "date" : { "on_or_before":"%s" } } ] } ] } }'
 	
+	NOTION_TASKLIST_EVENING_JSON = 	'{"filter": { "and": [{"property": "Status", "status" : { "equals": "To Do📎" } },  {"property": "Tag", "multi_select" : { "contains": "Evening Checklist" } }] } }'
+	
+	NOTION_TASKLIST_AFTERNOON_JSON = 	'{"filter": { "and": [{"property": "Status", "status" : { "equals": "To Do📎" } },  {"property": "Tag", "multi_select" : { "contains": "Mid Day Checkup" } }] } }'
+	
+	NOTION_TASKLIST_MORNING_JSON = 	'{"filter": { "and": [{"property": "Status", "status" : { "equals": "To Do📎" } },  {"property": "Tag", "multi_select" : { "contains": "Morning Checklist" } }] } }'
+	
 	NOTION_AIBOT_JSON = '{"Number": {"id": "fkgo", "type": "number", "number": 1}, "Select": {"id": "nUgq", "type": "select", "select": {"id": "cbe4cfd6-4e98-4675-b741-b5e277e93ff2", "name": "Field", "color": "green"}}}'
 	
 	JOURNAL_DATE_KEY = 'Date'
@@ -94,3 +106,9 @@ class global_vars:
 	REPORT_GRAPH_X_LABEL = 'Day of month'
 	
 	REPORT_IMAGE_NOT_FOUND_ERR = 'Error: graph image not found'
+	
+	EVENING = 'EVENING'
+	
+	MORNING = 'MORNING'
+	
+	AFTERNOON = 'AFTERNOON'

@@ -61,6 +61,14 @@ Impact of change can be any of:
 
 To count the lines of code, use `find . -type f -name "*.py" -exec wc -l {} +`
 
+## 2024-05-?? (93) Links to checklists during the day
++ (minor) removed debug print statement from notion_interface.py
++ (major) added script commands to generate messages for links for checklists during the day. The messages can be cron-jobbed. For instance, using ``python3 ./script.py evening`` and similarly using ``morning`` and ``afternoon``
+
+| Property | Value |
+| :--- | :--- |
+| Lines of python code | 834 |
+
 ## 2024-01-16 (92) AI summary in daily message
 + (minor) Added the correct numbering to previous commit
 + (medium) Added the AI summary of the journal to the daily message
