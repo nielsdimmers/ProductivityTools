@@ -24,7 +24,8 @@ class notion(notion_abstract):
 		super().patch_notion('children',response.json()['id'],notion_json_builder.NotionChildren(task_data).__dict__)
 		
 		# Setup the response telegram message
-		return "Created task with id [%s](%s). Status code: %s (%s)" % (response.json()['id'],response.json()['url'],response.status_code,response.reason)	
+		
+		return "Created inbox item with title '[%s](%s)'. Status code: %s (%s)" % (response.json()['properties']['Name']['title'][0]['plain_text'],response.json()['url'],response.status_code,response.reason)	
 	
 	# get task count based on the notion style date
 	def get_task_count(self,date):	

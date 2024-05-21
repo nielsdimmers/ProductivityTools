@@ -61,6 +61,10 @@ Impact of change can be any of:
 
 To count the lines of code, use `find . -type f -name "*.py" -exec wc -l {} +`
 
+## 2024-05-21 (95) task to inbox
++ (major) Renamed task (``tk``) to ``inbox`` which is more fitting to where the action will land
++ (medium) Buffed up the response message as well
+
 ## 2024-05-06.1 (94) Fix messages not being sent in markdown
 + (minor) Fixed the date on previous update
 + (minor) Fixed that some messages weren't sent in markdown but just plain text (showing full urls and all...)

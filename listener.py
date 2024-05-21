@@ -19,7 +19,7 @@ class Listener:
 		
 		if command == 'daily':
 			return notion.get_daily_data()
-		elif command == 'tk':
+		elif command == 'inbox':
 			return notion.create_task(message)
 		elif command == 'log':
 			return self.log.get_size_message()
@@ -52,7 +52,7 @@ class Listener:
 		return notion.micro_journal(message)
 	
 	def main(self):
-		telegram_commands = ['daily','tk','log','week','weight','goal','tomgoal','legal','words','onepercent','fun','tomfun']
+		telegram_commands = ['daily','inbox','log','week','weight','goal','tomgoal','legal','words','onepercent','fun','tomfun']
 		for telegram_command in telegram_commands:
 			self.message_interface.add_command(telegram_command,self)
 		self.message_interface.start_listener(global_vars.REBOOT_MESSAGE)
