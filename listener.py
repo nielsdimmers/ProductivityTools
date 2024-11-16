@@ -16,7 +16,7 @@ class Listener:
 	def execute(self,command,message):
 		notion = notion_interface.notion()
 		journal = notion_journal(datetime.datetime.now().strftime("%Y-%m-%d"))
-		
+
 		if command == 'daily':
 			return notion.get_daily_data()
 		elif command == 'inbox':
@@ -27,11 +27,6 @@ class Listener:
 			return global_vars.DATETIME_WEEK_NUMBER % datetime.date.today().strftime("%W")
 		elif command == 'weight':
 			return journal.journal_property(global_vars.JOURNAL_WEIGHT_KEY,message)
-		elif command == 'goal':
-			return journal.journal_property(global_vars.JOURNAL_GOAL_KEY,message)
-		elif command == 'tomgoal':
-			tomorrow = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
-			return notion_journal(tomorrow).journal_property(global_vars.JOURNAL_GOAL_KEY,message)
 		elif command == 'legal':
 			return global_vars.LEGAL_NOTICE
 		elif command == 'words':
@@ -39,20 +34,13 @@ class Listener:
 			notion_config = config.config('config_notion')
 			percentage = round((words/int(notion_config.get_item('notion','JOURNAL_DESIRED_LENGTH'))) * 100,2)
 			return global_vars.NOTION_JOURNAL_LENGTH_MSG % (words,percentage,notion_config.get_item('notion','JOURNAL_DESIRED_LENGTH'))
-		elif command == 'onepercent':
-			return journal.journal_property(global_vars.JOURNAL_ONE_PERCENT_KEY,message)
-		elif command == 'fun':
-			return journal.journal_property(global_vars.JOURNAL_FUN_KEY,message)
-		elif command == 'tomfun':
-			tomorrow = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
-			return notion_journal(tomorrow).journal_property(global_vars.JOURNAL_FUN_KEY,message)
 	
 	def journal(self, message):
 		notion = notion_journal(datetime.datetime.now().strftime("%Y-%m-%d"))
 		return notion.micro_journal(message)
 	
 	def main(self):
-		telegram_commands = ['daily','inbox','log','week','weight','goal','tomgoal','legal','words','onepercent','fun','tomfun']
+		telegram_commands = ['daily','inbox','log','week','weight','legal','words']
 		for telegram_command in telegram_commands:
 			self.message_interface.add_command(telegram_command,self)
 		self.message_interface.start_listener(global_vars.REBOOT_MESSAGE)

@@ -8,6 +8,7 @@ from notion_journal_interface import notion_journal
 from notion_interface import notion
 from telegram_interface import telegram_interface
 from text_interface import text_interface
+from signal_interface import signal_interface
 from report import report
 from log import log
 
@@ -22,6 +23,8 @@ class script_handler:
 		elif interface == 'text':
 			# otherwise the text interface
 			self.message_interface = text_interface()
+		elif interface == 'signal':
+			self.message_interface = signal_interface()
 	
 	def get_message_interface(self):
 		return self.message_interface

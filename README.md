@@ -5,17 +5,12 @@ This productivity tools program is connecting two api's together. The notion.so 
 Currently, the tool supports the following Telegram commands:
 
 ```
-tk - add a task
+inbox - add a task
 log - do a log check
 daily - get a daily update
 week - return the week number
 weight - set your weight
-goal - set your goal (or leave empty to get it)
-tomgoal - get or set tomorrow's goal
-onepercent - set the one percent improvement for today
 legal - get copyright information
-fun - get or set the fun action for today
-tomfun - get or set the fun action for tomorrow
 ```
 Add a / before it in telegram to execute them when sending messages to the bot.
 
@@ -60,6 +55,15 @@ Impact of change can be any of:
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
 To count the lines of code, use `find . -type f -name "*.py" -exec wc -l {} +`
+
+## 2024-11-16 (96) daily fix and remove commands
++ (major) removed the commands ``goal``, ``tomgoal``, ``fun``,``tomfun`` and ``onepercent`` which all have been removed from the new journal setup. Also removed the related code
++ (major) Fixed the ``daily`` command by removing references to fields which don't exist anymore
++ (minor) updated the commands above to also accommodate for the below change
+
+| Property | Value |
+| :--- | :--- |
+| Lines of python code | 845 |
 
 ## 2024-05-21 (95) task to inbox
 + (major) Renamed task (``tk``) to ``inbox`` which is more fitting to where the action will land
