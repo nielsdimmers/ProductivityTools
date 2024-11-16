@@ -56,6 +56,9 @@ Impact of change can be any of:
 
 To count the lines of code, use `find . -type f -name "*.py" -exec wc -l {} +`
 
+## 2024-11-16.1 (97) fix reference to signal interface
++ (bug) I was experimenting with signal interface, therefore it was added to the script, but that gave error messages in production, so removed it.
+
 ## 2024-11-16 (96) daily fix and remove commands
 + (major) removed the commands ``goal``, ``tomgoal``, ``fun``,``tomfun`` and ``onepercent`` which all have been removed from the new journal setup. Also removed the related code
 + (major) Fixed the ``daily`` command by removing references to fields which don't exist anymore
