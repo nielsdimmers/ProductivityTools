@@ -27,6 +27,14 @@ class notion(notion_abstract):
 		
 		return "Created inbox item with title '[%s](%s)'. Status code: %s (%s)" % (response.json()['properties']['Name']['title'][0]['plain_text'],response.json()['url'],response.status_code,response.reason)	
 	
+	def create_dysfunction(self,_dysfunction_title):
+		dictionary = notion_json_builder.NotionPage(super().get_config('DYSFUNCTION_DATABASE_KEY'),[_dysfunction_title]).__dict__
+		# The creation of the task
+		response = super().post_notion('page','',dictionary)
+		
+		# Setup the response telegram message
+		return "Did nothing %s " % response.status_code
+
 	# get task count based on the notion style date
 	def get_task_count(self,date):	
 		response = super().post_notion('database',super().get_config('TASK_DATABASE_KEY'),json.loads(global_vars.NOTION_TASKLIST_QUERY_JSON % (date,date)))

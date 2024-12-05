@@ -11,6 +11,7 @@ daily - get a daily update
 week - return the week number
 weight - set your weight
 legal - get copyright information
+d - add symptom to dysfunction mapping
 ```
 Add a / before it in telegram to execute them when sending messages to the bot.
 
@@ -55,6 +56,9 @@ Impact of change can be any of:
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
 To count the lines of code, use `find . -type f -name "*.py" -exec wc -l {} +`
+
+## 2024-12-05 (98) add /d for dysfunction mapping
++ (major) added the ``d`` command for adding symptoms to my dysfunction mapping
 
 ## 2024-11-16.1 (97) fix reference to signal interface
 + (bug) I was experimenting with signal interface, therefore it was added to the script, but that gave error messages in production, so removed it.

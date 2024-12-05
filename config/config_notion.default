@@ -8,6 +8,8 @@ INBOX_DATABASE_KEY = <notion key of inbox database here>
 
 GOAL_DATABASE_KEY = <notion key of goal database here>
 
+DYSFUNCTION_DATABASE_KEY = <notion key of dysfunction database here>
+
 AI_USAGE_DATABASE_KEY = <notion key of aicount database here>
 
 JOURNAL_ENTRY_MAX_LENGTH = <max length of a journal entry>

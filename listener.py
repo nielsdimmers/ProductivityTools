@@ -23,6 +23,8 @@ class Listener:
 			return notion.create_task(message)
 		elif command == 'log':
 			return self.log.get_size_message()
+		elif command == 'd':
+			return notion.create_dysfunction(message)
 		elif command == 'week':
 			return global_vars.DATETIME_WEEK_NUMBER % datetime.date.today().strftime("%W")
 		elif command == 'weight':
@@ -40,7 +42,7 @@ class Listener:
 		return notion.micro_journal(message)
 	
 	def main(self):
-		telegram_commands = ['daily','inbox','log','week','weight','legal','words']
+		telegram_commands = ['daily','inbox','log','week','weight','legal','words','d']
 		for telegram_command in telegram_commands:
 			self.message_interface.add_command(telegram_command,self)
 		self.message_interface.start_listener(global_vars.REBOOT_MESSAGE)
