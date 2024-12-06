@@ -8,3 +8,6 @@ TELEGRAM_CHAT_ID = <telegram user sending messages here>
 
 [report]
 REPORT_LOOKBACK_LENGTH = 10
+
+[release]
+NTFY_SERVER_ALERT = <NTFY server and alert>
