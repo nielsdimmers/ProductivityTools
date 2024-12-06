@@ -59,11 +59,7 @@ class global_vars:
 	
 	NOTION_TASKLIST_QUERY_JSON = '{"filter": { "and": [{"property": "Status", "status" : { "does_not_equal": "Done 🙌" } },  { "property": "Status", "status" : { "does_not_equal": "Dropped 🔥" } }, {  "or": [ { "property":"Due date", "date" :{ "on_or_before":"%s" } }, { "property":"Action date", "date" : { "on_or_before":"%s" } } ] } ] } }'
 	
-	NOTION_TASKLIST_EVENING_JSON = 	'{"filter": { "and": [{"property": "Status", "status" : { "equals": "To Do📎" } },  {"property": "Tag", "multi_select" : { "contains": "Evening Checklist" } }] } }'
-	
-	NOTION_TASKLIST_AFTERNOON_JSON = 	'{"filter": { "and": [{"property": "Status", "status" : { "equals": "To Do📎" } },  {"property": "Tag", "multi_select" : { "contains": "Mid Day Checkup" } }] } }'
-	
-	NOTION_TASKLIST_MORNING_JSON = 	'{"filter": { "and": [{"property": "Status", "status" : { "equals": "To Do📎" } },  {"property": "Tag", "multi_select" : { "contains": "Morning Checklist" } }] } }'
+	NOTION_OPEN_TASK_QUERY_JSON = '{"filter": { "and": [{"property": "Status", "status" : { "does_not_equal": "Done 🙌" } },  { "property": "Status", "status" : { "does_not_equal": "Dropped 🔥" } } ] } }'
 	
 	NOTION_AIBOT_JSON = '{"Number": {"id": "fkgo", "type": "number", "number": 1}, "Select": {"id": "nUgq", "type": "select", "select": {"id": "cbe4cfd6-4e98-4675-b741-b5e277e93ff2", "name": "Field", "color": "green"}}}'
 	
@@ -71,19 +67,11 @@ class global_vars:
 	
 	JOURNAL_LENGTH_KEY = 'Journal length'
 	
-	JOURNAL_ONE_PERCENT_KEY = '1% better'
-	
-	JOURNAL_GOAL_KEY = 'Goal'
-	
 	JOURNAL_WEIGHT_KEY = 'Weight (Kg)'
 	
-	JOURNAL_FUN_KEY = 'Fun for today'
+	JOURNAL_OPEN_TASKS_COUNT_KEY = 'Count open tasks'
 	
-	JOURNAL_PROMPT_KEY = 'Journal question'
-	
-	JOURNAL_AICOUNT_KEY = 'AI uses'
-	
-	JOURNAL_SUMMARY_KEY = 'Today\'s lessons'
+	JOURNAL_OPEN_TASKS_ESTIMATE_KEY = 'Estimate open tasks'
 	
 	LOG_LENGTH_MESSAGE = 'The logfile %s is %s lines long.'
 		
@@ -106,9 +94,3 @@ class global_vars:
 	REPORT_GRAPH_X_LABEL = 'Day of month'
 	
 	REPORT_IMAGE_NOT_FOUND_ERR = 'Error: graph image not found'
-	
-	EVENING = 'EVENING'
-	
-	MORNING = 'MORNING'
-	
-	AFTERNOON = 'AFTERNOON'

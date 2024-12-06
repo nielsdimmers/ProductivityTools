@@ -3,9 +3,6 @@ from global_vars import global_vars
 from notion_journal_interface import notion_journal
 import json
 import notion_json_builder
-import random
-import sys
-import os
 from datetime import datetime, date, timedelta
 
 
@@ -39,27 +36,36 @@ class notion(notion_abstract):
 	def get_task_count(self,date):	
 		response = super().post_notion('database',super().get_config('TASK_DATABASE_KEY'),json.loads(global_vars.NOTION_TASKLIST_QUERY_JSON % (date,date)))
 		return len(response.json()['results'])
-		
-	# return the currently active evening checklist task
-	def get_checklist_url(self, _checklist_type):
-		request_json = ''
-		if _checklist_type == global_vars.EVENING:
-			request_json = global_vars.NOTION_TASKLIST_EVENING_JSON
-		if _checklist_type == global_vars.MORNING:
-			request_json = global_vars.NOTION_TASKLIST_MORNING_JSON
-		if _checklist_type == global_vars.AFTERNOON:
-			request_json = global_vars.NOTION_TASKLIST_AFTERNOON_JSON			
-		response = super().post_notion('database',super().get_config('TASK_DATABASE_KEY'),json.loads(request_json))
-		return response.json()['results'][0]['url']
 	
+	def get_open_task_count(self):
+		response = super().post_notion('database',super().get_config('TASK_DATABASE_KEY'),json.loads(global_vars.NOTION_OPEN_TASK_QUERY_JSON))
+		return len(response.json()['results'])
+	
+	def get_open_task_effort(self):
+		response = super().post_notion('database',super().get_config('TASK_DATABASE_KEY'),json.loads(global_vars.NOTION_OPEN_TASK_QUERY_JSON))
+		total_effort = 0
+		for task in response.json()['results']:
+			if task['properties']['AI Effort (number)']['formula']['type'] == 'number':
+				total_effort += task['properties']['AI Effort (number)']['formula']['number']
+		return total_effort
+
 	def get_daily_data(self):
 		# number of words of yesterday's journal
 		yesterday = (date.today() - timedelta(days = 1)).strftime("%Y-%m-%d")
 		yesterday_journal = notion_journal(yesterday)
 		today = datetime.now().strftime("%Y-%m-%d")
-		
+		today_journal = notion_journal(today)
+
 		result = 'Good morning Niels, yesterday\'s journal word count is %s.\n' % yesterday_journal.count_words()
 		
-		result += "For today, there are a total of %s tasks.\n\n" % self.get_task_count(today)
-		
+		result += "For today, there are a total of %s tasks.\n" % self.get_task_count(today)
+
+		open_task_count = self.get_open_task_count()
+		open_effort_sum = self.get_open_task_effort()
+
+		today_journal.set_property(global_vars.JOURNAL_OPEN_TASKS_COUNT_KEY,open_task_count)
+		today_journal.set_property(global_vars.JOURNAL_OPEN_TASKS_ESTIMATE_KEY,open_effort_sum)
+
+		result += "In total, there are %s open tasks which represent an effort of %s .\n\n" % (open_task_count,open_effort_sum)
+
 		return result

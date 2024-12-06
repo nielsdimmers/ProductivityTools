@@ -57,6 +57,14 @@ Impact of change can be any of:
 
 To count the lines of code, use `find . -type f -name "*.py" -exec wc -l {} +`
 
+## 2024-12-06 (99) Add historical count and sum of effort
++ (major) added the open task count and effort sum to the daily, and also put it in the journal for historical purposes
++ (medium) Removed obsolete code related to moment-of day checklists some obsolete global_vars and old journal fields (pre nov 2024 journal)
+
+| Property | Value |
+| :--- | :--- |
+| Lines of python code | 772 |
+
 ## 2024-12-05 (98) add /d for dysfunction mapping
 + (major) added the ``d`` command for adding symptoms to my dysfunction mapping
 
