@@ -31,6 +31,8 @@ class Listener:
 			return journal.journal_property(global_vars.JOURNAL_WEIGHT_KEY,message)
 		elif command == 'legal':
 			return global_vars.LEGAL_NOTICE
+		elif command == 'drink':
+			return journal.journal_property(global_vars.JOURNAL_DRINK_KEY,message)
 		elif command == 'words':
 			words = journal.count_words()
 			notion_config = config.config('config_notion')
@@ -42,7 +44,7 @@ class Listener:
 		return notion.micro_journal(message)
 	
 	def main(self):
-		telegram_commands = ['daily','inbox','log','week','weight','legal','words','d']
+		telegram_commands = ['daily','inbox','log','week','weight','legal','words','d','drink']
 		for telegram_command in telegram_commands:
 			self.message_interface.add_command(telegram_command,self)
 		self.message_interface.start_listener(global_vars.REBOOT_MESSAGE)

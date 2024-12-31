@@ -12,6 +12,7 @@ week - return the week number
 weight - set your weight
 legal - get copyright information
 d - add symptom to dysfunction mapping
+drink - set the amount drunk for today
 ```
 Add a / before it in telegram to execute them when sending messages to the bot.
 
@@ -56,6 +57,14 @@ Impact of change can be any of:
 + `bug` Fixing a bug (introduced with 2023-02-12 (53))
 
 To count the lines of code, use `find . -type f -name "*.py" -exec wc -l {} +`
+
+## 2024-12-31 (101) new command: drink
++ (minor) Removed some additional global vars which were used for old code
++ (major) Added "drink" command which sets the amount of ml drunk.
+
+| Property | Value |
+| :--- | :--- |
+| Lines of python code | 823 |
 
 ## 2024-12-06.1 (100) Add release.py to automate releasing and send messages
 + (major) release.py handles pulling a new release and restarting the server using linux command.

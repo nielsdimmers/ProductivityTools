@@ -11,12 +11,6 @@ class global_vars:
 	IMAGE_TEXT_REPLACEMENT = "Wanted to send an image, but since this interface is text only, that's not possible."
 
 	DATETIME_WEEK_NUMBER = 'The current week number is %s.'
-	
-	EVENING_ACTIVITIES_MESSAGE = "It's time for your evening activities! You can find the link [here](%s)."
-	
-	MORNING_ACTIVITIES_MESSAGE = "It's time for your morning activities! You can find the link [here](%s)."
-	
-	AFTERNOON_ACTIVITIES_MESSAGE = "It's time for your mid day checkup! You can find the link [here](%s)."
 
 	# the telegram URL to send a message to myself
 	TELEGRAM_MSG_URL = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s&parse_mode=Markdown"
@@ -68,6 +62,8 @@ class global_vars:
 	JOURNAL_LENGTH_KEY = 'Journal length'
 	
 	JOURNAL_WEIGHT_KEY = 'Weight (Kg)'
+
+	JOURNAL_DRINK_KEY = 'drink (ml) 💦'
 	
 	JOURNAL_OPEN_TASKS_COUNT_KEY = 'Count open tasks'
 	
